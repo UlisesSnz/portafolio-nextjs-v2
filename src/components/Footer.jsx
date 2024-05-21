@@ -1,0 +1,22 @@
+import Link from 'next/link';
+import Layout from './Layout';
+
+const Footer = () => {
+  return (
+    <footer className="w-full border-t-2 border-solid border-dark font-medium text-lg dark:text-light dark:border-light sm:text-base">
+      <Layout className="py-8 flex items-center justify-between lg:flex-col lg:py-6">
+        <span className="xs:text-center">{new Date().getFullYear()} &copy; Todos Los Derechos Reservados.</span>
+        <div className="flex items-center lg:py-2">
+          Construido Con <span className="text-primary dark:text-primaryDark text-2xl px-1">&#9825;</span>
+          Por&nbsp;
+          <Link href="https://github.com/UlisesSnz" className="underline underline-offset-2" target="_blank">
+            UlisesSnz
+          </Link>
+        </div>
+        <Link href="https://www.linkedin.com/in/ulisessanchez" className="underline underline-offset-2" target="_blank">Saludar</Link>
+      </Layout>
+    </footer>
+  )
+}
+
+export default Footer;
