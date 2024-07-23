@@ -11,6 +11,10 @@ const montserrat = Montserrat({
   variable: "--font-mont",
 })
 
+const onExitComplete = () => {
+	window.scrollTo({ top: 0 })
+}
+
 export default function App({ Component, pageProps }) {
   const router = useRouter();
 
@@ -22,7 +26,7 @@ export default function App({ Component, pageProps }) {
       </Head>
       <main className={`${montserrat.variable} font-mont bg-light dark:bg-dark w-full min-h-screen`}>
         <Navbar />
-          <AnimatePresence mode='wait'>
+          <AnimatePresence initial={false} mode='wait' onExitComplete={onExitComplete}>
             <Component key={router.asPath} {...pageProps} />
           </AnimatePresence>
         <Footer />

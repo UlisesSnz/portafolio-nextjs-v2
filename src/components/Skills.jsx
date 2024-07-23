@@ -21,7 +21,7 @@ const Skill = ({ name, x, y }) => {
 const Skills = () => {
   return (
     <>
-      <h2 className="font-bold text-8xl mt-64 w-full text-center md:text-6xl md:mt-32">Habilidades</h2>
+      <h2 className="font-bold text-8xl mt-64 w-full text-center md:text-6xl md:mt-32">Stack</h2>
       <div className="w-full h-screen relative flex items-center justify-center rounded-full bg-circularLight dark:bg-circularDark
         lg:h-[80vh] sm:h-[60vh] xs:h-[50vh]
         lg:bg-circularLightLg lg:dark:bg-circularDarkLg
@@ -39,15 +39,14 @@ const Skills = () => {
 
         <Skill name="HTML" x="-26vw" y="-2vw" />
         <Skill name="CSS" x="-5vw" y="-10vw" />
-        <Skill name="JavaScript" x="8vw" y="12vw" />
-        <Skill name="ReactJS" x="-21vw" y="-15vw" />
+        <Skill name="JavaScript" x="19vw" y="12vw" />
+        <Skill name="ReactJS" x="-22vw" y="-15vw" />
         <Skill name="React Native" x="19vw" y="-12vw" />
-        <Skill name="PHP" x="32vw" y="-5vw" />
-        <Skill name="Python" x="0vw" y="-20vw" />
-        <Skill name="SQL" x="-25vw" y="18vw" />
-        <Skill name="Bootstrap" x="18vw" y="18vw" />
-        <Skill name="NextJS" x="-5vw" y="22vw" />
-        <Skill name="Git" x="-5vw" y="10vw" />
+        <Skill name="PHP" x="37vw" y="-5vw" />
+        <Skill name="Laravel" x="0vw" y="-21vw" />
+        <Skill name="SQL" x="-31vw" y="7vw" />
+        <Skill name="Next.js" x="-5vw" y="24vw" />
+        <Skill name="Git" x="-14vw" y="5vw" />
         <Skill name="GitHub" x="-26vw" y="18vw" />
       </div>
     </>

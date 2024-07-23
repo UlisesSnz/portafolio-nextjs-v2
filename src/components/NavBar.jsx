@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Logo from './Logo';
 import { useRouter } from 'next/router';
 import { GithubIcon, LinkedinIcon, MoonIcon, SunIcon, YoutubeIcon } from './Icons';
@@ -8,9 +8,10 @@ import useThemeSwitcher from './hooks/useThemeSwitcher';
 
 const CustomLink = ({href, title, className=""}) => {
     const router  = useRouter();
+    const isSamePath = router.pathname === href;
 
     return(
-        <Link href={href} className={`${className} relative group`}>
+        <Link href={href} scroll={isSamePath} className={`${className} relative group`}>
             {title}
 
             <span className={`
@@ -28,10 +29,11 @@ const CustomLink = ({href, title, className=""}) => {
 
 const CustomMobileLink = ({href, title, className="", toggle}) => {
     const router  = useRouter();
+    const isSamePath = router.pathname === href;
 
     const handleClick = () => {
         toggle();
-        router.push(href);
+        router.push(href, undefined, { scroll: isSamePath });
     }
 
     return(
@@ -60,6 +62,15 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   }
 
+    useEffect(() => {
+        if (isOpen) {
+            document.body.classList.add('overflow-y-hidden');
+        } else document.body.classList.remove('overflow-y-hidden');
+        return () => {
+            document.body.classList.remove('overflow-y-hidden');
+        };
+    }, [isOpen]);
+
   return (
     <header
         className="w-full px-32 py-8 font-medium flex items-center justify-between dark:text-light relative z-10 lg:px-16 md:px-12 sm:px-8"
@@ -76,7 +87,7 @@ const Navbar = () => {
             <CustomLink href="/" title="Inicio" className="mr-4" />
             <CustomLink href="/about" title="Sobre mí" className="mx-4" />
             <CustomLink href="/projects" title="Proyectos" className="mx-4" />
-            <CustomLink href="/articles" title="Artículos" className="ml-4" />
+            <CustomLink href="/blog" title="Blog" className="ml-4" />
         </nav>
         
         <nav className="flex items-center justify-center flex-wrap">
@@ -129,7 +140,7 @@ const Navbar = () => {
                 <CustomMobileLink href="/" title="Inicio" toggle={handleClick} />
                 <CustomMobileLink href="/about" title="Sobre mí" toggle={handleClick} />
                 <CustomMobileLink href="/projects" title="Proyectos" toggle={handleClick} />
-                <CustomMobileLink href="/articles" title="Artículos" toggle={handleClick} />
+                <CustomMobileLink href="/blog" title="Blog" toggle={handleClick} />
             </nav>
             
             <nav className="flex items-center justify-center flex-wrap mt-2">

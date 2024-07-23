@@ -96,13 +96,13 @@ const articles = () => {
   return (
     <>
       <Head>
-        <title>Artículos | Ulises Sánchez</title>
+        <title>Blog | Ulises Sánchez</title>
         <meta name="description" content="any description" />
       </Head>
       <TransitionEffect />
       <main className="w-full mb-16 flex flex-col items-center justify-center overflow-hidden dark:text-light">
         <Layout className="pt-16">
-          <AnimatedText text="Las palabras pueden cambiar el mundo" className="mb-16 lg:!text-7xl sm:mb-8 sm:!text-6xl xs:!text-4xl" />
+          <AnimatedText text="Las palabras cambian al mundo" className="mb-16 lg:!text-7xl sm:mb-8 sm:!text-6xl xs:!text-4xl" />
           <ul className="grid grid-cols-2 gap-16 lg:gap-8 md:grid-cols-1 md:gap-y-16">
             <FeaturedArticle
               title="Build A Custom Pagination Component In Reactjs From Scratch"

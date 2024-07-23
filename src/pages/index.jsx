@@ -8,6 +8,7 @@ import { LinkArrow } from '@/components/Icons';
 import HireMe from '@/components/HireMe';
 import lighBulb from '../../public/images/svgs/spotlight.svg';
 import TransitionEffect from '@/components/TransitionEffect';
+import NoScrollLink from '@/components/NoScrollLink';
 
 export default function Home() {
   return (
@@ -27,12 +28,12 @@ export default function Home() {
               />
             </div>
             <div className="w-1/2 flex flex-col items-center self-center lg:w-full lg:text-center">
-              <AnimatedText text="Desarrollando sueños a través de código y diseño." className="!text-6xl !text-left
+              <AnimatedText text="Desarrollando sueños con código." className="!text-6xl !text-left
                 xl:!text-5xl lg:!text-center lg:!text-6xl md:!text-5xl sm:!text-3xl"
               />
               <p className="my-4 text-base font-medium md:text-sm sm:text-xs">
-              Como desarrollador, me dedico a convertir ideas en aplicaciones web innovadoras.
-              Siéntase libre de explorar mis últimos proyectos y artículos, que muestran mi experiencia codificando.
+                Como desarrollador, me dedico a convertir ideas en aplicaciones web innovadoras.
+                Siéntase libre de explorar mis últimos proyectos y posts, que muestran mi experiencia codificando.
               </p>
               <div className="flex items-center self-start mt-2 lg:self-center">
                 <Link
@@ -46,13 +47,11 @@ export default function Home() {
                 >
                   Currículum <LinkArrow className={"h-auto ml-1 !w-6 md:!w-4"} />
                 </Link>
-                <Link
-                  href="mailto:ulises.sanchez.guzman@outlook.com"
-                  target={"_blank"}
+                <NoScrollLink
+                  href="/contact"
+                  title="Contactar"
                   className="ml-4 text-lg font-medium capitalize text-dark underline dark:text-light md:text-base"
-                >
-                  Contactar
-                </Link>
+                />
               </div>
             </div>
           </div>
@@ -60,7 +59,7 @@ export default function Home() {
 
         <HireMe />
 
-        <div className="absolute right-8 bottom-8 inline-block w-24 md:hidden">
+        <div className="absolute right-8 bottom-16 inline-block w-24 md:hidden">
           <Image src={lighBulb} alt="Desarrollador" className="w-full h-auto" />
         </div>
       </main>
