@@ -11,11 +11,15 @@ export const TransitionEffect = () => {
         state.options.scroll = false;
         return true;
       });
-    }, []);
+    }, [router]);
 
   return (
     <>
-      <Script>{`window.history.scrollRestoration = "manual"`}</Script>
+      {/* <Script>{`window.history.scrollRestoration = "manual"`}</Script> */}
+      <Script
+        id="scroll-restoration-script"
+        dangerouslySetInnerHTML={{__html: `window.history.scrollRestoration = "manual";`}}
+      />
       <motion.div
         className="fixed top-0 bottom-0 right-full w-screen h-screen z-30 bg-dark"
         initial={{ x:'100%', width:'100%' }}

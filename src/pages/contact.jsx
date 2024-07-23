@@ -9,7 +9,7 @@ import TransitionEffect from '@/components/TransitionEffect';
 import LottieAnimation from '@/components/LottieAnimation';
 import ContactForm from '@/components/ContacForm';
 
-const contact = () => {
+const SendForm = () => {
     const [loading, setLoading] = useState(false);
 
     const {
@@ -20,7 +20,6 @@ const contact = () => {
     } = useForm();
 
     const onSubmit = (data) => {
-        // console.log(data);
         setLoading(true);
         const params = {
             "name":data.name, //key value must be same as in your template in emailjs
@@ -62,6 +61,12 @@ const contact = () => {
     console.log(errors);
 
     return (
+        <ContactForm register={register} handleSubmit={handleSubmit} onSubmit={onSubmit} loading={loading} />
+    );
+}
+
+const contact = () => {
+    return (
         <>
             <Head>
                 <title>Contactame | Ulises Sánchez</title>
@@ -80,7 +85,7 @@ const contact = () => {
                                 className="!text-6xl !text-left xl:!text-5xl lg:!text-center lg:!text-6xl md:!text-5xl sm:!text-3xl"
                             />
                             <div className="my-4 text-base font-medium md:text-sm sm:text-xs">
-                                <ContactForm register={register} handleSubmit={handleSubmit} onSubmit={onSubmit} loading={loading} />
+                                <SendForm />
                             </div>
                         </div>
                     </div>
