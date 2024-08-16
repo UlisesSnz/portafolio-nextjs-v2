@@ -41,6 +41,7 @@ const ContactForm = ({ register, handleSubmit, onSubmit, loading }) => {
                   font-semibold hover:bg-light hover:text-dark border-2 border-solid border-transparent hover:border-dark
                   dark:bg-light dark:text-dark hover:dark:bg-dark hover:dark:text-light hover:dark:border-light
                   md:p-2 md:px-4 md:text-base self-start mt-4
+                  disabled:text-dark disabled:bg-light disabled:border-dark
                   disabled:dark:text-light disabled:dark:bg-dark disabled:dark:border-light"
                 disabled={loading}
             >

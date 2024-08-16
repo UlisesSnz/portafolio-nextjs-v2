@@ -1,8 +1,12 @@
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Layout from './Layout';
 import NoScrollLink from './NoScrollLink';
 
 const Footer = () => {
+  const router  = useRouter();
+  const isContactPage = router.pathname === '/contact';
+
   return (
     <footer className="w-full border-t-2 border-solid border-dark font-medium text-lg dark:text-light dark:border-light sm:text-base">
       <Layout className="py-8 flex items-center justify-between lg:flex-col lg:py-6">
@@ -14,7 +18,11 @@ const Footer = () => {
             UlisesSnz
           </Link>
         </div>
-        <NoScrollLink href="/contact" title="Di Hola" className="underline underline-offset-2" />
+        <NoScrollLink
+          href="/contact"
+          title="Di Hola"
+          className={`underline underline-offset-2 ${isContactPage ? 'decoration-primary dark:decoration-primaryDark' : ''}`}
+        />
       </Layout>
     </footer>
   )
