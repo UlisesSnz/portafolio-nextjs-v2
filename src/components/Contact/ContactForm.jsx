@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import emailjs from '@emailjs/browser';
 import { toast } from 'sonner';
-import ContactForm from './ContacForm';
+import ContactFormInputs from './ContactFormInputs';
 
-const SendForm = () => {
+const ContactForm = () => {
     const [loading, setLoading] = useState(false);
 
     const {
@@ -57,8 +57,8 @@ const SendForm = () => {
     // console.log(errors);
 
     return (
-        <ContactForm register={register} handleSubmit={handleSubmit} onSubmit={onSubmit} loading={loading} />
+        <ContactFormInputs register={register} handleSubmit={handleSubmit} onSubmit={onSubmit} loading={loading} />
     );
 }
 
-export default SendForm;
+export default ContactForm;

@@ -1,4 +1,5 @@
 import { CircularTextEsp, EmailIcon } from '../Shared/Icons';
+import siteMetadata from '@/utils/siteMetaData';
 
 const HireMe = () => {
   return (
@@ -9,7 +10,7 @@ const HireMe = () => {
             <CircularTextEsp className={"fill-dark animate-spin-slow dark:fill-light"} />
 
             <a
-              href={"mailto:ulises.sanchez.guzman@outlook.com"}
+              href={`mailto:${siteMetadata.email}`}
               className="flex items-center justify-center absolute left-1/2 top-1/2
               -translate-x-1/2 -translate-y-1/2 bg-dark text-light shadow-md z-10
               border border-solid border-dark w-20 h-20 rounded-full font-semibold

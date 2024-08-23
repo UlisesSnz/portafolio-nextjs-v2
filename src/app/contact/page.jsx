@@ -2,7 +2,7 @@ import { Toaster } from 'sonner';
 import AnimatedText from '@/components/Animations/AnimatedText';
 import Layout from '@/components/Shared/Layout';
 import LottieAnimation from '@/components/Contact/LottieAnimation';
-import SendForm from '@/components/Contact/SendForm';
+import ContactForm from '@/components/Contact/ContactForm';
 import siteMetadata from '@/utils/siteMetaData';
 
 export const metadata = {
@@ -25,7 +25,11 @@ const contact = () => {
                                 className="!text-6xl !text-left xl:!text-5xl lg:!text-center lg:!text-6xl md:!text-5xl sm:!text-3xl"
                             />
                             <div className="my-4 text-base font-medium md:text-sm sm:text-xs">
-                                <SendForm />
+                                <p className="mb-4">
+                                    Contáctame a través del siguiente formulario o envíame un correo electrónico a&ensp;
+                                    <a href={`mailto:${siteMetadata.email}`} className="underline underline-offset-2">{siteMetadata.email}</a>
+                                </p>
+                                <ContactForm />
                             </div>
                         </div>
                     </div>

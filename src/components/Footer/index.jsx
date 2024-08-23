@@ -5,7 +5,7 @@ import NoScrollLink from '../Shared/NoScrollLink';
 
 const Footer = () => {
   const pathname = usePathname()
-  const isContactPage = pathname === '/contact';
+  const isAboutPage = pathname === '/about';
 
   return (
     <footer className="w-full border-t-2 border-solid border-dark font-medium text-lg dark:text-light dark:border-light sm:text-base">
@@ -16,9 +16,9 @@ const Footer = () => {
           & Next.js 14
         </div>
         <NoScrollLink
-          href="/contact"
-          title="Di Hola"
-          className={`underline underline-offset-2 ${isContactPage ? 'decoration-primary dark:decoration-primaryDark' : ''}`}
+          href="/about"
+          title="Sobre Mí"
+          className={`underline underline-offset-2 ${isAboutPage ? 'decoration-primary dark:decoration-primaryDark' : ''}`}
         />
       </Layout>
     </footer>
