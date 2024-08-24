@@ -44,21 +44,33 @@ const Navbar = () => {
         </nav>
         
         <nav className="flex items-center justify-center flex-wrap">
-            <motion.a href="https://github.com/UlisesSnz" target={"_blank"} className="w-6 mr-3"
+            <motion.a
+                href="https://github.com/UlisesSnz"
+                target={"_blank"}
+                className="w-6 mr-3"
+                aria-label="Visitar mi perfil en GitHub"
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.9 }}
             >
                 <GithubIcon />
             </motion.a>
 
-            <motion.a href="https://www.linkedin.com/in/ulisessanchez" target={"_blank"} className="w-6 mx-3"
+            <motion.a
+                href="https://www.linkedin.com/in/ulisessanchez"
+                target={"_blank"}
+                className="w-6 mx-3"
+                aria-label="Visitar mi perfil en LinkedIn"
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.9 }}
             >
                 <LinkedinIcon />
             </motion.a>
 
-            <motion.a href="https://www.youtube.com/@ulises-snz" target={"_blank"} className="w-6 mx-3"
+            <motion.a
+                href="https://www.youtube.com/@ulises-snz"
+                target={"_blank"}
+                className="w-6 mx-3"
+                aria-label="Visitar mi canal en YouTube"
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.9 }}
             >
@@ -97,31 +109,45 @@ const Navbar = () => {
             </nav>
             
             <nav className="flex items-center justify-center flex-wrap mt-2">
-                <motion.a href="https://x.com" target={"_blank"} className="w-6 mr-3 bg-light rounded-full dark:bg-dark sm:mr-1"
+                <motion.a
+                    href="https://github.com/UlisesSnz"
+                    target={"_blank"}
+                    className="w-6 mr-3 bg-light rounded-full dark:bg-dark sm:mr-1"
+                    aria-label="Visitar mi perfil en GitHub"
                     whileHover={{ y: -2 }}
                     whileTap={{ scale: 0.9 }}
                 >
                     <GithubIcon />
                 </motion.a>
 
-                <motion.a href="https://x.com" target={"_blank"} className="w-6 mx-3 sm:mx-1"
-                    whileHover={{ y: -2 }}
-                    whileTap={{ scale: 0.9 }}
-                >
-                    <YoutubeIcon />
-                </motion.a>
-
-                <motion.a href="https://x.com" target={"_blank"} className="w-6 mx-3 sm:mx-1"
+                <motion.a
+                    href="https://www.linkedin.com/in/ulisessanchez"
+                    target={"_blank"}
+                    className="w-6 mx-3 sm:mx-1"
+                    aria-label="Visitar mi perfil en LinkedIn"
                     whileHover={{ y: -2 }}
                     whileTap={{ scale: 0.9 }}
                 >
                     <LinkedinIcon />
                 </motion.a>
 
-                <button onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}
+                <motion.a
+                    href="https://www.youtube.com/@ulises-snz"
+                    target={"_blank"}
+                    className="w-6 mx-3 sm:mx-1"
+                    aria-label="Visitar mi canal en YouTube"
+                    whileHover={{ y: -2 }}
+                    whileTap={{ scale: 0.9 }}
+                >
+                    <YoutubeIcon />
+                </motion.a>
+
+                <button
+                    onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}
+                    aria-label={`Cambiar a modo ${mode === 'light' ? 'oscuro' : 'claro'}`}
                     className={`ml-3 sm:ml-1 flex items-center justify-center rounded-full p-1
-                            ${mode === 'light' ? 'bg-dark text-light' : 'bg-light text-dark'}
-                        `}
+                        ${mode === 'light' ? 'bg-dark text-light' : 'bg-light text-dark'}
+                    `}
                 >
                     {
                         mode === 'dark'
