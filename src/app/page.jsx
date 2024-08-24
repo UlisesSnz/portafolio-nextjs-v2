@@ -30,13 +30,16 @@ export default function Home() {
                     </p>
                     <div className="flex items-center self-start mt-2 lg:self-center">
                         <Link
-                            href="/CvUlisesSanchez.pdf"
+                            href="/Ulises_Sanchez.pdf"
+                            download="Ulises_Sanchez.pdf"
+                            locale={false}
+                            rel="noopener noreferrer"
                             target={"_blank"}
+                            aria-label="Descargar currículum"
                             className="flex items-center bg-dark text-light p-2.5 px-6 rounded-lg text-lg
                             font-semibold hover:bg-light hover:text-dark border-2 border-solid border-transparent hover:border-dark
                             dark:bg-light dark:text-dark hover:dark:bg-dark hover:dark:text-light hover:dark:border-light
                             md:p-2 md:px-4 md:text-base"
-                            download={true}
                         >
                             Currículum <LinkArrow className={"h-auto ml-1 !w-6 md:!w-4"} />
                         </Link>
