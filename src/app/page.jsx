@@ -30,8 +30,8 @@ export default function Home() {
                     </p>
                     <div className="flex items-center self-start mt-2 lg:self-center">
                         <Link
-                            href="/Ulises_Sanchez.pdf"
-                            download="Ulises_Sanchez.pdf"
+                            href="/ulises.pdf"
+                            download="Ulises.pdf"
                             locale={false}
                             rel="noopener noreferrer"
                             target={"_blank"}
