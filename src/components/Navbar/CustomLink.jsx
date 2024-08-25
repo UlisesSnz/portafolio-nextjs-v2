@@ -5,14 +5,8 @@ const CustomLink = ({href, title, className=""}) => {
     const pathname = usePathname()
     const isSamePath = pathname === href;
 
-    const handleClick = () => {
-        if(isSamePath) {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    }
-
     return(
-        <Link href={href} scroll={isSamePath} className={`${className} relative group`} onClick={handleClick}>
+        <Link href={href} className={`${className} relative group`}>
             {title}
 
             <span className={`

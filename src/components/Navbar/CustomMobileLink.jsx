@@ -5,17 +5,9 @@ const CustomMobileLink = ({href, title, className="", toggle}) => {
     const pathname = usePathname()
     const isSamePath = pathname === href;
     
-    // const handleClick = () => {
-    //     toggle();
-    //     router.push(href, undefined, { scroll: isSamePath });
-    // }
     const handleClick = () => {
         toggle();
-        if(!isSamePath){
-            router.push(href, undefined, { scroll: isSamePath });
-            return;
-        }
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        router.push(href);
     }
 
     return(

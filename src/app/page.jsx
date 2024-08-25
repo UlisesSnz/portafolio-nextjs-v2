@@ -6,11 +6,9 @@ import Link from 'next/link';
 import { LinkArrow } from '@/components/Shared/Icons';
 import HireMe from '../components/Home/HireMe';
 import lighBulb from '../../public/images/svgs/spotlight.svg';
-import NoScrollLink from '@/components/Shared/NoScrollLink';
 
 export default function Home() {
   return (
-    
     <main className="flex items-center text-dark w-full min-h-screen dark:text-light sm:items-start">
         <Layout className="!pt-0 md:!pt-16 sm:!pt-16">
             <div className="flex items-center justify-between w-full lg:flex-col">
@@ -44,11 +42,12 @@ export default function Home() {
                         >
                             Currículum <LinkArrow className={"h-auto ml-1 !w-6 md:!w-4"} />
                         </Link>
-                        <NoScrollLink
+                        <Link
                             href="/contact"
-                            title="Contactar"
                             className="ml-4 text-lg font-medium capitalize text-dark underline dark:text-light md:text-base hidden lg:flex"
-                        />
+                        >
+                            Contactar
+                        </Link>
                     </div>
                 </div>
             </div>

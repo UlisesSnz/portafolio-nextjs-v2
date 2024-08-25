@@ -1,7 +1,7 @@
 'use client';
 import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 import Layout from '../Shared/Layout';
-import NoScrollLink from '../Shared/NoScrollLink';
 
 const Footer = () => {
   const pathname = usePathname()
@@ -15,11 +15,12 @@ const Footer = () => {
           Construido Con <span className="text-primary dark:text-primaryDark text-2xl px-1">&#9825;</span>
           & Next.js 14
         </div>
-        <NoScrollLink
+        <Link
           href="/about"
-          title="Sobre Mí"
           className={`underline underline-offset-2 ${isAboutPage ? 'decoration-primary dark:decoration-primaryDark' : ''}`}
-        />
+        >
+          Sobre Mí
+        </Link>
       </Layout>
     </footer>
   )
