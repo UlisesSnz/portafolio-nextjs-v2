@@ -8,7 +8,7 @@ const quote = {
     animate: {
         opacity: 1,
         transition: {
-            dalay: 0.5,
+            delay: 0.5,
             staggerChildren: 0.08,
         }
     }
@@ -52,4 +52,4 @@ const AnimatedText = ({ text, className="" }) => {
   )
 }
 
-export default AnimatedText
+export default AnimatedText;

@@ -3,7 +3,7 @@ import { SendIcon } from '../Shared/Icons';
 const ContactFormInputs = ({ register, handleSubmit, onSubmit, loading }) => {
     
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} className="leading-relaxed">
             ¡Hola! Mi nombre es{" "}
             <input
                 type="text"

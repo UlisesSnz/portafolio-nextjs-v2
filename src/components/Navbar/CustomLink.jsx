@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const CustomLink = ({href, title, className=""}) => {
-    const pathname = usePathname()
+    const pathname = usePathname();
     const isSamePath = pathname === href;
 
     return(
