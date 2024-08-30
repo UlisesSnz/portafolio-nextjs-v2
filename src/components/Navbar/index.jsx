@@ -1,5 +1,6 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { createRoot } from 'react-dom/client';
 import Logo from './Logo';
 import { GithubIcon, LinkedinIcon, MoonIcon, SunIcon, YoutubeIcon } from '../Shared/Icons';
 import { motion } from 'framer-motion';
@@ -10,26 +11,48 @@ import CustomMobileLink from './CustomMobileLink';
 const Navbar = () => {
     const [mode, setMode] = useThemeSwitcher();
     const [isOpen, setIsOpen] = useState(false);
+    const rootRef = useRef(null);
 
     const handleClick = () => {
         setIsOpen(!isOpen);
     }
 
     useEffect(() => {
+        const modalContainer = document.getElementById('modal');;
         if (isOpen) {
             document.body.classList.add('overflow-y-hidden');
-        } else document.body.classList.remove('overflow-y-hidden');
+            if (!rootRef.current) {
+                rootRef.current = createRoot(modalContainer);
+            }
+            const modalDiv = (
+                <div 
+                    className="z-100 fixed top-0 left-0 bottom-0 right-0 inline-block bg-dark/50 font-os backdrop-blur-[2px]"
+                    onClick={handleClick}
+                />
+            );
+            rootRef.current.render(modalDiv);
+        } else{
+            document.body.classList.remove('overflow-y-hidden');
+            if (rootRef.current) {
+                rootRef.current.unmount();
+                rootRef.current = null;
+            }
+        } 
         return () => {
             document.body.classList.remove('overflow-y-hidden');
+            if (rootRef.current) {
+                rootRef.current.unmount();
+                rootRef.current = null;
+            }
         };
-    }, [isOpen]);
+    }, [isOpen, handleClick]);
 
   return (
     <header
-        className="w-full px-32 py-8 font-medium flex items-center justify-between dark:text-light relative z-10 lg:px-16 md:px-12 sm:px-8"
+        className="w-full px-32 py-8 font-medium flex items-center justify-between dark:text-light z-10 lg:px-16 md:px-12 sm:px-8"
     >
 
-      <button className="flex-col justify-center items-center hidden lg:flex" onClick={handleClick} aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}>
+      <button className="flex-col justify-center items-center hidden lg:flex mt-2" onClick={handleClick} aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}>
         <span className={`bg-dark dark:bg-light block transition-all duration-300 ease-out h-0.5 w-6 rounded-sm ${isOpen ? 'rotate-45 translate-y-1' : '-translate-y-0.5'}`}></span>
         <span className={`bg-dark dark:bg-light block transition-all duration-300 ease-out h-0.5 w-6 rounded-sm my-0.5 ${isOpen ? 'opacity-0' : 'opacity-100'}`}></span>
         <span className={`bg-dark dark:bg-light block transition-all duration-300 ease-out h-0.5 w-6 rounded-sm ${isOpen ? '-rotate-45 -translate-y-1' : 'translate-y-0.5'}`}></span>
@@ -101,7 +124,7 @@ const Navbar = () => {
             initial={{scale:0, opacity:0, x: '-50%', y: '-50%'}}
             animate={{scale:1, opacity:1}}
             className="min-w-[80vw] flex flex-col justify-between z-30 items-center fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-            bg-dark/90 dark:bg-light/75 rounded-lg backdrop-blur-md py-32"
+            bg-dark/90 dark:bg-light/75 rounded-lg backdrop-blur-md py-12"
         >
             <nav className="flex items-center flex-col justify-center">
                 <CustomMobileLink href="/" title="Inicio" toggle={handleClick} />
