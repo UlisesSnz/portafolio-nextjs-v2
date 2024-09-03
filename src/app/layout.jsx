@@ -16,9 +16,6 @@ export const metadata = {
         template: `%s | ${siteMetadata.title}`,
         default: siteMetadata.title, // a default is required when creating a template
     },
-    icons: {
-        icon: '/favicon.png',
-    },
     description: siteMetadata.description,
     openGraph: {
         title: siteMetadata.title,
