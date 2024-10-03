@@ -1,11 +1,11 @@
 import Layout from '@/components/Shared/Layout';
 import Image from 'next/image';
-import profilePic from '../../public/images/profile/developer.png'
+import profilePic from '../../../public/images/profile/developer.png'
 import AnimatedText from '@/components/Animations/AnimatedText';
 import Link from 'next/link';
 import { LinkArrow } from '@/components/Shared/Icons';
-import HireMe from '../components/Home/HireMe';
-import lighBulb from '../../public/images/svgs/spotlight.svg';
+import HireMe from '../../components/Home/HireMe';
+import lighBulb from '../../../public/images/svgs/spotlight.svg';
 
 export default function Home() {
   return (

@@ -1,9 +1,9 @@
 import AnimatedText from '@/components/Animations/AnimatedText';
 import Layout from '@/components/Shared/Layout';
-import project1 from '../../../public/images/projects/portfolio-spa-react-threejs-image.jpg';
-import project2 from '../../../public/images/projects/heroes-spa-react-image.jpg';
-import project3 from '../../../public/images/projects/gifs-spa-react-image.jpg';
-import project4 from '../../../public/images/projects/kobbox-mvc-image.jpg';
+import project1 from '../../../../public/images/projects/portfolio-spa-react-threejs-image.jpg';
+import project2 from '../../../../public/images/projects/heroes-spa-react-image.jpg';
+import project3 from '../../../../public/images/projects/gifs-spa-react-image.jpg';
+import project4 from '../../../../public/images/projects/kobbox-mvc-image.jpg';
 import ProjectCard from '@/components/Projects/ProjectCard';
 import FeaturedProyectCard from '@/components/Projects/FeaturedProyectCard';
 

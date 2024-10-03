@@ -1,10 +1,10 @@
 import AnimatedText from '@/components/Animations/AnimatedText';
 import Layout from '@/components/Shared/Layout';
-import article1 from '../../../public/images/articles/pagination component in reactjs.jpg';
-import article2 from '../../../public/images/articles/create loading screen in react js.jpg';
-import article3 from '../../../public/images/articles/create modal component in react using react portals.png';
-import article4 from '../../../public/images/articles/form validation in reactjs using custom react hook.png';
-import article5 from '../../../public/images/articles/smooth scrolling in reactjs.png';
+import article1 from '../../../../public/images/articles/pagination component in reactjs.jpg';
+import article2 from '../../../../public/images/articles/create loading screen in react js.jpg';
+import article3 from '../../../../public/images/articles/create modal component in react using react portals.png';
+import article4 from '../../../../public/images/articles/form validation in reactjs using custom react hook.png';
+import article5 from '../../../../public/images/articles/smooth scrolling in reactjs.png';
 import FeaturedArticleCard from '@/components/Blog/FeaturedArticleCard';
 import ArticleCard from '@/components/Blog/ArticleCard';
 
