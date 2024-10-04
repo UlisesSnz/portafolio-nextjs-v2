@@ -103,7 +103,7 @@ const Navbar = () => {
             <button
                 onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}
                 aria-label={`Cambiar a modo ${mode === 'light' ? 'oscuro' : 'claro'}`}
-                className={`ml-3 flex items-center justify-center rounded-full p-1
+                className={`w-7 ml-3 flex items-center justify-center rounded-full p-1
                         ${mode === 'light' ? 'bg-dark text-light' : 'bg-light text-dark'}
                 `}
             >

@@ -14,9 +14,9 @@ const contact = () => {
     return (
         <>
             <main className="flex items-center text-dark w-full min-h-screen dark:text-light sm:items-start">
-                <Layout className="!pt-0 md:!pt-14 sm:!pt-14">
+                <Layout className="!pt-0 md:!pt-14 sm:!pt-10">
                     <div className="flex items-center justify-between w-full lg:flex-col h-[75vh] lg:h-auto">
-                        <div className="inline-block w-2/5 md:w-4/5 sm:w-full">
+                        <div className="inline-block w-2/5 md:w-4/5 sm:w-full lg:h-[15vh] md:h-[25vh]">
                             <LottieAnimation />
                         </div>
                         <div className="w-3/5 flex flex-col items-center self-center lg:w-full pl-16 lg:pl-0 pb-8">
