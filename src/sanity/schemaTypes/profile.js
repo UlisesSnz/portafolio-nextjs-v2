@@ -1,0 +1,160 @@
+import { defineField } from 'sanity';
+
+const profile = {
+    name: "profile",
+    title: "Profile",
+    type: "document",
+    fieldsets: [
+        { name: "home", title: "Shown On Home Page" },
+        { name: "about", title: "Shown On About Page" },
+        { name: "contact", title: "Contact Information"},
+    ],
+    fields: [
+        defineField({
+            name: "fullName",
+            title: "Full Name",
+            type: "string",
+            fieldset: "home",
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
+            name: "headline",
+            title: "Headline",
+            type: "string",
+            description: "In one short sentence, what do you do?",
+            fieldset: "home",
+            validation: (Rule) => Rule.required().min(30).max(50),
+        }),
+        {
+            name: "shortBiography",
+            title: "Short Biography",
+            type: "text",
+            rows: 4,
+            fieldset: "home",
+        },
+        {
+            name: "resumeURL",
+            title: "Upload Resume",
+            type: "file",
+            fieldset: "home",
+        },
+        {
+            name: "profileImage",
+            title: "Profile Image",
+            type: "image",
+            description: "Upload a profile picture",
+            fieldset: "about",
+            options: { hotspot: true },
+            fields: [
+                {
+                    name: "alt",
+                    title: "Alt",
+                    type: "string",
+                },
+            ],
+        },
+        {
+            name: "fullBiography",
+            title: "Full Biography",
+            type: "array",
+            fieldset: "about",
+            of: [{ type: "block" }],
+        },
+        {
+            name: "developerStatistic",
+            title: "Developer Statistic",
+            type: "object",
+            description: "Add your developer statistics:",
+            fieldset: "about",
+            fields: [
+                {
+                    name: "technologiesLearned",
+                    title: "Technologies Learned",
+                    type: "number",
+                    initialValue: 0,
+                    validation: (Rule) => Rule.required().min(1).max(100),
+                },
+                {
+                    name: "completedProjects",
+                    title: "Completed Projects",
+                    type: "number",
+                    initialValue: 0,
+                    validation: (Rule) => Rule.required().min(1).max(100),
+                },
+                {
+                    name: "programmingLanguagesLearned",
+                    title: "Programming Languages Learned",
+                    type: "number",
+                    initialValue: 0,
+                    validation: (Rule) => Rule.required().min(1).max(100),
+                },
+            ],
+            options: {
+                collapsed: false,
+                collapsible: true,
+                columns: 2,
+            },
+        },
+        {
+            name: "skills",
+            title: "Skills",
+            type: "array",
+            description: "Add a list of skills",
+            fieldset: "about",
+            of: [{ type: "string" }],
+        },
+        {
+            name: "email",
+            title: "Email Address",
+            type: "string",
+            fieldset: "contact",
+            validation: (Rule) => Rule.required().regex(
+                /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                { name: 'email', invert: false }
+            ).error('Please enter a valid email address'),
+        },
+        {
+            name: "socialLinks",
+            title: "Social Links",
+            type: "object",
+            description: "Add your social media links:",
+            fieldset: "contact",
+            fields: [
+                {
+                    name: "github",
+                    title: "Github URL",
+                    type: "url",
+                    initialValue: "https://github.com/",
+                    validation: (Rule) => Rule.uri({
+                        scheme: ['https'],
+                    }).error('Please enter a secure URL'),
+                },
+                {
+                    name: "linkedin",
+                    title: "Linkedin URL",
+                    type: "url",
+                    initialValue: "https://linkedin.com/in/",
+                    validation: (Rule) => Rule.uri({
+                        scheme: ['https'],
+                    }).error('Please enter a secure URL'),
+                },
+                {
+                    name: "youtube",
+                    title: "YouTube URL",
+                    type: "url",
+                    initialValue: "https://www.youtube.com/",
+                    validation: (Rule) => Rule.uri({
+                        scheme: ['https'],
+                    }).error('Please enter a secure URL'),
+                },
+            ],
+            options: {
+                collapsed: false,
+                collapsible: true,
+                columns: 2,
+            },
+        },
+    ],
+};
+
+export default profile;

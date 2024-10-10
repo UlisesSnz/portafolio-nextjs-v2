@@ -1,3 +1,5 @@
+import profile from './profile';
+
 export const schema = {
-  types: [],
+  types: [profile],
 }
