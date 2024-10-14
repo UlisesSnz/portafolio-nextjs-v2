@@ -7,14 +7,12 @@ const profile = {
     fieldsets: [
         { name: "home", title: "Shown On Home Page" },
         { name: "about", title: "Shown On About Page" },
-        { name: "contact", title: "Contact Information"},
     ],
     fields: [
         defineField({
             name: "fullName",
             title: "Full Name",
             type: "string",
-            fieldset: "home",
             validation: (rule) => rule.required(),
         }),
         defineField({
@@ -102,57 +100,6 @@ const profile = {
             description: "Add a list of skills",
             fieldset: "about",
             of: [{ type: "string" }],
-        },
-        {
-            name: "email",
-            title: "Email Address",
-            type: "string",
-            fieldset: "contact",
-            validation: (Rule) => Rule.required().regex(
-                /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                { name: 'email', invert: false }
-            ).error('Please enter a valid email address'),
-        },
-        {
-            name: "socialLinks",
-            title: "Social Links",
-            type: "object",
-            description: "Add your social media links:",
-            fieldset: "contact",
-            fields: [
-                {
-                    name: "github",
-                    title: "Github URL",
-                    type: "url",
-                    initialValue: "https://github.com/",
-                    validation: (Rule) => Rule.uri({
-                        scheme: ['https'],
-                    }).error('Please enter a secure URL'),
-                },
-                {
-                    name: "linkedin",
-                    title: "Linkedin URL",
-                    type: "url",
-                    initialValue: "https://linkedin.com/in/",
-                    validation: (Rule) => Rule.uri({
-                        scheme: ['https'],
-                    }).error('Please enter a secure URL'),
-                },
-                {
-                    name: "youtube",
-                    title: "YouTube URL",
-                    type: "url",
-                    initialValue: "https://www.youtube.com/",
-                    validation: (Rule) => Rule.uri({
-                        scheme: ['https'],
-                    }).error('Please enter a secure URL'),
-                },
-            ],
-            options: {
-                collapsed: false,
-                collapsible: true,
-                columns: 2,
-            },
         },
     ],
 };

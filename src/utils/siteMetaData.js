@@ -2,7 +2,7 @@ const siteMetadata = {
     title: 'Ulises Sánchez',
     author: 'Ulises Sánchez',
     headerTitle: 'Portafolio Next.js',
-    description: 'Un portafolio web creado con Next.js, Tailwind.css y Outstatic.',
+    description: 'Un portafolio web creado con Next.js, Tailwind.css y Sanity.',
     language: 'es-mx',
     theme: 'system', // system, dark or light
     siteUrl: 'https://ulisessanchez.me',
@@ -13,4 +13,4 @@ const siteMetadata = {
     locale: 'es-MX',
   }
   
-  module.exports = siteMetadata
+module.exports = siteMetadata

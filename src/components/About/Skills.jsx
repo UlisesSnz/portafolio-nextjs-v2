@@ -1,57 +1,30 @@
 'use client';
 import { motion } from 'framer-motion';
 
-const Skill = ({ name, x, y }) => {
-  return(
-    <motion.div
-      className="flex items-center justify-center rounded-full font-semibold bg-dark text-light
-        py-3 px-6 shadow-dark cursor-pointer absolute dark:text-dark dark:bg-light
-        lg:py-2 lg:px-4 md:text-sm md:py-1.5 md:px-3 xs:bg-transparent xs:dark:bg-transparent
-        xs:text-dark xs:dark:text-light xs:font-bold
-      "
-      whileHover={{ scale:1.05 }}
-      initial={{ x:0, y:0 }}
-      whileInView={{ x, y, transition:{duration: 1.5} }}
-      viewport={{ once:true }}
-    >
-      {name}
-    </motion.div>
-  )
-}
-
-const Skills = () => {
+const Skills = ({ skills }) => {
   return (
     <>
-      <h2 className="font-bold text-8xl mt-64 w-full text-center md:text-6xl md:mt-32">Stack</h2>
-      <div className="w-full h-screen relative flex items-center justify-center rounded-full bg-circularLight dark:bg-circularDark
-        lg:h-[80vh] sm:h-[60vh] xs:h-[50vh]
-        lg:bg-circularLightLg lg:dark:bg-circularDarkLg
-        md:bg-circularLightMd md:dark:bg-circularDarkMd
-        sm:bg-circularLightSm sm:dark:bg-circularDarkSm
-      ">
-        <motion.div
-          className="flex items-center justify-center rounded-full font-semibold bg-dark text-light
-            p-8 shadow-dark cursor-pointer dark:text-dark dark:bg-light lg:p-6 md:p-4 xs:text-xs xs:p-2
-          "
-          whileHover={{ scale: 1.05 }}  
-        >
-          Web
-        </motion.div>
-
-        <Skill name="HTML" x="-26vw" y="-2vw" />
-        <Skill name="CSS" x="-5vw" y="-10vw" />
-        <Skill name="JavaScript" x="19vw" y="12vw" />
-        <Skill name="ReactJS" x="-22vw" y="-15vw" />
-        <Skill name="React Native" x="19vw" y="-12vw" />
-        <Skill name="PHP" x="37vw" y="-5vw" />
-        <Skill name="Laravel" x="0vw" y="-21vw" />
-        <Skill name="SQL" x="-31vw" y="7vw" />
-        <Skill name="Next.js" x="-5vw" y="24vw" />
-        <Skill name="Git" x="-14vw" y="5vw" />
-        <Skill name="GitHub" x="-26vw" y="18vw" />
-      </div>
+      <h2 className="font-bold text-8xl mt-64 w-full text-center md:text-6xl xs:text-4xl md:mt-32">Habilidades</h2>
+      <ul className="flex flex-wrap mt-8 justify-center">
+        {skills.map((skill, id) => {
+          return (
+            <motion.li
+              key={id}
+              initial={{ opacity:0, y:200 }}
+              whileInView={{ opacity:1, y:0, transition:{duration:0.5, ease:"easeInOut"} }}
+              viewport={{ once:true }}
+              className="font-semibold inline-block capitalize xs:text-base sm:text-lg md:text-xl text-2xl xs:py-2
+              sm:py-3 lg:py-4 py-5 xs:px-4 sm:px-6 lg:px-8 px-12 border-2 border-solid border-dark dark:border-light
+              rounded xs:mr-3 xs:mb-3 md:mr-4 md:mb-4 mr-6 mb-6 hover:scale-105 transition-all ease duration-200
+              cursor-pointer dark:font-normal"
+            >
+              {skill}
+            </motion.li>
+          );
+        })}
+      </ul>
     </>
   )
 }
 
-export default Skills
+export default Skills;
