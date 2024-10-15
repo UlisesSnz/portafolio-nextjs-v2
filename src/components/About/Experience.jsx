@@ -55,7 +55,8 @@ const Experience = ({ job }) => {
         />
         <ul className="w-full flex flex-col items-start justify-between ml-4 xs:ml-2">
           {job && job.map(data => (
-            <Details 
+            <Details
+              key={data._id}
               position={data.jobTitle}
               company={data.name}
               companyLink={data.url}
