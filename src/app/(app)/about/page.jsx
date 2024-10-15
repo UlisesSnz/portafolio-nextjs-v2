@@ -1,12 +1,11 @@
 import AnimatedText from '@/components/Animations/AnimatedText';
 import Layout from '@/components/Shared/Layout';
 import Image from 'next/image';
-import profilePic from '../../../../public/images/profile/cohete-pic.png';
 import Skills from '@/components/About/Skills';
 import Experience from '@/components/About/Experience';
 import Education from '@/components/About/Education';
 import AnimatedNumbers from '@/components/About/AnimatedNumbers';
-import { getProfile } from '@/sanity/sanity.query';
+import { getJob, getProfile } from '@/sanity/sanity.query';
 import { PortableText } from 'next-sanity';
 
 export const metadata = {
@@ -16,6 +15,7 @@ export const metadata = {
 
 const about = async () => {
     const profile = await getProfile();
+    const job = await getJob();
 
     return (
         <main className="flex w-full flex-col items-center justify-center dark:text-light">
@@ -80,7 +80,7 @@ const about = async () => {
                         <Skills skills={data.skills} />
                     </>
                 ))}
-                <Experience />
+                <Experience job={job} />
                 <Education />
             </Layout>
         </main>

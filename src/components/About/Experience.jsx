@@ -33,7 +33,7 @@ const Details = ({ position, company, companyLink, time, address, work }) => {
   )
 }
 
-const Experience = () => {
+const Experience = ({ job }) => {
   const ref = useRef(null);
   
   const {scrollYProgress} = useScroll({
@@ -42,47 +42,32 @@ const Experience = () => {
   });
   
   return (
-    <div className="my-64">
-      <h2 className="font-bold text-8xl mb-32 w-full text-center md:text-6xl xs:text-4xl md:mb-16">
+    <div className="my-64 md:my-32">
+      <h2 className="font-bold text-8xl mb-16 w-full text-center md:text-6xl xs:text-4xl">
         Experiencia
       </h2>
 
       <div ref={ref} className="w-[75%] mx-auto relative lg:w-[90%] md:w-full">
-
         <motion.div
           style={{ scaleY: scrollYProgress }}
           className="absolute left-9 top-0 w-[4px] h-full bg-dark origin-top dark:bg-light
-            md:w-[2px] md:left-[30px] xs:left-[20px]"
-          />
-
+          md:w-[2px] md:left-[30px] xs:left-[20px]"
+        />
         <ul className="w-full flex flex-col items-start justify-between ml-4 xs:ml-2">
-          <Details
-            position="Freelancer"
-            company="Creativa Innova Tech"
-            // companyLink="www.google.com"
-            time="2022-Present"
-            address="México"
-            work="Me desenvolví de manera independiente como freelancer, enfocado en proporcionar servicios
-            de mantenimiento y desarrollo de sitios web, así como en la implementación de nuevas funcionalidades
-            para mejorar la experiencia del usuario. Además, tuve la oportunidad de crear un ecommerce desde cero,
-            proporcionando a los clientes una plataforma sólida para su negocio en línea. Durante este tiempo,
-            además de trabajar en proyectos concretos, realice implementaciones de Google Analytics para mejorar
-            la analítica web de mis clientes.
-            Asimismo, aproveché la oportunidad para expandir mis habilidades, sumergiéndome en el aprendizaje
-            de tecnologías modernas de desarrollo web e inteligencia artificial"
-          />
-
-          <Details
-            position="Desarrollador Web"
-            company="Kobbox Technologies"
-            companyLink="https://kobbox.mx/"
-            time="2021-2022"
-            address="México"
-            work="Trabajé en colaboración con un pequeño equipo para desarrollar el sitio web
-            corporativo de la empresa. Este proyecto no solo implicó la creación de un diseño web
-            atractivo y funcional, sino que también incorporamos un sistema de gestión de contenido
-            (CMS) basado en Laravel, siguiendo la arquitectura MVC."
-          />
+          {job && job.map(data => (
+            <Details 
+              position={data.jobTitle}
+              company={data.name}
+              companyLink={data.url}
+              time={
+                data.years.endYear
+                  ? `${data.years.startYear}-${data.years.endYear}`
+                  : `${data.years.startYear}-Presente`
+              }
+              address={data.location}
+              work={data.description}
+            />
+          ))}
         </ul>
       </div>
     </div>

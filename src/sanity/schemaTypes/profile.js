@@ -62,7 +62,7 @@ const profile = {
             name: "developerStatistic",
             title: "Developer Statistic",
             type: "object",
-            description: "Add your developer statistics:",
+            description: "Add your developer statistics",
             fieldset: "about",
             fields: [
                 {

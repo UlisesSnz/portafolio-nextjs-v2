@@ -21,3 +21,17 @@ export async function getProfile() {
         }`
     );
 }
+
+export async function getJob() {
+    return client.fetch(
+        groq`*[_type == "job"]{
+            _id,
+            name,
+            jobTitle,
+            location,
+            url,
+            description,
+            years,
+        }`
+    );
+}
