@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import Lilcon from './Lilcon';
 import { motion, useScroll } from 'framer-motion';
 
-const Details = ({ type, time, place, info }) => {
+const Details = ({ type, time, place, info, certificate }) => {
   const ref = useRef(null)
 
   return (
@@ -16,7 +16,7 @@ const Details = ({ type, time, place, info }) => {
           {type}
         </h3>
         <span className="capitalize font-medium text-dark/75 dark:text-light/75 xs:text-sm">
-          {time} | {place}
+          {time} | {place} {certificate ? <a href={certificate} target='_blank'>| <span className='underline underline-offset-2'>Certificado</span></a> : ''}
         </span>
         <p className="font-medium w-full md:text-sm">
           {info}
@@ -26,7 +26,7 @@ const Details = ({ type, time, place, info }) => {
   )
 }
 
-const Education = () => {
+const Education = ({ education }) => {
   const ref = useRef(null);
   
   const {scrollYProgress} = useScroll({
@@ -49,13 +49,19 @@ const Education = () => {
           />
 
         <ul className="w-full flex flex-col items-start justify-between ml-4 xs:ml-2">
-          <Details
-            type="Ingeniería en Tecnologías de la Información"
-            time="2018-2021"
-            place="Universidad Politécnica de Atlautla (UPA)"
-            info="Los cursos relevantes incluyeron estructuras de datos y algoritmos, ingeniería informática,
-            redes y matemáticas para ingeniería. "
-          />
+          {education && education.map(data => (
+            <Details
+              key={data._id}
+              type={data.name}
+              time={data.years.endYear
+                ? `${data.years.startYear}-${data.years.endYear}`
+                : `${data.years.startYear}`
+              }
+              place={data.studyCenter}
+              info={data.description}
+              certificate={data.certificateURL}
+            />
+          ))}
         </ul>
       </div>
     </div>

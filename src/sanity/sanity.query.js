@@ -35,3 +35,16 @@ export async function getJob() {
         }`
     );
 }
+
+export async function getEducation() {
+    return client.fetch(
+        groq`*[_type == "education"]{
+            _id,
+            name,
+            studyCenter,
+            "certificateURL": certificateURL.asset->url,
+            description,
+            years,
+        }`
+    );
+}

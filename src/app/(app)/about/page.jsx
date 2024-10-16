@@ -5,7 +5,7 @@ import Skills from '@/components/About/Skills';
 import Experience from '@/components/About/Experience';
 import Education from '@/components/About/Education';
 import AnimatedNumbers from '@/components/About/AnimatedNumbers';
-import { getJob, getProfile } from '@/sanity/sanity.query';
+import { getEducation, getJob, getProfile } from '@/sanity/sanity.query';
 import { PortableText } from 'next-sanity';
 
 export const metadata = {
@@ -16,6 +16,7 @@ export const metadata = {
 const about = async () => {
     const profile = await getProfile();
     const job = await getJob();
+    const education = await getEducation();
 
     return (
         <main className="flex w-full flex-col items-center justify-center dark:text-light">
@@ -81,7 +82,7 @@ const about = async () => {
                     </>
                 ))}
                 <Experience job={job} />
-                <Education />
+                <Education education={education} />
             </Layout>
         </main>
     )
