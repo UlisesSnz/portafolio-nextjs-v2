@@ -48,3 +48,49 @@ export async function getEducation() {
         }`
     );
 }
+
+export async function getProjects() {
+    return client.fetch(
+        groq`*[_type == "project"]{
+            _id, 
+            name,
+            "slug": slug.current,
+            shortDescription,
+            coverImage {
+                alt,
+                "image": asset->url,
+                "imageWidth": asset->metadata.dimensions.width,
+                "imageHeight": asset->metadata.dimensions.height
+            },
+            githubUrl,
+            projectUrl,
+        }`
+    );
+}
+
+export async function getSingleProject(slug) {
+    return client.fetch(
+        groq`*[_type == "project" && slug.current == $slug][0]{
+            _id,
+            name,
+            coverImage {
+                alt,
+                "image": asset->url,
+                "imageWidth": asset->metadata.dimensions.width,
+                "imageHeight": asset->metadata.dimensions.height
+            },
+            githubUrl,
+            projectUrl,
+            description[]{
+                ...,
+                _type == "image" => {
+                    "image": asset->url,
+                    alt,
+                    "imageWidth": asset->metadata.dimensions.width,
+                    "imageHeight": asset->metadata.dimensions.height
+                }
+            }
+        }`,
+        { slug }
+    );
+}
