@@ -20,9 +20,8 @@ const projects = async () => {
         />
         <div className="grid grid-cols-12 gap-24 gap-y-32 xl:gap-x-16 lg:gap-x-8 md:gap-y-24 sm:gap-x-0">
           {projects && projects.map(data => (
-            <div className="col-span-12">
+            <div className="col-span-12" key={data._id}>
               <FeaturedProyectCard
-                key={data._id}
                 title={data.name}
                 slug={data.slug}
                 img={data.coverImage}
