@@ -21,17 +21,19 @@ const project = async ({ params }) => {
                 <div className="flex items-center justify-center sm:flex-wrap">
                     <div className="underline underline-offset-2 sm:mb-2">
                         <a href="../about" target="_blank" className="flex items-center">
-                            <span className="font-os font-bold dark:font-semibold">Ulises Sánchez</span>
+                            <span className="font-os font-bold dark:font-semibold text-dark/75 dark:text-light/75">
+                                Ulises Sánchez
+                            </span>
                         </a>
                     </div>
-                    <span className="text-md font-medium mx-8 text-placeholder dark:text-light sm:mx-4 sm:text-sm sm:mb-2">
+                    <span className="text-md font-medium mx-8 text-placeholder text-dark/75 dark:text-light/75 sm:mx-4 sm:text-sm sm:mb-2">
                         10 mn de lectura
                     </span>
-                    <span className="text-md font-medium text-placeholder dark:text-light sm:text-sm sm:mb-2">
+                    <span className="text-md font-medium text-placeholder text-dark/75 dark:text-light/75 sm:text-sm sm:mb-2">
                         Act. el 15/10/24
                     </span>
                 </div>
-                <div className="text-md my-6 w-full text-center font-medium capitalize text-placeholder dark:text-light
+                <div className="text-md my-6 w-full text-center font-medium capitalize text-placeholder text-dark/75 dark:text-light/75
                     sm:text-sm sm:leading-snug"
                 >
                     Etiquetas:&nbsp;
@@ -55,16 +57,16 @@ const project = async ({ params }) => {
 
                 <div className="grid grid-cols-12 gap-y-8 gap-16 xl:gap-8 md:gap-x-0 mt-8">
                     <div className="col-span-4 lg:col-span-12">
-                        <details className="border-[1px] border-solid border-dark dark:border-light text-dark
-                            dark:text-light rounded-xl p-4 sticky top-6 max-h-[80vh] overflow-hidden overflow-y-auto"
+                        <details className="border-[1px] border-solid border-dark dark:border-light
+                            rounded-xl p-4 sticky top-6 max-h-[80vh] overflow-hidden overflow-y-auto"
                             open
                         >
-                            <summary className="text-lg font-bold text-dark/75 dark:text-light/75 cursor-pointer">
+                            <summary className="text-lg font-bold cursor-pointer">
                                 Tabla de Contenido
                             </summary>
                         </details>
                     </div>
-                    <div className="col-span-8 lg:col-span-12 space-y-4 font-medium max-w-max">
+                    <div className="col-span-8 lg:col-span-12 font-medium max-w-max">
                         <PortableText value={project.description} components={PortableTextComponents} />
                     </div>
                 </div>
