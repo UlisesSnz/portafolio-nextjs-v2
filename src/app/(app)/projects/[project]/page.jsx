@@ -6,6 +6,7 @@ import AnimatedText from '@/components/Animations/AnimatedText';
 import { GithubIcon } from '@/components/Shared/Icons';
 import Layout from '@/components/Shared/Layout';
 import PortableTextComponents from '@/components/Shared/PortableTextComponents ';
+import TableOfContent from '@/components/Shared/TableOfContent';
 
 const project = async ({ params }) => {
     const slug = params.project;
@@ -57,14 +58,7 @@ const project = async ({ params }) => {
 
                 <div className="grid grid-cols-12 gap-y-8 gap-16 xl:gap-8 md:gap-x-0 mt-8">
                     <div className="col-span-4 lg:col-span-12">
-                        <details className="border-[1px] border-solid border-dark dark:border-light
-                            rounded-xl p-4 sticky top-6 max-h-[80vh] overflow-hidden overflow-y-auto"
-                            open
-                        >
-                            <summary className="text-lg font-bold cursor-pointer">
-                                Tabla de Contenido
-                            </summary>
-                        </details>
+                        <TableOfContent headings={project.headings} />
                     </div>
                     <div className="col-span-8 lg:col-span-12 font-medium max-w-max">
                         <PortableText value={project.description} components={PortableTextComponents} />

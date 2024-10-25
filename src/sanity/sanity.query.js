@@ -89,7 +89,8 @@ export async function getSingleProject(slug) {
                     "imageWidth": asset->metadata.dimensions.width,
                     "imageHeight": asset->metadata.dimensions.height
                 }
-            }
+            },
+            "headings": description[style in ["h2", "h3"]]
         }`,
         { slug }
     );
