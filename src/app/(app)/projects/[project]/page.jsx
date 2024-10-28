@@ -31,7 +31,7 @@ const project = async ({ params }) => {
                         {`${project.estimatedReadingTime} mn de lectura`}
                     </span>
                     <span className="text-md font-medium text-placeholder text-dark/75 dark:text-light/75 sm:text-sm sm:mb-2">
-                        Act. el 15/10/24
+                        {`Act. el ${new Date(project._updatedAt).toLocaleDateString()}`}
                     </span>
                 </div>
                 <div className="text-md my-6 w-full text-center font-medium capitalize text-placeholder text-dark/75 dark:text-light/75

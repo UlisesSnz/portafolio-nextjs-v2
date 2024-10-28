@@ -94,7 +94,8 @@ export async function getSingleProject(slug) {
                 }
             },
             "headings": description[style in ["h2", "h3"]],
-            "estimatedReadingTime": round(length(pt::text(description)) / ${meanWordCharacterCount} / ${wpm})
+            "estimatedReadingTime": round(length(pt::text(description)) / ${meanWordCharacterCount} / ${wpm}),
+            _updatedAt
         }`,
         { slug }
     );
