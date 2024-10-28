@@ -28,7 +28,7 @@ const project = async ({ params }) => {
                         </a>
                     </div>
                     <span className="text-md font-medium mx-8 text-placeholder text-dark/75 dark:text-light/75 sm:mx-4 sm:text-sm sm:mb-2">
-                        10 mn de lectura
+                        {`${project.estimatedReadingTime} mn de lectura`}
                     </span>
                     <span className="text-md font-medium text-placeholder text-dark/75 dark:text-light/75 sm:text-sm sm:mb-2">
                         Act. el 15/10/24

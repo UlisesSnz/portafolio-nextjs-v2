@@ -69,6 +69,9 @@ export async function getProjects() {
 }
 
 export async function getSingleProject(slug) {
+    const wpm = 180;
+    const meanWordCharacterCount = 5;
+
     return client.fetch(
         groq`*[_type == "project" && slug.current == $slug][0]{
             _id,
@@ -90,7 +93,8 @@ export async function getSingleProject(slug) {
                     "imageHeight": asset->metadata.dimensions.height
                 }
             },
-            "headings": description[style in ["h2", "h3"]]
+            "headings": description[style in ["h2", "h3"]],
+            "estimatedReadingTime": round(length(pt::text(description)) / ${meanWordCharacterCount} / ${wpm})
         }`,
         { slug }
     );
