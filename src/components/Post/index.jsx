@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { PortableText } from 'next-sanity';
 import AnimatedText from '@/components/Animations/AnimatedText';
-import { GithubIcon } from '@/components/Shared/Icons';
+import { GithubIcon, Pencil } from '@/components/Shared/Icons';
 import Layout from '@/components/Shared/Layout';
 import PortableTextComponents from '@/components/Shared/PortableTextComponents ';
 import TableOfContent from './TableOfContent';
@@ -28,8 +28,8 @@ const Post = ({
                 <div className="flex items-center justify-center sm:flex-wrap">
                     <div className="underline underline-offset-2 sm:mb-2">
                         <a href="../about" target="_blank" className="flex items-center">
-                            <span className="font-os font-bold dark:font-semibold text-dark/75 dark:text-light/75">
-                                Ulises Sánchez
+                            <span className="flex font-os font-bold dark:font-semibold text-dark/75 dark:text-light/75">
+                                <Pencil className={"h-auto ml-1 !w-6 md:!w-4"} />Ulises Sánchez
                             </span>
                         </a>
                     </div>
