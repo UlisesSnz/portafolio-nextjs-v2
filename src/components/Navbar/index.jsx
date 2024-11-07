@@ -1,5 +1,6 @@
 'use client';
 import React, { useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { createRoot } from 'react-dom/client';
 import Logo from './Logo';
 import { MoonIcon, SunIcon } from '../Shared/Icons';
@@ -14,6 +15,7 @@ const Navbar = () => {
     const [mode, setMode] = useThemeSwitcher();
     const [isOpen, setIsOpen] = useState(false);
     const rootRef = useRef(null);
+    const router = useRouter();
 
     const handleClick = () => {
         setIsOpen(!isOpen);
@@ -48,6 +50,18 @@ const Navbar = () => {
             }
         };
     }, [isOpen, handleClick]);
+
+    useEffect(() => {
+        const handleHashChange = () => {
+          if (window.location.hash) {
+            router.push(window.location.pathname + window.location.hash);
+          }
+        };
+        window.addEventListener('hashchange', handleHashChange);
+        return () => {
+          window.removeEventListener('hashchange', handleHashChange);
+        };
+    }, [router]);
 
     return (
         <header
