@@ -25,12 +25,12 @@ const ContactForm = () => {
         }
         emailjs.send(
             process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
-            process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+            process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_CONTACT,
             {
-              name: params.name,
-              phone: params.phone,
-              email: params.email,
-              message: params.message,
+                name: params.name,
+                phone: params.phone,
+                email: params.email,
+                message: params.message,
             },
             process.env.NEXT_PUBLIC_EMAILJS_USER_ID
         )
@@ -47,7 +47,7 @@ const ContactForm = () => {
                 // console.log(error);
                 toast.error('Algo salió mal',
                     {
-                        description: 'Por favor vuelva a intentar enviar el mensaje.',
+                        description: 'Por favor vuelve a intentar enviar el mensaje.',
                     }
                 )
             }

@@ -7,6 +7,7 @@ const project = async ({ params }) => {
   
     return (
         <Post
+            postId={project._id}
             title={project.name}
             estimatedReadingTime={project.estimatedReadingTime}
             coverImage={project.coverImage}
