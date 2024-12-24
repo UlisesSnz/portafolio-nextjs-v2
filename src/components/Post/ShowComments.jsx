@@ -33,7 +33,11 @@ const ShowComments = ({ postId, slug, commentsOrder }) => {
                 setComments(prevComments => {
                     const exists = prevComments.some(comment => comment._id === update.result._id);
                     if(!exists) {
-                        return [...prevComments, update.result];
+                        if(commentsOrder === 'desc') {
+                            return [update.result, ...prevComments];
+                        } else {
+                            return [...prevComments, update.result];
+                        }
                     }
                     return prevComments;
                 });
