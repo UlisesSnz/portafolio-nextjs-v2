@@ -5,9 +5,9 @@ import AnimatedText from '@/components/Animations/AnimatedText';
 import { GithubIcon, Pencil } from '@/components/Shared/Icons';
 import Layout from '@/components/Shared/Layout';
 import PortableTextComponents from '@/components/Shared/PortableTextComponents ';
-import TableOfContent from './TableOfContent';
-import AddComment from './AddComment';
 import { Toaster } from 'sonner';
+import Comments from './Comments';
+import TableOfContent from './TableOfContent';
 
 const Post = ({
         postId,
@@ -18,7 +18,9 @@ const Post = ({
         description,
         githubUrl,
         projectUrl,
-        updatedAt
+        updatedAt,
+        slug,
+        commentsOrder
     }) => {
   
     return (
@@ -92,7 +94,7 @@ const Post = ({
                             </div>
                         </div>
                     )}
-                    <AddComment postId={postId} postTitle={title} />
+                    <Comments postId={postId} title={title} slug={slug} commentsOrder={commentsOrder} />
                 </Layout>
             </article>
             <Toaster theme='system' duration={3000} />

@@ -1,8 +1,11 @@
 import { getSingleProject } from '@/sanity/sanity.query';
 import Post from '@/components/Post';
 
-const project = async ({ params }) => {
+const project = async ({ params, searchParams }) => {
     const slug = params.project;
+    const commentsOrder = (searchParams.comments === 'asc' || searchParams.comments === 'desc')
+        ? searchParams.comments
+        : 'desc';
     const project = await getSingleProject(slug);
   
     return (
@@ -16,6 +19,8 @@ const project = async ({ params }) => {
             githubUrl={project.githubUrl}
             projectUrl={project.projectUrl}
             updatedAt={project._updatedAt}
+            slug={slug}
+            commentsOrder={commentsOrder}
         />
     );
 }

@@ -100,3 +100,27 @@ export async function getSingleProject(slug) {
         { slug }
     );
 }
+
+export async function getComments(postId, commentsOrder) {
+    return client.fetch(
+        groq`*[_type == "comment" && relatedDocument._ref == $postId] | order(_createdAt ${commentsOrder}){
+            _id,
+            name,
+            comment,
+            _createdAt,
+        }`,
+        { postId }
+    );
+}
+
+export function getCommentsListen(postId, commentsOrder) {
+    return client.listen(
+        groq`*[_type == "comment" && relatedDocument._ref == $postId] | order(_createdAt ${commentsOrder}){
+            _id,
+            name,
+            comment,
+            _createdAt,
+        }`,
+        { postId }
+    );
+}
