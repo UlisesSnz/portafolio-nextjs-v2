@@ -70,7 +70,7 @@ const AddComment = ({ postId, postTitle }) => {
                 className="flex flex-col border border-solid border-dark dark:border-light rounded-xl p-8 space-y-6"
             >
                 <p className="mb-4">
-                    Comparte tu opinión o plantea tus preguntas en esta sección. Ten la seguridad de que me tomaré el tiempo
+                    Comparte tu opinión o plantea tus preguntas. Ten la seguridad de que me tomaré el tiempo
                     de leer y responder cada comentario.
                 </p>
                 <div className="flex flex-row sm:flex-col gap-6">
