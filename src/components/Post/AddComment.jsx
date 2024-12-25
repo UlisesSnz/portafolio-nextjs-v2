@@ -65,14 +65,14 @@ const AddComment = ({ postId, postTitle }) => {
 
     return (
         <div className="mb-4 text-base font-medium md:text-sm sm:text-xs w-full">
-            <p className="mb-4">
-                Comparte tu opinión o plantea tus preguntas en esta sección. Ten la seguridad de que me tomaré el tiempo
-                de leer y responder cada comentario.
-            </p>
             <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="flex flex-col border border-solid border-dark dark:border-light rounded-xl p-8 space-y-6"
             >
+                <p className="mb-4">
+                    Comparte tu opinión o plantea tus preguntas en esta sección. Ten la seguridad de que me tomaré el tiempo
+                    de leer y responder cada comentario.
+                </p>
                 <div className="flex flex-row sm:flex-col gap-6">
                     <div className="w-1/2 sm:w-full flex flex-col">
                         <label className="mb-2 text-sm sm:text-xs font-semibold" htmlFor="comment-name">Nombre</label>
@@ -85,7 +85,10 @@ const AddComment = ({ postId, postTitle }) => {
                         />
                     </div>
                     <div className="w-1/2 sm:w-full flex flex-col">
-                        <label className="mb-2 text-sm sm:text-xs font-semibold" htmlFor="comment-email">Email</label>
+                        <label className="mb-2 text-sm sm:text-xs font-semibold" htmlFor="comment-email">
+                            Email&nbsp;
+                            <span className="text-gray-500 dark:text-gray-400 text-xs font-normal">(Tu email no será publicado)</span>
+                        </label>
                         <input
                             id="comment-email"
                             {...register("email", { required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i })}
