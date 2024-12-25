@@ -87,7 +87,7 @@ const AddComment = ({ postId, postTitle }) => {
                     <div className="w-1/2 sm:w-full flex flex-col">
                         <label className="mb-2 text-sm sm:text-xs font-semibold" htmlFor="comment-email">
                             Email&nbsp;
-                            <span className="text-gray-500 dark:text-gray-400 text-xs font-normal">(Tu email no será publicado)</span>
+                            <span className="text-dark/75 dark:text-light/75 text-xs font-normal">(Tu email no será publicado)</span>
                         </label>
                         <input
                             id="comment-email"
