@@ -1,11 +1,11 @@
 const tag = {
-    name: "tag",
-    title: "Tag",
+    name: "category",
+    title: "Category",
     type: "document",
     fields: [
         {
             name: "name",
-            title: "Tag Name",
+            title: "Category Name",
             type: "string",
         },
         {
