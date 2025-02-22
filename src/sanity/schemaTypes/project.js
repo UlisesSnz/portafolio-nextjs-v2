@@ -74,10 +74,10 @@ const project = {
             ],
         },
         {
-            name: "tags",
-            title: "Tags",
+            name: "categories",
+            title: "Categories",
             type: "array",
-            of: [{ type: "reference", to: [{ type: "tag" }] }],
+            of: [{ type: "reference", to: [{ type: "category" }] }],
         },
     ],
 };
