@@ -51,8 +51,8 @@ const Post = ({
                         sm:text-sm sm:leading-snug"
                     >
                         {categories && categories.length > 0 && (
-                            <span className="flex flex-wrap justify-center gap-x-2 gap-y-0">
-                                Etiquetas:
+                            <span className="flex flex-wrap justify-center gap-2">
+                                Categorías:
                                 {categories.map(category => (
                                     <a
                                         key={category.slug}
