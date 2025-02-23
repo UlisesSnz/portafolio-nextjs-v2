@@ -29,7 +29,7 @@ const FeaturedProyectCard = ({title, slug, summary, img, link, github, categorie
         </Link>
   
         <div className="w-1/2 flex flex-col items-start justify-between pl-6 lg:w-full lg:pl-0 lg:pt-6">
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-x-2 gap-y-0 mb-2">
             {categories &&
               categories.map(categy => (
                 <Link

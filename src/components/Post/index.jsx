@@ -51,13 +51,13 @@ const Post = ({
                         sm:text-sm sm:leading-snug"
                     >
                         {categories && categories.length > 0 && (
-                            <span>
-                                Etiquetas:&nbsp;
+                            <span className="flex flex-wrap justify-center gap-x-2 gap-y-0">
+                                Etiquetas:
                                 {categories.map(category => (
                                     <a
                                         key={category.slug}
                                         href={`/search/${category.slug}`}
-                                        className="mx-1 rounded font-semibold capitalize text-primary dark:text-primaryDark underline underline-offset-2 hover:bg-transparent"
+                                        className="font-semibold capitalize text-primary dark:text-primaryDark underline underline-offset-2"
                                     >
                                         #{category.name}
                                     </a>
