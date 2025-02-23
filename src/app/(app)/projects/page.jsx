@@ -28,7 +28,7 @@ const projects = async () => {
                 summary={data.shortDescription}
                 link={data.projectUrl}
                 github={data.githubUrl}
-                type="Proyecto destacado"
+                categories={data.categories}
               />
             </div>
           ))}

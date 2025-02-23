@@ -64,6 +64,7 @@ export async function getProjects() {
             },
             githubUrl,
             projectUrl,
+            categories[]-> { name, "slug": slug.current }
         }`
     );
 }
@@ -95,7 +96,8 @@ export async function getSingleProject(slug) {
             },
             "headings": description[style in ["h2", "h3"]],
             "estimatedReadingTime": round(length(pt::text(description)) / ${meanWordCharacterCount} / ${wpm}),
-            _updatedAt
+            categories[]-> { name, "slug": slug.current },
+            _updatedAt,
         }`,
         { slug }
     );

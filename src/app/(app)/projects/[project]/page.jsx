@@ -18,6 +18,7 @@ const project = async ({ params, searchParams }) => {
             description={project.description}
             githubUrl={project.githubUrl}
             projectUrl={project.projectUrl}
+            categories={project.categories}
             updatedAt={project._updatedAt}
             slug={slug}
             commentsOrder={commentsOrder}

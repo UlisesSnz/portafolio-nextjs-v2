@@ -18,6 +18,7 @@ const Post = ({
         description,
         githubUrl,
         projectUrl,
+        categories,
         updatedAt,
         slug,
         commentsOrder
@@ -33,7 +34,7 @@ const Post = ({
                     />
                     <div className="flex items-center justify-center sm:flex-wrap">
                         <div className="underline underline-offset-2 sm:mb-2">
-                            <a href="../about" target="_blank" className="flex items-center">
+                            <a href="../about" className="flex items-center">
                                 <span className="flex font-os font-bold dark:font-semibold text-dark/75 dark:text-light/75">
                                     <Pencil className={"h-auto ml-1 !w-6 md:!w-4"} />Ulises Sánchez
                                 </span>
@@ -49,12 +50,20 @@ const Post = ({
                     <div className="text-md my-6 w-full text-center font-medium capitalize text-placeholder text-dark/75 dark:text-light/75
                         sm:text-sm sm:leading-snug"
                     >
-                        Etiquetas:&nbsp;
-                        <a href="#" className="mr-3 rounded font-semibold capitalize text-primary dark:text-primaryDark
-                            underline underline-offset-2 hover:bg-transparent"
-                        >
-                            #react-js
-                        </a>
+                        {categories && categories.length > 0 && (
+                            <span>
+                                Etiquetas:&nbsp;
+                                {categories.map(category => (
+                                    <a
+                                        key={category.slug}
+                                        href={`/search/${category.slug}`}
+                                        className="mx-1 rounded font-semibold capitalize text-primary dark:text-primaryDark underline underline-offset-2 hover:bg-transparent"
+                                    >
+                                        #{category.name}
+                                    </a>
+                                ))}
+                            </span>
+                        )}
                     </div>
                     <figure className="relative aspect-video w-full">
                         <Image

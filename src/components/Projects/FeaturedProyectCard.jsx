@@ -6,7 +6,7 @@ import { GithubIcon } from '../Shared/Icons';
 
 const FramerImage = motion(Image);
 
-const FeaturedProyectCard = ({type, title, slug, summary, img, link, github}) =>{
+const FeaturedProyectCard = ({title, slug, summary, img, link, github, categories}) =>{
     return(
       <article className="w-full flex items-center justify-between relative rounded-br-2xl
         rounded-3xl border border-solid border-dark bg-light shadow-2xl p-12 dark:bg-dark dark:border-light
@@ -29,7 +29,20 @@ const FeaturedProyectCard = ({type, title, slug, summary, img, link, github}) =>
         </Link>
   
         <div className="w-1/2 flex flex-col items-start justify-between pl-6 lg:w-full lg:pl-0 lg:pt-6">
-          <span className="text-primary font-medium text-xl dark:text-primaryDark xs:text-base">{type}</span>
+          <div className="flex flex-wrap gap-2">
+            {categories &&
+              categories.map(categy => (
+                <Link
+                  key={categy.slug}
+                  href={`/search/${categy.slug}`}
+                  className="hover:underline underline-offset-2 capitalize text-primary font-medium text-xl dark:text-primaryDark xs:text-base">
+                  <span>
+                    #{categy.name}
+                  </span>
+                </Link>
+              ))
+            }
+          </div>
           <Link href={`/projects/${slug}`} className="hover:underline underline-offset-2">
             <h2 className="my-2 w-full text-left text-4xl lg:text-3xl sm:text-2xl font-bold dark:text-light">{title}</h2>
           </Link>

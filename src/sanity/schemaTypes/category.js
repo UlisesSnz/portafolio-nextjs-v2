@@ -1,4 +1,4 @@
-const tag = {
+const category = {
     name: "category",
     title: "Category",
     type: "document",
@@ -19,4 +19,4 @@ const tag = {
     ],
 }
 
-export default tag;
+export default category;
