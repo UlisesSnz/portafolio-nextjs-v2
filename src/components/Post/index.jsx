@@ -19,9 +19,9 @@ const Post = ({
         githubUrl,
         projectUrl,
         categories,
-        updatedAt,
         slug,
-        commentsOrder
+        commentsOrder,
+        date
     }) => {
   
     return (
@@ -44,7 +44,7 @@ const Post = ({
                             {`${estimatedReadingTime} mn de lectura`}
                         </span>
                         <span className="text-md font-medium text-placeholder text-dark/75 dark:text-light/75 sm:text-sm sm:mb-2">
-                            {`Act. el ${new Date(updatedAt).toLocaleDateString()}`}
+                            {`Act. el ${new Date(date).toLocaleDateString()}`}
                         </span>
                     </div>
                     <div className="text-md my-6 w-full text-center font-medium capitalize text-placeholder text-dark/75 dark:text-light/75

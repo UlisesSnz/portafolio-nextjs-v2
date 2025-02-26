@@ -19,8 +19,8 @@ const project = async ({ params, searchParams }) => {
             githubUrl={project.githubUrl}
             projectUrl={project.projectUrl}
             categories={project.categories}
-            updatedAt={project._updatedAt}
             slug={slug}
+            date={project.date}
             commentsOrder={commentsOrder}
         />
     );

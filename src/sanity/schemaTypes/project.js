@@ -79,6 +79,13 @@ const project = {
             type: "array",
             of: [{ type: "reference", to: [{ type: "category" }] }],
         },
+        defineField({
+            name: "date",
+            title: "Date",
+            type: "date",
+            description: "Enter the date of the project",
+            validation: (rule) => rule.required(),
+        }),
     ],
 };
 
