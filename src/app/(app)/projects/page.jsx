@@ -1,6 +1,6 @@
 import AnimatedText from '@/components/Animations/AnimatedText';
 import Layout from '@/components/Shared/Layout';
-import FeaturedProyectCard from '@/components/Projects/FeaturedProyectCard';
+import FeaturedProjectCard from '@/components/Projects/FeaturedProjectCard';
 import { getProjects } from '@/sanity/sanity.query';
 
 export const metadata = {
@@ -21,7 +21,7 @@ const projects = async () => {
         <div className="grid grid-cols-12 gap-24 gap-y-32 xl:gap-x-16 lg:gap-x-8 md:gap-y-24 sm:gap-x-0">
           {projects && projects.map(data => (
             <div className="col-span-12" key={data._id}>
-              <FeaturedProyectCard
+              <FeaturedProjectCard
                 title={data.name}
                 slug={data.slug}
                 img={data.coverImage}
@@ -35,7 +35,6 @@ const projects = async () => {
         </div>
       </Layout>
     </main>
-    
   )
 }
 

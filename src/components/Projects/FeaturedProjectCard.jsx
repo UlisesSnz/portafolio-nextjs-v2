@@ -6,7 +6,7 @@ import { GithubIcon } from '../Shared/Icons';
 
 const FramerImage = motion(Image);
 
-const FeaturedProyectCard = ({title, slug, summary, img, link, github, categories}) =>{
+const FeaturedProjectCard = ({title, slug, summary, img, link, github, categories}) =>{
     return(
       <article className="w-full flex items-center justify-between relative rounded-br-2xl
         rounded-3xl border border-solid border-dark bg-light shadow-2xl p-12 dark:bg-dark dark:border-light
@@ -65,4 +65,4 @@ const FeaturedProyectCard = ({title, slug, summary, img, link, github, categorie
     )
 }
 
-export default FeaturedProyectCard;
+export default FeaturedProjectCard;

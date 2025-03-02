@@ -126,3 +126,34 @@ export function getCommentsListen(postId, commentsOrder) {
         { postId }
     );
 }
+
+export async function getCategories() {
+    return client.fetch(
+      groq`*[_type == "category"]{
+        _id,
+        name,
+        "slug": slug.current
+      }`
+    );
+}
+
+export async function getPostsBySlug(slug) {
+    return client.fetch(
+        groq`*[_type == "project" && $slug in categories[]->slug.current]{
+            _id, 
+            name,
+            "slug": "projects/" + slug.current,
+            shortDescription,
+            coverImage {
+                alt,
+                "image": asset->url,
+                "imageWidth": asset->metadata.dimensions.width,
+                "imageHeight": asset->metadata.dimensions.height
+            },
+            githubUrl,
+            projectUrl,
+            categories[]-> { name, "slug": slug.current }
+        }`,
+        { slug }
+    );
+}
