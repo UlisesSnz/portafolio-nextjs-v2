@@ -38,12 +38,12 @@ const PostCard = ({title, summary, categories, img, link, github }) => {
               ))
             }
           </div>
-          <Link href={`/${link}`} target="_blank" className="hover:underline underline-offset-2">
+          <Link href={`/${link}`} className="hover:underline underline-offset-2">
             <h2 className="my-2 w-full text-left text-3xl font-bold lg:text-2xl">{title}</h2>
           </Link>
           <p className="my-2 font-medium text-dark dark:text-light sm:text-sm">{summary}</p>
           <div className="w-full mt-2 flex items-center justify-between">
-            <Link href={`/${link}`} target="_blank" className="text-lg font-semibold underline underline-offset-2 md:text-base">
+            <Link href={`/${link}`} className="text-lg font-semibold underline underline-offset-2 md:text-base">
               Continuar leyendo
             </Link>
             {github && (
