@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import AnimatedText from '@/components/Animations/AnimatedText';
 import PostCard from '@/components/Post/PostCard';
 import Layout from '@/components/Shared/Layout';
@@ -34,12 +35,14 @@ const posts = async ({ params }) => {
                     <ul className="mt-4 text-base">
                         {categories.map(category => (
                             <li key={category.slug} className="py-1">
-                                <a
+                                <Link
                                     href={`/search/${category.slug}`}
                                     className="flex items-center justify-start transform transition-transform duration-300 hover:translate-x-2"
                                 >
-                                    <span className={category.slug === slug && 'underline underline-offset-2'}>{category.name}</span>
-                                </a>
+                                    <span className={category.slug === slug ? 'underline underline-offset-2' : ''}>
+                                        {category.name}
+                                    </span>
+                                </Link>
                             </li>
                         ))}
                     </ul>
