@@ -2,7 +2,8 @@ import Link from 'next/link';
 import AnimatedText from '@/components/Animations/AnimatedText';
 import PostCard from '@/components/Post/PostCard';
 import Layout from '@/components/Shared/Layout';
-import { getCategories, getPostsBySlug } from '@/sanity/sanity.query';
+import { getCategories, getPostsBySlug, getRecentPosts } from '@/sanity/sanity.query';
+import ListCard from '@/components/Post/ListCard';
 
 export const metadata = {
     title: "Categorías",
@@ -19,6 +20,7 @@ const formatSlug = (slug) => {
 const posts = async ({ params }) => {
     const slug = params.posts;
     const categories = await getCategories();
+    const recentPosts = await getRecentPosts();
     const posts = await getPostsBySlug(slug);
 
     return (
@@ -69,6 +71,18 @@ const posts = async ({ params }) => {
                 </div>
             </div>
         </div>
+        <h2 className="font-bold text-4xl w-full text-center my-16 mt-32">Código e Ideas Recientes</h2>
+        <ul>
+            {recentPosts.map(post => (
+                <ListCard
+                    key={post._id}
+                    title={post.name}
+                    date={post.date}
+                    img={post.coverImage}
+                    link={post.slug}
+                />
+            ))}
+        </ul>
       </Layout>
     </main>
     )

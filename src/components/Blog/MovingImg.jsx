@@ -13,8 +13,9 @@ const MovingImg = ({ title, img, link }) => {
   
     function handleMouse(e) {
       imgRef.current.style.display = "inline-block";
-      x.set(e.pageX);
-      y.set(-10);
+      const offsetX = -100;
+      x.set(e.pageX + offsetX);
+      y.set(10);
     }
   
     function handleMouseLeave(e) {
@@ -24,7 +25,7 @@ const MovingImg = ({ title, img, link }) => {
     }
   
     return (
-      <Link href={link} target="_blank"
+      <Link href={link}
         onMouseMove={handleMouse}
         onMouseLeave={handleMouseLeave}
       >
@@ -34,7 +35,10 @@ const MovingImg = ({ title, img, link }) => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity:1, transition:{duration:0.2} }}
           ref={imgRef}
-          src={img} alt={title}
+          src={img.image}
+          width={img.imageWidth}
+          height={img.imageHeight}
+          alt={title}
           className="z-10 w-96 h-auto hidden absolute rounded-lg md:!hidden"
         />
       </Link>

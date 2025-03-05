@@ -1,10 +1,6 @@
 import AnimatedText from '@/components/Animations/AnimatedText';
 import Layout from '@/components/Shared/Layout';
-import article3 from '../../../../public/images/articles/create modal component in react using react portals.png';
-import article4 from '../../../../public/images/articles/form validation in reactjs using custom react hook.png';
-import article5 from '../../../../public/images/articles/smooth scrolling in reactjs.png';
 import FeaturedArticleCard from '@/components/Blog/FeaturedArticleCard';
-import ArticleCard from '@/components/Blog/ArticleCard';
 import { getArticles } from '@/sanity/sanity.query';
 
 export const metadata = {
@@ -32,27 +28,6 @@ const blog = async () => {
                 date={article.date}
               />
             ))}
-          </ul>
-          <h2 className="font-bold text-4xl w-full text-center my-16 mt-32">Todos los artículos</h2>
-          <ul>
-            <ArticleCard
-              title="Form Validation In Reactjs: Build A Reusable Custom Hook For Inputs And Error Handling"
-              date="March 22, 2023"
-              link="/"
-              img={article3}
-            />
-            <ArticleCard
-              title="Form Validation In Reactjs: Build A Reusable Custom Hook For Inputs And Error Handling"
-              date="March 22, 2023"
-              link="/"
-              img={article4}
-            />
-            <ArticleCard
-              title="Form Validation In Reactjs: Build A Reusable Custom Hook For Inputs And Error Handling"
-              date="March 22, 2023"
-              link="/"
-              img={article5}
-            />
           </ul>
         </Layout>
       </main>

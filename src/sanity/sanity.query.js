@@ -208,3 +208,22 @@ export async function getSingleArticle(slug) {
         { slug }
     );
 }
+
+export async function getRecentPosts() {
+    return client.fetch(
+        groq`*[_type in ["project", "article"]] | order(date desc) [0..4] {
+            _id, 
+            name,
+            "slug": "/" + select(_type == "article" => "blog", _type == "project" => "projects") + "/" + slug.current,
+            shortDescription,
+            coverImage {
+                alt,
+                "image": asset->url,
+                "imageWidth": asset->metadata.dimensions.width,
+                "imageHeight": asset->metadata.dimensions.height
+            },
+            categories[]-> { name, "slug": slug.current },
+            "date": date,
+        }`
+    );
+}

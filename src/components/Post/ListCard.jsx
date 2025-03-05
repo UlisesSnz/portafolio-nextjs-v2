@@ -1,8 +1,8 @@
 'use client';
 import { motion } from 'framer-motion';
-import MovingImg from './MovingImg';
+import MovingImg from '../Blog/MovingImg';
 
-const ArticleCard = ({img, title, date, link}) => {
+const ListCard = ({ title, date, img, link }) => {
     return (
       <motion.li
         initial={{ opacity:0, y:200 }}
@@ -13,10 +13,14 @@ const ArticleCard = ({img, title, date, link}) => {
         border-r-4 border-b-4 dark:border-light dark:bg-dark dark:text-light
         sm:flex-col"
       >
-        <MovingImg title={title} img={img} link={link} />
+        <MovingImg
+          title={title}
+          img={img}
+          link={link}
+        />
         <span className="text-primary font-semibold pl-4 dark:text-primaryDark sm:self-start sm:pl-0 xs:text-sm">{date}</span>
       </motion.li>
     )
 }
 
-export default ArticleCard;
+export default ListCard;
