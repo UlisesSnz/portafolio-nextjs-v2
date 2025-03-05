@@ -139,10 +139,10 @@ export async function getCategories() {
 
 export async function getPostsBySlug(slug) {
     return client.fetch(
-        groq`*[_type == "project" && $slug in categories[]->slug.current]{
+        groq`*[_type in ["project", "article"] && $slug in categories[]->slug.current]{
             _id, 
             name,
-            "slug": "projects/" + slug.current,
+            "slug": "/" + select(_type == "article" => "blog", _type == "project" => "projects") + "/" + slug.current,
             shortDescription,
             coverImage {
                 alt,
@@ -152,7 +152,58 @@ export async function getPostsBySlug(slug) {
             },
             githubUrl,
             projectUrl,
-            categories[]-> { name, "slug": slug.current }
+            categories[]-> { name, "slug": slug.current },
+        }`,
+        { slug }
+    );
+}
+
+export async function getArticles() {
+    return client.fetch(
+        groq`*[_type == "article"]{
+            _id, 
+            name,
+            "slug": slug.current,
+            shortDescription,
+            coverImage {
+                alt,
+                "image": asset->url,
+                "imageWidth": asset->metadata.dimensions.width,
+                "imageHeight": asset->metadata.dimensions.height
+            },
+            categories[]-> { name, "slug": slug.current },
+            "date": date,
+        }`
+    );
+}
+
+export async function getSingleArticle(slug) {
+    const wpm = 180;
+    const meanWordCharacterCount = 5;
+
+    return client.fetch(
+        groq`*[_type == "article" && slug.current == $slug][0]{
+            _id,
+            name,
+            coverImage {
+                alt,
+                "image": asset->url,
+                "imageWidth": asset->metadata.dimensions.width,
+                "imageHeight": asset->metadata.dimensions.height
+            },
+            description[]{
+                ...,
+                _type == "image" => {
+                    "image": asset->url,
+                    alt,
+                    "imageWidth": asset->metadata.dimensions.width,
+                    "imageHeight": asset->metadata.dimensions.height
+                }
+            },
+            "headings": description[style in ["h2", "h3"]],
+            "estimatedReadingTime": round(length(pt::text(description)) / ${meanWordCharacterCount} / ${wpm}),
+            categories[]-> { name, "slug": slug.current },
+            "date": date,
         }`,
         { slug }
     );

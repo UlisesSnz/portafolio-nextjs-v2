@@ -17,7 +17,7 @@ const PostCard = ({title, summary, categories, img, link, github }) => {
           rounded-br-3xl dark:bg-light md:-right-2 md:w-[101%] xs:h-[102%] xs:rounded-[1.5rem]"  
         />
         
-        <Link href={`/${link}`} className="w-full cursor-pointer overflow-hidden rounded-lg">
+        <Link href={link} className="w-full cursor-pointer overflow-hidden rounded-lg">
           <FramerImage src={img.image} width={img.imageWidth} height={img.imageHeight} alt={title} className="w-full h-auto"
             whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }}
           />
@@ -38,12 +38,12 @@ const PostCard = ({title, summary, categories, img, link, github }) => {
               ))
             }
           </div>
-          <Link href={`/${link}`} className="hover:underline underline-offset-2">
+          <Link href={link} className="hover:underline underline-offset-2">
             <h2 className="my-2 w-full text-left text-3xl font-bold lg:text-2xl">{title}</h2>
           </Link>
           <p className="my-2 font-medium text-dark dark:text-light sm:text-sm">{summary}</p>
           <div className="w-full mt-2 flex items-center justify-between">
-            <Link href={`/${link}`} className="text-lg font-semibold underline underline-offset-2 md:text-base">
+            <Link href={link} className="text-lg font-semibold underline underline-offset-2 md:text-base">
               Continuar leyendo
             </Link>
             {github && (

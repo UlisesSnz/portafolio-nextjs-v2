@@ -4,6 +4,11 @@ import PostCard from '@/components/Post/PostCard';
 import Layout from '@/components/Shared/Layout';
 import { getCategories, getPostsBySlug } from '@/sanity/sanity.query';
 
+export const metadata = {
+    title: "Categorías",
+    description: `Aquí encontrara todos mis posts y proyectos.`,
+};
+
 const formatSlug = (slug) => {
     return slug
         .split('-')

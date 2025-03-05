@@ -68,7 +68,7 @@ const Post = ({
                     <figure className="relative aspect-video w-full">
                         <Image
                             src={coverImage?.image || fallBackImage}
-                            alt={coverImage?.alt || project.name}
+                            alt={coverImage?.alt || title}
                             width={coverImage.imageWidth}
                             height={coverImage.imageHeight}
                             className="w-full h-auto transform object-center rounded-xl"

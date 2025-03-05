@@ -1,16 +1,16 @@
 import { defineField } from 'sanity';
 
-const project = {
-    name: "project",
-    title: "Project",
-    description: "Project Schema",
+const article = {
+    name: "article",
+    title: "Article",
+    description: "Article Schema",
     type: "document",
     fields: [
         {
             name: "name",
             title: "Name",
             type: "string",
-            description: "Enter the name of the project",
+            description: "Enter the name of the article",
         },
         defineField({
             name: "shortDescription",
@@ -31,7 +31,7 @@ const project = {
             name: "coverImage",
             title: "Cover Image",
             type: "image",
-            description: "Upload a cover image for this project",
+            description: "Upload a cover image for this article",
             options: { hotspot: true },
             fields: [
                 {
@@ -42,20 +42,10 @@ const project = {
             ],
         },
         {
-            name: "githubUrl",
-            title: "GitHub URL",
-            type: "url",
-        },
-        {
-            name: "projectUrl",
-            title: "Project URL",
-            type: "url",
-        },
-        {
             name: "description",
             title: "Description",
             type: "array",
-            description: "Write a full description about this project",
+            description: "Write a full description about this article",
             of: [
                 {
                     type: "block"
@@ -83,11 +73,11 @@ const project = {
             name: "date",
             title: "Date",
             type: "date",
-            description: "Enter the date of the project",
+            description: "Enter the date of the article",
             validation: (rule) => rule.required(),
             initialValue: () => new Date().toISOString().split('T')[0],
         }),
     ],
 };
 
-export default project;
+export default article;

@@ -25,7 +25,7 @@ const comment = {
             name: "relatedDocument",
             title: "Related Document",
             type: "reference",
-            to: [{ type: "project" }],
+            to: [{ type: "article", type: "project" }],
         },
     ],
 };
