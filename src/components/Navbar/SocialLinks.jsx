@@ -19,7 +19,7 @@ const SocialLinks = () => {
             <motion.a
                 href="https://www.linkedin.com/in/ulisessanchez"
                 target={"_blank"}
-                className="w-6 mx-3"
+                className="w-5 mx-3"
                 aria-label="Visitar mi perfil en LinkedIn"
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.9 }}

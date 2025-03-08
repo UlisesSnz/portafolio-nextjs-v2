@@ -67,13 +67,9 @@ const Navbar = () => {
         <header
             className="w-full px-32 py-8 font-medium flex items-center justify-between dark:text-light z-10 lg:px-16 md:px-12 sm:px-8"
         >
-
-            <button className="flex-col justify-center items-center hidden lg:flex mt-2" onClick={handleClick} aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}>
-                <span className={`bg-dark dark:bg-light block transition-all duration-300 ease-out h-0.5 w-6 rounded-sm ${isOpen ? 'rotate-45 translate-y-1' : '-translate-y-0.5'}`}></span>
-                <span className={`bg-dark dark:bg-light block transition-all duration-300 ease-out h-0.5 w-6 rounded-sm my-0.5 ${isOpen ? 'opacity-0' : 'opacity-100'}`}></span>
-                <span className={`bg-dark dark:bg-light block transition-all duration-300 ease-out h-0.5 w-6 rounded-sm ${isOpen ? '-rotate-45 -translate-y-1' : 'translate-y-0.5'}`}></span>
-            </button>
-
+            <div className="mr-10 md:mr-0">
+                <Logo />
+            </div>
             <div className="w-full flex justify-between items-center lg:hidden">
                 <nav>
                     <CustomLink href="/" title="Inicio" className="mr-4" />
@@ -88,7 +84,7 @@ const Navbar = () => {
                     <button
                         onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}
                         aria-label={`Cambiar a modo ${mode === 'light' ? 'oscuro' : 'claro'}`}
-                        className={`w-7 ml-3 flex items-center justify-center rounded-full p-1
+                        className={`w-6 ml-3 flex items-center justify-center rounded-full p-1
                                 ${mode === 'light' ? 'bg-dark text-light' : 'bg-light text-dark'}
                         `}
                     >
@@ -101,6 +97,12 @@ const Navbar = () => {
 
                 </nav>
             </div>
+
+            <button className="flex-col justify-center items-center hidden lg:flex mt-0" onClick={handleClick} aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}>
+                <span className={`bg-dark dark:bg-light block transition-all duration-300 ease-out h-0.5 w-6 rounded-sm ${isOpen ? 'rotate-45 translate-y-1' : '-translate-y-0.5'}`}></span>
+                <span className={`bg-dark dark:bg-light block transition-all duration-300 ease-out h-0.5 w-6 rounded-sm my-0.5 ${isOpen ? 'opacity-0' : 'opacity-100'}`}></span>
+                <span className={`bg-dark dark:bg-light block transition-all duration-300 ease-out h-0.5 w-6 rounded-sm ${isOpen ? '-rotate-45 -translate-y-1' : 'translate-y-0.5'}`}></span>
+            </button>
 
             {
                 isOpen ?
@@ -140,10 +142,6 @@ const Navbar = () => {
 
                 : null
             }
-
-            <div className="absolute left-[50%] top-2 translate-x-[-50%]">
-                <Logo />
-            </div>
         </header>
     );
 }

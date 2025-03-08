@@ -30,7 +30,7 @@ const MobileSocialLinks = () => {
             <motion.a
                 href="https://www.youtube.com/@ulises-snz"
                 target={"_blank"}
-                className="w-6 mx-3 sm:mx-1"
+                className="w-7 mx-3 sm:mx-1"
                 aria-label="Visitar mi canal en YouTube"
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.9 }}
