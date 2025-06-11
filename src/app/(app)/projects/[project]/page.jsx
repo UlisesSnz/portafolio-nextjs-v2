@@ -1,5 +1,15 @@
 import { getSingleProject } from '@/sanity/sanity.query';
 import Post from '@/components/Post';
+import { getProjects } from '@/sanity/sanity.query';
+
+export const dynamic = 'force-static';
+
+export async function generateStaticParams() {
+  const projects = await getProjects();
+  return projects.map(project => ({
+    project: project.slug,
+  }));
+}
 
 const project = async ({ params, searchParams }) => {
     const slug = params.project;
