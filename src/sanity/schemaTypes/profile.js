@@ -21,7 +21,7 @@ const profile = {
             type: "string",
             description: "In one short sentence, what do you do?",
             fieldset: "home",
-            validation: (Rule) => Rule.required().min(30).max(50),
+            validation: (Rule) => Rule.required().min(15).max(50),
         }),
         {
             name: "shortBiography",
