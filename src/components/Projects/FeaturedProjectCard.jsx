@@ -47,19 +47,26 @@ const FeaturedProjectCard = ({title, slug, summary, img, link, github, categorie
             <h2 className="my-2 w-full text-left text-4xl lg:text-3xl sm:text-2xl font-bold dark:text-light">{title}</h2>
           </Link>
           <p className="my-2 font-medium text-dark dark:text-light sm:text-sm">{summary}</p>
-          <div className="w-full mt-2 flex items-center justify-between">
-            <Link
-              href={link}
-              target="_blank"
-              className="text-lg font-semibold underline sm:pr-4 sm:text-base"
-            >
-              Ver Proyecto
-            </Link>
-            <Link href={github} target="_blank" className="w-8 md:w-6">
-              {" "}
-              <GithubIcon />{" "}
-            </Link>
-          </div>
+          {(github || link) && (
+              <div className="w-full mt-2 flex items-center justify-between">
+                {link && (
+                  <Link
+                    href={link}
+                    target="_blank"
+                    className="text-lg font-semibold underline sm:pr-4 sm:text-base"
+                  >
+                    Ver Proyecto
+                  </Link>
+                )}
+                {github && (
+                  <Link href={github} target="_blank" className="w-8 md:w-6">
+                    {" "}
+                    <GithubIcon />{" "}
+                  </Link>
+                )}
+              </div>
+            )
+          }
         </div>
       </article>
     )
