@@ -1,5 +1,14 @@
-import { getSingleArticle } from '@/sanity/sanity.query';
+import { getArticles, getSingleArticle } from '@/sanity/sanity.query';
 import Post from '@/components/Post';
+
+export const dynamic = 'force-static';
+
+export async function generateStaticParams() {
+  const articles = await getArticles();
+  return articles.map(article => ({
+    article: article.slug,
+  }));
+}
 
 const article = async ({ params, searchParams }) => {
     const slug = params.article;
