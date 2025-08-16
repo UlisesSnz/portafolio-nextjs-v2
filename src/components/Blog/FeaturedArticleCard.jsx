@@ -29,6 +29,7 @@ const FeaturedArticleCard = ({img, title, categories, summary, link, date}) => {
           <h2 className="capitalize text-2xl font-bold my-2 mt-2 hover:underline xs:text-lg ">{title}</h2>
         </Link>
         <p className="text-sm mb-2">{summary}</p>
+          <div className="flex flex-wrap gap-x-2 gap-y-0">
           {categories &&
             categories.map(categy => (
               <Link
@@ -41,6 +42,7 @@ const FeaturedArticleCard = ({img, title, categories, summary, link, date}) => {
               </Link>
             ))
           }
+        </div>
       </li>
     )
 }
