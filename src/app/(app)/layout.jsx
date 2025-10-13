@@ -4,6 +4,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import siteMetadata from '@/utils/siteMetaData';
 import Script from 'next/script';
+import { Analytics } from "@vercel/analytics/next"
 
 const montserrat = Montserrat({
     subsets: ["latin"],
@@ -56,6 +57,7 @@ export default function RootLayout({ children }) {
                 {children}
                 <Footer />
                 <div id='modal' />
+                <Analytics />
             </body>
         </html>
     );
