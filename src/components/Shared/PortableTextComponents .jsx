@@ -1,19 +1,17 @@
+import Image from 'next/image';
 import { toPlainText } from 'next-sanity';
 import slugify from 'slugify';
 
 const PortableTextComponents = {
   types: {
     image: ({ value }) => (
-      <img
+      <Image
         src={value.image}
         alt={value.alt || 'Imagen'}
-        width={value.imageWidth}
-        height={value.imageHeight}
+        width={value.imageWidth || 1200}
+        height={value.imageHeight || 675}
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw"
         className="rounded-xl w-full h-auto mb-8"
-        loading="lazy"
-        decoding="async"
-        role="img"
       />
     ),
   },

@@ -12,10 +12,9 @@ const ShowComments = ({ postId, slug, commentsOrder }) => {
         if(subscriptionRef.current) {
             subscriptionRef.current.unsubscribe();
         }
-        
-        setLoading(true);
-        
+
         const fetchInitialComments = async () => {
+            setLoading(true);
             try {
                 const initialComments = await getComments(postId, commentsOrder);
                 setComments(initialComments);

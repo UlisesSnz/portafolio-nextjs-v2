@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createRoot } from 'react-dom/client';
 import Logo from './Logo';
@@ -17,9 +17,9 @@ const Navbar = () => {
     const rootRef = useRef(null);
     const router = useRouter();
 
-    const handleClick = () => {
-        setIsOpen(!isOpen);
-    }
+    const handleClick = useCallback(() => {
+        setIsOpen(prevIsOpen => !prevIsOpen);
+    }, []);
 
     useEffect(() => {
         const modalContainer = document.getElementById('modal');;

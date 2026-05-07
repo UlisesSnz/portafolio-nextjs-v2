@@ -8,6 +8,7 @@ import PortableTextComponents from '@/components/Shared/PortableTextComponents '
 import { Toaster } from 'sonner';
 import Comments from './Comments';
 import TableOfContent from './TableOfContent';
+import fallBackImage from '../../../public/images/profile/developer.png';
 
 const Post = ({
         postId,
@@ -23,6 +24,9 @@ const Post = ({
         commentsOrder,
         date
     }) => {
+    const imageSrc = coverImage?.image || fallBackImage;
+    const imageWidth = coverImage?.imageWidth || 1200;
+    const imageHeight = coverImage?.imageHeight || 675;
   
     return (
         <>
@@ -67,10 +71,10 @@ const Post = ({
                     </div>
                     <figure className="relative aspect-video w-full">
                         <Image
-                            src={coverImage?.image || fallBackImage}
+                            src={imageSrc}
                             alt={coverImage?.alt || title}
-                            width={coverImage.imageWidth}
-                            height={coverImage.imageHeight}
+                            width={imageWidth}
+                            height={imageHeight}
                             className="w-full h-auto transform object-center rounded-xl"
                             priority
                             sizes="100vw"
