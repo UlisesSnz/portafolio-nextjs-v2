@@ -18,7 +18,8 @@ const formatSlug = (slug) => {
 };
 
 const posts = async ({ params }) => {
-    const slug = params.posts;
+    const resolvedParams = await params;
+    const slug = resolvedParams.posts;
     const categories = await getCategories();
     const recentPosts = await getRecentPosts();
     const posts = await getPostsBySlug(slug);

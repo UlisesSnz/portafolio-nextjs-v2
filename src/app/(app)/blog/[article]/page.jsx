@@ -1,5 +1,6 @@
 import { getArticles, getSingleArticle } from '@/sanity/sanity.query';
 import Post from '@/components/Post';
+import { notFound } from 'next/navigation';
 
 export const dynamic = 'force-static';
 
@@ -11,11 +12,16 @@ export async function generateStaticParams() {
 }
 
 const article = async ({ params, searchParams }) => {
-    const slug = params.article;
-    const commentsOrder = (searchParams.comments === 'asc' || searchParams.comments === 'desc')
-        ? searchParams.comments
+  const resolvedParams = await params;
+  const resolvedSearchParams = await searchParams;
+  const slug = resolvedParams.article;
+  const commentsOrder = (resolvedSearchParams.comments === 'asc' || resolvedSearchParams.comments === 'desc')
+    ? resolvedSearchParams.comments
         : 'desc';
     const article = await getSingleArticle(slug);
+  if (!article) {
+    notFound();
+  }
   
     return (
         <Post
