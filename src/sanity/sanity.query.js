@@ -1,6 +1,14 @@
 import { groq } from 'next-sanity';
 import { client } from './lib/client';
 
+const DEFAULT_REVALIDATE_SECONDS = 300;
+const DEFAULT_FETCH_OPTIONS = {
+    next: { revalidate: DEFAULT_REVALIDATE_SECONDS },
+};
+const NO_STORE_FETCH_OPTIONS = {
+    cache: 'no-store',
+};
+
 export async function getProfile() {
     return client.fetch(
         groq`*[_type == "profile"]{
@@ -18,7 +26,9 @@ export async function getProfile() {
             fullBiography,
             developerStatistic,
             skills,
-        }`
+        }`,
+        {},
+        DEFAULT_FETCH_OPTIONS
     );
 }
 
@@ -32,7 +42,9 @@ export async function getJob() {
             url,
             description,
             years,
-        }`
+        }`,
+        {},
+        DEFAULT_FETCH_OPTIONS
     );
 }
 
@@ -45,7 +57,9 @@ export async function getEducation() {
             "certificateURL": certificateURL.asset->url,
             description,
             years,
-        }`
+        }`,
+        {},
+        DEFAULT_FETCH_OPTIONS
     );
 }
 
@@ -65,7 +79,9 @@ export async function getProjects() {
             githubUrl,
             projectUrl,
             categories[]-> { name, "slug": slug.current }
-        }`
+        }`,
+        {},
+        DEFAULT_FETCH_OPTIONS
     );
 }
 
@@ -99,7 +115,8 @@ export async function getSingleProject(slug) {
             categories[]-> { name, "slug": slug.current },
             "date": date,
         }`,
-        { slug }
+        { slug },
+        DEFAULT_FETCH_OPTIONS
     );
 }
 
@@ -111,7 +128,8 @@ export async function getComments(postId, commentsOrder) {
             comment,
             _createdAt,
         }`,
-        { postId }
+        { postId },
+        NO_STORE_FETCH_OPTIONS
     );
 }
 
@@ -133,7 +151,9 @@ export async function getCategories() {
         _id,
         name,
         "slug": slug.current
-      }`
+            }`,
+            {},
+            DEFAULT_FETCH_OPTIONS
     );
 }
 
@@ -154,7 +174,8 @@ export async function getPostsBySlug(slug) {
             projectUrl,
             categories[]-> { name, "slug": slug.current },
         }`,
-        { slug }
+        { slug },
+        DEFAULT_FETCH_OPTIONS
     );
 }
 
@@ -173,7 +194,9 @@ export async function getArticles() {
             },
             categories[]-> { name, "slug": slug.current },
             "date": date,
-        }`
+        }`,
+        {},
+        DEFAULT_FETCH_OPTIONS
     );
 }
 
@@ -205,7 +228,8 @@ export async function getSingleArticle(slug) {
             categories[]-> { name, "slug": slug.current },
             "date": date,
         }`,
-        { slug }
+        { slug },
+        DEFAULT_FETCH_OPTIONS
     );
 }
 
@@ -224,6 +248,8 @@ export async function getRecentPosts() {
             },
             categories[]-> { name, "slug": slug.current },
             "date": date,
-        }`
+        }`,
+        {},
+        DEFAULT_FETCH_OPTIONS
     );
 }
