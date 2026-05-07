@@ -1,16 +1,13 @@
 'use client';
-import { DotLottiePlayer } from '@dotlottie/react-player';
-import '@dotlottie/react-player/dist/index.css';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 const LottieAnimation = ({ animation }) => {
   return (
-    <DotLottiePlayer
+    <DotLottieReact
       src={animation}
       autoplay
       loop
-    >
-       
-    </DotLottiePlayer>
+    />
   );
 };
 
