@@ -13,7 +13,7 @@ const Footer = () => {
         <span className="xs:text-center">{new Date().getFullYear()} &copy; Derechos Reservados.</span>
         <div className="flex items-center lg:py-2">
           Construido Con <span className="text-primary dark:text-primaryDark text-2xl px-1">&#9825;</span>
-          & Next.js 14
+          & Next.js 16
         </div>
         <Link
           href="/about"
