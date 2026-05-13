@@ -42,7 +42,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
     return (
-        <html lang="es">
+        <html lang="es" suppressHydrationWarning>
             <body className={`${montserrat.variable} font-mont bg-light dark:bg-dark w-full min-h-screen`}>
                 <Script id='theme-switcher' strategy='beforeInteractive' >
                     {`
