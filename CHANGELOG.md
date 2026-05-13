@@ -46,6 +46,8 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 - Corregir error de SSR en /studio que causaba "window is not defined" y respuesta 500 en produccion.
 - Mover el render de NextStudio a un componente cliente dedicado para evitar evaluacion de codigo del navegador en el servidor.
 - Cargar el componente del Studio con import dinamico sin SSR.
+- Corregir warning de hidratacion en la raiz de la app por desajuste de atributos en html al aplicar tema oscuro antes de hidratar.
+- Agregar suppressHydrationWarning en la etiqueta html del layout principal para alinear SSR y cliente en Next.js 16.
 
 #### Style
 
@@ -57,6 +59,7 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 - [860bcd6](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/860bcd6) - feat: migrar rutas dinamicas a APIs async
 - [233b1cd](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/233b1cd) - feat: agregar revalidacion en consultas de Sanity
 - [04b5b6c](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/04b5b6c) - fix: reforzar estabilidad en componentes de contenido y navegacion
+- [d9f8bfb](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/d9f8bfb) - fix: corregir mismatch de hidratacion por tema oscuro
 - [ad7d43f](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/ad7d43f) - style: actualizar referencia de version en footer
 
 ### Q1 (Ene-Mar) - Sin actividad
