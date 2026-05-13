@@ -3,9 +3,10 @@ import category from './category';
 import comment from './comment';
 import education from './education';
 import job from './job';
+import portableTable from './portableTable';
 import profile from './profile';
 import project from './project';
 
 export const schema = {
-  types: [profile, job, education, project, comment, category, article],
+  types: [portableTable, profile, job, education, project, comment, category, article],
 }

@@ -61,6 +61,9 @@ const project = {
                     type: "block"
                 },
                 {
+                    type: "portableTable",
+                },
+                {
                     type: "image",
                     options: { hotspot: true },
                     fields: [
@@ -68,6 +71,13 @@ const project = {
                             name: "alt",
                             title: "Alt",
                             type: "string",
+                        },
+                        {
+                            name: "caption",
+                            title: "Caption",
+                            type: "string",
+                            description: "Optional caption shown below the image",
+                            validation: (rule) => rule.max(180),
                         }
                     ]
                 }

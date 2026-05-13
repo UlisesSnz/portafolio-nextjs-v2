@@ -56,7 +56,7 @@ const profile = {
             title: "Full Biography",
             type: "array",
             fieldset: "about",
-            of: [{ type: "block" }],
+            of: [{ type: "block" }, { type: "portableTable" }],
         },
         {
             name: "developerStatistic",

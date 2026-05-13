@@ -51,6 +51,9 @@ const article = {
                     type: "block"
                 },
                 {
+                    type: "portableTable",
+                },
+                {
                     type: "image",
                     options: { hotspot: true },
                     fields: [
@@ -58,6 +61,13 @@ const article = {
                             name: "alt",
                             title: "Alt",
                             type: "string",
+                        },
+                        {
+                            name: "caption",
+                            title: "Caption",
+                            type: "string",
+                            description: "Optional caption shown below the image",
+                            validation: (rule) => rule.max(180),
                         }
                     ]
                 }
