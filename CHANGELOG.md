@@ -36,6 +36,12 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 - Migrar rutas dinamicas para usar params y searchParams async en App Router.
 - Agregar manejo de notFound en rutas dinamicas para evitar errores de prerender.
 - Definir estrategia explicita de cache para consultas de Sanity con revalidacion por defecto.
+- Integrar soporte de tablas en Studio con @sanity/table y unificar el formato de tabla en Portable Text.
+- Agregar bloque Table con configuracion de encabezado opcional y alineacion por columna.
+- Implementar renderer responsivo para tablas con scroll horizontal y estilos de lectura mejorados.
+- Aplicar renderer compartido en contenido de About para mantener consistencia visual.
+- Agregar soporte de pie de imagen (caption) en Portable Text desde schema, query y frontend.
+- Mejorar el espaciado de listas con viñetas para corregir alineacion en lineas multilinea.
 
 #### Fix
 
@@ -61,6 +67,8 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 - [04b5b6c](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/04b5b6c) - fix: reforzar estabilidad en componentes de contenido y navegacion
 - [d9f8bfb](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/d9f8bfb) - fix: corregir mismatch de hidratacion por tema oscuro
 - [ad7d43f](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/ad7d43f) - style: actualizar referencia de version en footer
+- [1bb8e4c](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/1bb8e4c) - feat: integrar tablas avanzadas y unificar formato de tabla en Portable Text
+- [b2a1fa5](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/b2a1fa5) - feat: aplicar renderer compartido y cargar captions desde Sanity
 
 ### Q1 (Ene-Mar) - Sin actividad
 
