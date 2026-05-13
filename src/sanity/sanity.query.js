@@ -106,6 +106,7 @@ export async function getSingleProject(slug) {
                 _type == "image" => {
                     "image": asset->url,
                     alt,
+                    caption,
                     "imageWidth": asset->metadata.dimensions.width,
                     "imageHeight": asset->metadata.dimensions.height
                 }
@@ -219,6 +220,7 @@ export async function getSingleArticle(slug) {
                 _type == "image" => {
                     "image": asset->url,
                     alt,
+                    caption,
                     "imageWidth": asset->metadata.dimensions.width,
                     "imageHeight": asset->metadata.dimensions.height
                 }

@@ -7,6 +7,7 @@ import Education from '@/components/About/Education';
 import AnimatedNumbers from '@/components/About/AnimatedNumbers';
 import { getEducation, getJob, getProfile } from '@/sanity/sanity.query';
 import { PortableText } from 'next-sanity';
+import PortableTextComponents from '@/components/Shared/PortableTextComponents ';
 
 export const metadata = {
     title: "Sobre mí",
@@ -28,7 +29,7 @@ const about = async () => {
                             <div className="col-span-3 flex flex-col items-start justify-start xl:col-span-4 md:order-2 md:col-span-8">
                                 <h2 className="mb-4 text-lg font-bold uppercase text-dark/75 dark:text-light/75">Biografía</h2>
                                 <div className="space-y-4 font-medium">
-                                    <PortableText value={data.fullBiography} />
+                                    <PortableText value={data.fullBiography} components={PortableTextComponents} />
                                 </div>
                             </div>
 
