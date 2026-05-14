@@ -42,6 +42,8 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 - Aplicar renderer compartido en contenido de About para mantener consistencia visual.
 - Agregar soporte de pie de imagen (caption) en Portable Text desde schema, query y frontend.
 - Mejorar el espaciado de listas con viñetas para corregir alineacion en lineas multilinea.
+- Habilitar bloques de codigo en Portable Text usando @sanity/code-input en Studio.
+- Implementar renderer de snippets con boton de copiado, etiqueta de lenguaje y soporte de filename.
 
 #### Fix
 
@@ -58,6 +60,7 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 #### Style
 
 - Actualizar referencia visual de version de Next.js en el footer de 14 a 16.
+- Unificar ritmo vertical y espaciado en bloques de Portable Text (titulos, parrafos, listas, tablas, imagenes y codigo).
 
 #### Commits de referencia
 
@@ -69,6 +72,8 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 - [ad7d43f](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/ad7d43f) - style: actualizar referencia de version en footer
 - [1bb8e4c](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/1bb8e4c) - feat: integrar tablas avanzadas y unificar formato de tabla en Portable Text
 - [b2a1fa5](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/b2a1fa5) - feat: aplicar renderer compartido y cargar captions desde Sanity
+- [004510e](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/004510e) - feat: mejorar bloques de codigo en Portable Text
+- [db167a1](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/db167a1) - style: unificar espaciado en bloques Portable Text
 
 ### Q1 (Ene-Mar) - Sin actividad
 
