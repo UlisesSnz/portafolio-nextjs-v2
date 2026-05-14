@@ -30,6 +30,7 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 - Migrar configuracion de lint a ESLint CLI con flat config.
 - Ajustar configuracion de Turbopack para definir la raiz del workspace.
 - Reemplazar @dotlottie/react-player por @lottiefiles/dotlottie-react para compatibilidad con React 19.
+- Integrar skills locales del proyecto (.agents y skills-lock.json) para soporte de Sanity, Portable Text y UX sin depender del scope global.
 
 #### Feature
 
@@ -74,6 +75,7 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 - [b2a1fa5](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/b2a1fa5) - feat: aplicar renderer compartido y cargar captions desde Sanity
 - [004510e](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/004510e) - feat: mejorar bloques de codigo en Portable Text
 - [db167a1](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/db167a1) - style: unificar espaciado en bloques Portable Text
+- [f6550f4](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/f6550f4) - chore: agregar skills locales del proyecto para Sanity y UX
 
 ### Q1 (Ene-Mar) - Sin actividad
 
