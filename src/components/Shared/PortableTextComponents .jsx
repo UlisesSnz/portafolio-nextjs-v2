@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { toPlainText } from 'next-sanity';
 import slugify from 'slugify';
+import PortableTextCodeBlock from './PortableTextCodeBlock';
 
 const tableAlignmentClassMap = {
   left: 'text-left',
@@ -105,6 +106,9 @@ const PortableTextComponents = {
       hasHeader: value?.hasHeader !== false,
       columnAlignments: value?.columnAlignments,
     }),
+    code: ({ value }) => (
+      <PortableTextCodeBlock value={value} />
+    ),
     image: ({ value }) => {
       const caption = value?.caption?.trim();
 
@@ -169,6 +173,11 @@ const PortableTextComponents = {
   },
 
   marks: {
+    code: ({ children }) => (
+      <code className="rounded-md bg-dark/10 px-1.5 py-0.5 font-mono text-[0.95em] text-dark dark:bg-light/10 dark:text-light">
+        {children}
+      </code>
+    ),
     link: ({ children, value }) => {
       const target = value?.href?.startsWith('http') ? '_blank' : undefined;
       return (

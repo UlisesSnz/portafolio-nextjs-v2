@@ -5,6 +5,7 @@
  */
 
 import {visionTool} from '@sanity/vision'
+import {codeInput} from '@sanity/code-input'
 import {table} from '@sanity/table'
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
@@ -22,6 +23,7 @@ export default defineConfig({
   schema,
   plugins: [
     structureTool({structure}),
+    codeInput(),
     table(),
     // Vision is for querying with GROQ from inside the Studio
     // https://www.sanity.io/docs/the-vision-plugin

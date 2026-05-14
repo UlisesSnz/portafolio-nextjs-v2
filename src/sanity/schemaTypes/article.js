@@ -54,6 +54,26 @@ const article = {
                     type: "portableTable",
                 },
                 {
+                    type: "code",
+                    options: {
+                        language: "javascript",
+                        withFilename: true,
+                        languageAlternatives: [
+                            { title: "Javascript", value: "javascript" },
+                            { title: "Typescript", value: "typescript" },
+                            { title: "TSX", value: "tsx" },
+                            { title: "HTML", value: "html" },
+                            { title: "CSS", value: "css" },
+                            { title: "Bash", value: "bash" },
+                            { title: "NPM", value: "npm", mode: "bash" },
+                            { title: "Yarn", value: "yarn", mode: "bash" },
+                            { title: "PNPM", value: "pnpm", mode: "bash" },
+                            { title: "Python", value: "python" },
+                            { title: "JSON", value: "json" },
+                        ],
+                    },
+                },
+                {
                     type: "image",
                     options: { hotspot: true },
                     fields: [
