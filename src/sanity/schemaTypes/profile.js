@@ -57,23 +57,30 @@ const profile = {
             type: "array",
             fieldset: "about",
             of: [
-                { type: "block" },
-                { type: "portableTable" },
+                { 
+                    type: "block" 
+                },
+                { 
+                    type: "portableTable" 
+                },
                 {
                     type: "code",
+                    initialValue: {
+                        language: "text",
+                    },
                     options: {
-                        language: "javascript",
                         withFilename: true,
                         languageAlternatives: [
+                            { title: "Text", value: "text" },
                             { title: "Javascript", value: "javascript" },
                             { title: "Typescript", value: "typescript" },
                             { title: "TSX", value: "tsx" },
                             { title: "HTML", value: "html" },
                             { title: "CSS", value: "css" },
-                            { title: "Bash", value: "bash" },
-                            { title: "NPM", value: "npm", mode: "bash" },
-                            { title: "Yarn", value: "yarn", mode: "bash" },
-                            { title: "PNPM", value: "pnpm", mode: "bash" },
+                            { title: "Bash", value: "bash", mode: "sh" },
+                            { title: "NPM", value: "npm", mode: "sh" },
+                            { title: "Yarn", value: "yarn", mode: "sh" },
+                            { title: "PNPM", value: "pnpm", mode: "sh" },
                             { title: "Python", value: "python" },
                             { title: "JSON", value: "json" },
                         ],
