@@ -57,6 +57,8 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 - Cargar el componente del Studio con import dinamico sin SSR.
 - Corregir warning de hidratacion en la raiz de la app por desajuste de atributos en html al aplicar tema oscuro antes de hidratar.
 - Agregar suppressHydrationWarning en la etiqueta html del layout principal para alinear SSR y cliente en Next.js 16.
+- Corregir defaults de bloques code en schemas de Sanity para persistir `language: text` al crear snippets nuevos y evitar estados `description-null/script` hasta re-seleccionar lenguaje.
+- Alinear selector de lenguaje de code-input agregando opcion `Text` y usando modo `sh` en comandos de shell para coherencia visual en Studio.
 
 #### Style
 
@@ -76,6 +78,7 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 - [004510e](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/004510e) - feat: mejorar bloques de codigo en Portable Text
 - [db167a1](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/db167a1) - style: unificar espaciado en bloques Portable Text
 - [f6550f4](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/f6550f4) - chore: agregar skills locales del proyecto para Sanity y UX
+- [8a32628](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/8a32628) - fix: persistir lenguaje default text en bloques code
 
 ### Q1 (Ene-Mar) - Sin actividad
 
