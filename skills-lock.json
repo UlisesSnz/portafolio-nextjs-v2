@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "skills": {
+    "portable-text-conversion": {
+      "source": "sanity-io/agent-toolkit",
+      "sourceType": "github",
+      "skillPath": "skills/portable-text-conversion/SKILL.md",
+      "computedHash": "abf49cd08bc3f6337967f9dc37fd085248d021ca3f14014ed84fe72d375c1d44"
+    },
+    "portable-text-serialization": {
+      "source": "sanity-io/agent-toolkit",
+      "sourceType": "github",
+      "skillPath": "skills/portable-text-serialization/SKILL.md",
+      "computedHash": "96693a472132e56c6a3f472c240348249d3e513b7a8ffd0089a267574227598a"
+    },
+    "sanity-best-practices": {
+      "source": "sanity-io/agent-toolkit",
+      "sourceType": "github",
+      "skillPath": "skills/sanity-best-practices/SKILL.md",
+      "computedHash": "5ed57f5cd0e76ac8a6dc616085c915e8da5e70f62fab08a4959a87a3054709e7"
+    },
+    "shiki-code-blocks": {
+      "source": "andrelandgraf/fullstackrecipes",
+      "sourceType": "github",
+      "skillPath": "skills/shiki-code-blocks/SKILL.md",
+      "computedHash": "299e5790322795fe592e01da93fdca3be4f2fbb8e0efaadf1ae0fb4a5f805f38"
+    },
+    "ui-ux-polish": {
+      "source": "oakoss/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/ui-ux-polish/SKILL.md",
+      "computedHash": "5663336029837c6720888fb7d5b2135c97a3e313a8df461f89074c959dee674e"
+    }
+  }
+}
