@@ -64,7 +64,7 @@ const PortableTextCodeBlock = ({ value }) => {
   };
 
   return (
-    <figure className="mb-8 overflow-hidden rounded-xl border border-dark/20 bg-light text-dark shadow-sm dark:border-light/20 dark:bg-dark dark:text-light">
+    <figure className="my-10 overflow-hidden rounded-xl border border-dark/20 bg-light text-dark shadow-sm dark:border-light/20 dark:bg-dark dark:text-light sm:my-8">
       <figcaption className="flex items-center justify-between gap-3 border-b border-dark/15 px-4 py-2 dark:border-light/15">
         <div className="flex items-center gap-2 overflow-hidden text-xs text-dark/80 dark:text-light/80">
           <span className="rounded-md bg-dark/10 px-2 py-1 font-semibold uppercase tracking-wide dark:bg-light/10">

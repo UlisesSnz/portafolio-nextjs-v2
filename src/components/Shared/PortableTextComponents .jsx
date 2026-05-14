@@ -52,7 +52,7 @@ const renderTable = ({ rows, hasHeader = true, columnAlignments = [] }) => {
   const bodyRows = useHeaderRow ? normalizedTable.rows.slice(1) : normalizedTable.rows;
 
   return (
-    <div className="mb-8 overflow-x-auto rounded-xl border border-dark/15 bg-light/30 dark:border-light/20 dark:bg-dark/20">
+    <div className="my-10 overflow-x-auto rounded-xl border border-dark/15 bg-light/30 dark:border-light/20 dark:bg-dark/20 sm:my-8">
       <table className="w-full min-w-[560px] border-collapse text-sm sm:min-w-[460px] sm:text-xs">
         {useHeaderRow && (
           <thead className="bg-dark/[0.04] dark:bg-light/[0.08]">
@@ -113,7 +113,7 @@ const PortableTextComponents = {
       const caption = value?.caption?.trim();
 
       return (
-        <figure className="mb-8">
+        <figure className="my-10 sm:my-8">
           <Image
             src={value.image}
             alt={value.alt || 'Imagen'}
@@ -123,7 +123,7 @@ const PortableTextComponents = {
             className="rounded-xl w-full h-auto"
           />
           {caption && (
-            <figcaption className="mt-3 text-sm leading-6 italic text-dark/70 dark:text-light/70">
+            <figcaption className="mt-4 text-sm leading-6 italic text-dark/70 dark:text-light/70">
               {caption}
             </figcaption>
           )}
@@ -136,7 +136,7 @@ const PortableTextComponents = {
     h2: ({ children, value }) => {
       const slug = slugify(toPlainText(value), { lower: true });
       return (
-        <h2 id={slug} className="font-bold text-4xl sm:text-2xl xs:text-xl mb-8 sm:mb-6 scroll-mt-4">
+        <h2 id={slug} className="mt-14 mb-6 scroll-mt-4 font-bold text-4xl sm:mt-10 sm:mb-5 sm:text-2xl xs:text-xl first:mt-0">
           {children}
         </h2>
       );
@@ -144,31 +144,31 @@ const PortableTextComponents = {
     h3: ({ children, value }) => {
       const slug = slugify(toPlainText(value), { lower: true });
       return (
-        <h3 id={slug} className="font-bold text-2xl sm:text-xl xs:text-lg mb-4 sm:mb-3 scroll-mt-4">
+        <h3 id={slug} className="mt-10 mb-4 scroll-mt-4 font-bold text-2xl sm:mt-8 sm:mb-3 sm:text-xl xs:text-lg first:mt-0">
           {children}
         </h3>
       );
     },
     normal: ({ children }) => (
-      <p className="leading-7 mb-6 sm:mb-5 text-balance">{children}</p>
+      <p className="mb-7 text-balance leading-8 sm:mb-6 sm:leading-7">{children}</p>
     ),
   },
 
   list: {
     bullet: ({ children }) => (
-      <ul className="mb-6 ml-6 list-disc list-outside space-y-2">{children}</ul>
+      <ul className="my-8 ml-7 list-disc list-outside space-y-3 sm:my-7 sm:ml-6 sm:space-y-2">{children}</ul>
     ),
     number: ({ children }) => (
-      <ol className="mb-6 ml-6 list-decimal list-outside space-y-2">{children}</ol>
+      <ol className="my-8 ml-7 list-decimal list-outside space-y-3 sm:my-7 sm:ml-6 sm:space-y-2">{children}</ol>
     ),
   },
 
   listItem: {
     bullet: ({ children }) => (
-      <li className="pl-1 leading-7">{children}</li>
+      <li className="pl-1 leading-8 sm:leading-7">{children}</li>
     ),
     number: ({ children }) => (
-      <li className="pl-1 leading-7">{children}</li>
+      <li className="pl-1 leading-8 sm:leading-7">{children}</li>
     ),
   },
 
