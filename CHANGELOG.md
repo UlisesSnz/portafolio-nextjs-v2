@@ -45,6 +45,8 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 - Mejorar el espaciado de listas con viñetas para corregir alineacion en lineas multilinea.
 - Habilitar bloques de codigo en Portable Text usando @sanity/code-input en Studio.
 - Implementar renderer de snippets con boton de copiado, etiqueta de lenguaje y soporte de filename.
+- Agregar resaltado de sintaxis por lenguaje en bloques de code de Portable Text con Shiki para frontend.
+- Separar el boton de copiado en un componente cliente dedicado para mantener interaccion sin perder SSR en el renderer de codigo.
 
 #### Fix
 
@@ -79,6 +81,7 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 - [db167a1](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/db167a1) - style: unificar espaciado en bloques Portable Text
 - [f6550f4](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/f6550f4) - chore: agregar skills locales del proyecto para Sanity y UX
 - [8a32628](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/8a32628) - fix: persistir lenguaje default text en bloques code
+- [b604247](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/b604247) - feat: agregar resaltado de sintaxis en bloques de codigo de portable text
 
 ### Q1 (Ene-Mar) - Sin actividad
 
