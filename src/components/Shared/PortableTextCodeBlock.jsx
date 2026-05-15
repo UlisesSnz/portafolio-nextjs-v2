@@ -1,6 +1,28 @@
-'use client';
+import { bundledLanguages, codeToHtml } from 'shiki';
+import PortableTextCodeCopyButton from './PortableTextCodeCopyButton';
 
-import { useState } from 'react';
+const LANGUAGE_ALIASES = {
+  csharp: 'c#',
+  cs: 'c#',
+  javascript: 'js',
+  md: 'markdown',
+  plaintext: 'txt',
+  py: 'python',
+  shell: 'bash',
+  text: 'txt',
+  ts: 'typescript',
+  yml: 'yaml',
+  zsh: 'bash',
+};
+
+const LIGHT_THEME = 'one-light';
+const DARK_THEME = 'one-dark-pro';
+
+const isBundledLanguage = (language) => (
+  Object.prototype.hasOwnProperty.call(bundledLanguages, language)
+);
+
+const FALLBACK_LANGUAGE = ['txt', 'plaintext', 'text'].find((language) => isBundledLanguage(language));
 
 const formatLanguageLabel = (language) => {
   if (!language) {
@@ -12,36 +34,69 @@ const formatLanguageLabel = (language) => {
     .replace(/\b\w/g, (char) => char.toUpperCase());
 };
 
-const copyTextToClipboard = async (text) => {
-  if (!text) {
-    return false;
+const escapeHtml = (value) => value
+  .replace(/&/g, '&amp;')
+  .replace(/</g, '&lt;')
+  .replace(/>/g, '&gt;');
+
+const getPlainCodeHtml = (code) => (
+  `<pre class="shiki"><code>${escapeHtml(code)}</code></pre>`
+);
+
+const resolveLanguage = (language) => {
+  const normalizedLanguage = (language || 'text').trim().toLowerCase();
+  const aliasedLanguage = LANGUAGE_ALIASES[normalizedLanguage] || normalizedLanguage;
+
+  if (isBundledLanguage(aliasedLanguage)) {
+    return aliasedLanguage;
   }
 
-  if (typeof navigator !== 'undefined' && navigator.clipboard?.writeText) {
-    await navigator.clipboard.writeText(text);
-    return true;
+  if (isBundledLanguage(normalizedLanguage)) {
+    return normalizedLanguage;
   }
 
-  if (typeof document === 'undefined') {
-    return false;
-  }
-
-  const textArea = document.createElement('textarea');
-  textArea.value = text;
-  textArea.setAttribute('readonly', '');
-  textArea.style.position = 'absolute';
-  textArea.style.left = '-9999px';
-
-  document.body.appendChild(textArea);
-  textArea.select();
-  const copied = document.execCommand('copy');
-  document.body.removeChild(textArea);
-
-  return copied;
+  return FALLBACK_LANGUAGE;
 };
 
-const PortableTextCodeBlock = ({ value }) => {
-  const [copied, setCopied] = useState(false);
+const getHighlightedCode = async (code, language) => {
+  const resolvedLanguage = resolveLanguage(language);
+
+  if (!resolvedLanguage) {
+    const plainCodeHtml = getPlainCodeHtml(code);
+
+    return {
+      darkHtml: plainCodeHtml,
+      lightHtml: plainCodeHtml,
+    };
+  }
+
+  try {
+    const [lightHtml, darkHtml] = await Promise.all([
+      codeToHtml(code, {
+        lang: resolvedLanguage,
+        theme: LIGHT_THEME,
+      }),
+      codeToHtml(code, {
+        lang: resolvedLanguage,
+        theme: DARK_THEME,
+      }),
+    ]);
+
+    return {
+      darkHtml,
+      lightHtml,
+    };
+  } catch {
+    const plainCodeHtml = getPlainCodeHtml(code);
+
+    return {
+      darkHtml: plainCodeHtml,
+      lightHtml: plainCodeHtml,
+    };
+  }
+};
+
+const PortableTextCodeBlock = async ({ value }) => {
   const code = value?.code || '';
   const language = value?.language || 'text';
   const filename = value?.filename;
@@ -50,18 +105,7 @@ const PortableTextCodeBlock = ({ value }) => {
     return null;
   }
 
-  const handleCopy = async () => {
-    try {
-      const copiedSuccessfully = await copyTextToClipboard(code);
-
-      if (copiedSuccessfully) {
-        setCopied(true);
-        setTimeout(() => setCopied(false), 1600);
-      }
-    } catch {
-      setCopied(false);
-    }
-  };
+  const { darkHtml, lightHtml } = await getHighlightedCode(code, language);
 
   return (
     <figure className="my-10 overflow-hidden rounded-xl border border-dark/20 bg-light text-dark shadow-sm dark:border-light/20 dark:bg-dark dark:text-light sm:my-8">
@@ -74,19 +118,17 @@ const PortableTextCodeBlock = ({ value }) => {
             <span className="truncate text-[12px] text-dark/65 dark:text-light/70">{filename}</span>
           )}
         </div>
-        <button
-          type="button"
-          onClick={handleCopy}
-          aria-label="Copiar codigo"
-          className="rounded-md border border-dark/20 bg-dark/5 px-2.5 py-1 text-xs font-medium text-dark/85 transition hover:bg-dark/10 dark:border-light/20 dark:bg-light/10 dark:!text-light dark:hover:bg-light/15"
-        >
-          {copied ? 'Copiado' : 'Copiar'}
-        </button>
+        <PortableTextCodeCopyButton code={code} />
       </figcaption>
 
-      <pre className="overflow-x-auto px-4 py-4 text-sm leading-6">
-        <code className="font-mono whitespace-pre">{code}</code>
-      </pre>
+      <div
+        className="overflow-x-auto px-4 py-4 text-sm leading-6 dark:hidden [&>pre]:m-0 [&>pre]:!bg-transparent [&>pre]:p-0 [&_code]:font-mono [&_code]:text-sm"
+        dangerouslySetInnerHTML={{ __html: lightHtml }}
+      />
+      <div
+        className="hidden overflow-x-auto px-4 py-4 text-sm leading-6 dark:block [&>pre]:m-0 [&>pre]:!bg-transparent [&>pre]:p-0 [&_code]:font-mono [&_code]:text-sm"
+        dangerouslySetInnerHTML={{ __html: darkHtml }}
+      />
     </figure>
   );
 };
