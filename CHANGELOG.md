@@ -31,6 +31,7 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 - Ajustar configuracion de Turbopack para definir la raiz del workspace.
 - Reemplazar @dotlottie/react-player por @lottiefiles/dotlottie-react para compatibilidad con React 19.
 - Integrar skills locales del proyecto (.agents y skills-lock.json) para soporte de Sanity, Portable Text y UX sin depender del scope global.
+- Agregar assets de la mascota virtual estilo pixel art.
 
 #### Feature
 
@@ -47,6 +48,7 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 - Implementar renderer de snippets con boton de copiado, etiqueta de lenguaje y soporte de filename.
 - Agregar resaltado de sintaxis por lenguaje en bloques de code de Portable Text con Shiki para frontend.
 - Separar el boton de copiado en un componente cliente dedicado para mantener interaccion sin perder SSR en el renderer de codigo.
+- Implementar sección de compartir contenido en posts y proyectos asi como el asignar sus elementos Open Graph.
 
 #### Fix
 
@@ -82,6 +84,8 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 - [f6550f4](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/f6550f4) - chore: agregar skills locales del proyecto para Sanity y UX
 - [8a32628](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/8a32628) - fix: persistir lenguaje default text en bloques code
 - [b604247](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/b604247) - feat: agregar resaltado de sintaxis en bloques de codigo de portable text
+- [019c348](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/019c348) - agregar assets de canario virtual estilo pixel art
+- [041dcba](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/041dcba) - agregar funcionalidad de compartir contenido y Open Graph en posts y proyectos
 
 ### Q1 (Ene-Mar) - Sin actividad
 
