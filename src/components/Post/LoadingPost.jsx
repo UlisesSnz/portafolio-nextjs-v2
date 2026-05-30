@@ -8,9 +8,10 @@ const LoadingPost = () => {
                     <div className="flex flex-col items-center w-full mb-6">
                         <span className="w-3/4 sm:w-full h-32 mb-16 sm:mb-8 bg-dark dark:bg-light rounded-lg animate-pulse"></span>
                         <div className="flex w-full items-center justify-center my-6 sm:mb-2">
-                            <span className="w-2/12 sm:w-3/12 h-5 bg-dark dark:bg-light rounded-lg animate-pulse"></span>
-                            <span className="w-2/12 sm:w-3/12 h-5 bg-dark dark:bg-light rounded-lg animate-pulse mx-6"></span>
-                            <span className="w-2/12 sm:w-3/12 h-5 bg-dark dark:bg-light rounded-lg animate-pulse"></span>
+                            <span className="w-1/12 sm:w-2/12 h-5 bg-dark dark:bg-light rounded-lg animate-pulse"></span>
+                            <span className="w-1/12 sm:w-2/12 h-5 bg-dark dark:bg-light rounded-lg animate-pulse mx-6"></span>
+                            <span className="w-1/12 sm:w-2/12 h-5 bg-dark dark:bg-light rounded-lg animate-pulse mr-6"></span>
+                            <span className="w-1/12 sm:w-2/12 h-5 bg-dark dark:bg-light rounded-lg animate-pulse"></span>
                         </div>
                         <span className="w-2/5 sm:w-4/5 h-5 sm:mb-2 bg-dark dark:bg-light rounded-lg animate-pulse"></span>
                     </div>

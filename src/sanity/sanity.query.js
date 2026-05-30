@@ -93,6 +93,12 @@ export async function getSingleProject(slug) {
         groq`*[_type == "project" && slug.current == $slug][0]{
             _id,
             name,
+            shortDescription,
+            openGraphDescription,
+            openGraphImage{
+                alt,
+                asset
+            },
             coverImage {
                 alt,
                 "image": asset->url,
@@ -209,6 +215,12 @@ export async function getSingleArticle(slug) {
         groq`*[_type == "article" && slug.current == $slug][0]{
             _id,
             name,
+            shortDescription,
+            openGraphDescription,
+            openGraphImage{
+                alt,
+                asset
+            },
             coverImage {
                 alt,
                 "image": asset->url,

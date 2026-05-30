@@ -20,6 +20,14 @@ const project = {
             validation: (rule) => rule.max(180).required(),
         }),
         defineField({
+            name: "openGraphDescription",
+            title: "Open Graph Description",
+            type: "text",
+            description: "Description used when sharing this project on social media.",
+            rows: 3,
+            validation: (rule) => rule.max(200),
+        }),
+        defineField({
             name: "slug",
             title: "Slug",
             type: "slug",
@@ -41,6 +49,20 @@ const project = {
                 },
             ],
         },
+        defineField({
+            name: "openGraphImage",
+            title: "Open Graph Image",
+            type: "image",
+            description: "Image used in social previews. Recommended size: 1200x630 px.",
+            options: { hotspot: true },
+            fields: [
+                defineField({
+                    name: "alt",
+                    title: "Alt",
+                    type: "string",
+                }),
+            ],
+        }),
         {
             name: "githubUrl",
             title: "GitHub URL",

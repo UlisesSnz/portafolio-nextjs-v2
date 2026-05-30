@@ -8,6 +8,7 @@ import PortableTextComponents from '@/components/Shared/PortableTextComponents '
 import { Toaster } from 'sonner';
 import Comments from './Comments';
 import TableOfContent from './TableOfContent';
+import SharePostLinks from './SharePostLinks';
 import fallBackImage from '../../../public/images/profile/developer.png';
 
 const Post = ({
@@ -22,7 +23,8 @@ const Post = ({
         categories,
         slug,
         commentsOrder,
-        date
+        date,
+        shareUrl
     }) => {
     const imageSrc = coverImage?.image || fallBackImage;
     const imageWidth = coverImage?.imageWidth || 1200;
@@ -50,10 +52,13 @@ const Post = ({
                         <span className="text-md font-medium text-placeholder text-dark/75 dark:text-light/75 sm:text-sm sm:mb-2">
                             {`Act. el ${new Date(date).toLocaleDateString()}`}
                         </span>
+                        <SharePostLinks
+                            title={title}
+                            shareUrl={shareUrl}
+                            triggerClassName="ml-6 sm:ml-2 sm:mb-2"
+                        />
                     </div>
-                    <div className="text-md my-6 w-full text-center font-medium capitalize text-placeholder text-dark/75 dark:text-light/75
-                        sm:text-sm sm:leading-snug"
-                    >
+                    <div className="text-md mt-6 mb-8 w-full text-center font-medium capitalize text-placeholder text-dark/75 dark:text-light/75 sm:mt-4 sm:mb-6 sm:text-sm sm:leading-snug">
                         {categories && categories.length > 0 && (
                             <span className="flex flex-wrap justify-center gap-2">
                                 Categorías:
