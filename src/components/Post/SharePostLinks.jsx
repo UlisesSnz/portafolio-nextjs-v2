@@ -119,9 +119,9 @@ const SharePostLinks = ({ title, shareUrl, triggerClassName = "" }) => {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     aria-label={`Compartir en ${name}`}
-                                    className="inline-flex items-center justify-center p-1 text-dark dark:text-light"
+                                    className="inline-flex items-center justify-center text-dark dark:text-light w-7 md:w-5"
                                 >
-                                    <Icon className="h-8 w-8" />
+                                    <Icon/>
                                 </a>
                             ))}
                         </div>
