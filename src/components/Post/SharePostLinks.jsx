@@ -104,7 +104,9 @@ const SharePostLinks = ({ title, shareUrl, triggerClassName = "" }) => {
                             onClick={handleCopy}
                             className="inline-flex shrink-0 items-center justify-center gap-2 rounded-md bg-dark px-3 py-2 text-sm font-semibold text-light transition-colors hover:bg-dark/85 dark:bg-light dark:text-dark dark:hover:bg-light/90"
                         >
-                            <Copy className="h-4 w-4" />
+                            <span className="inline-flex h-4 w-4 shrink-0">
+                                <Copy />
+                            </span>
                             Copiar
                         </button>
                     </div>
