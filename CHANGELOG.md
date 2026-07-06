@@ -20,6 +20,7 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 #### Resumen
 
 - Se agrego ordenamiento por URL en proyectos, blog y categorias.
+- Se agrego filtrado multi-select por etiquetas en proyectos y blog.
 - Se incorporo un filtro por tipo de contenido en categorias para alternar entre proyectos y posts.
 - Se mantuvo el ordenamiento en servidor para conservar las paginas principales como Server Components.
 - Se valido la integracion con build de produccion usando Turbopack.
@@ -29,6 +30,7 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 - Agregar controles reutilizables para ordenar contenido por fecha y nombre.
 - Permitir ordenar proyectos, posts y resultados de categorias con el parametro `sort`.
 - Agregar filtro de tipo en categorias con el parametro `type` para mostrar todos, proyectos o posts.
+- Agregar filtro multi-select de etiquetas en proyectos y blog con el parametro `tags`.
 - Preservar filtros activos al navegar entre categorias.
 - Incluir `date` y `_type` en consultas de Sanity necesarias para ordenar y filtrar listas combinadas.
 
@@ -36,11 +38,13 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 
 - Ajustar los filtros a una UI compacta alineada a la derecha con iconos outline.
 - Reutilizar iconos minimalistas desde el archivo compartido de iconos.
+- Agregar icono de etiqueta reconocible para el filtro de tags.
 - Marcar el elemento activo con color primario y fondo suave sin indicadores redundantes.
 
 #### Commits de referencia
 
 - [f874668](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/f874668) - feat: agregar filtros de contenido
+- [e134146](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/e134146) - feat: agregar filtro de tags
 
 ### Q2 (Abr-Jun) - Modernizacion y estabilidad
 
