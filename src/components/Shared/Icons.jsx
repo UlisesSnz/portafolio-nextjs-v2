@@ -615,3 +615,183 @@ export const Share = ({ className, ...rest }) => (
     />
   </svg>
 );
+
+export const ArrowUpDownIcon = ({ className, ...rest }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    viewBox="0 0 24 24"
+    className={className}
+    {...rest}
+  >
+    <path
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.8}
+      d="M7 4v16m0-16 3 3M7 4 4 7m13 13V4m0 16-3-3m3 3 3-3"
+    />
+  </svg>
+);
+
+export const ArrowUpIcon = ({ className, ...rest }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    viewBox="0 0 24 24"
+    className={className}
+    {...rest}
+  >
+    <path
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.8}
+      d="M12 19V5m0 0-5 5m5-5 5 5"
+    />
+  </svg>
+);
+
+export const ArrowDownIcon = ({ className, ...rest }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    viewBox="0 0 24 24"
+    className={className}
+    {...rest}
+  >
+    <path
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.8}
+      d="M12 5v14m0 0 5-5m-5 5-5-5"
+    />
+  </svg>
+);
+
+export const CheckIcon = ({ className, ...rest }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    viewBox="0 0 24 24"
+    className={className}
+    {...rest}
+  >
+    <path
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.8}
+      d="m5 12 4 4L19 6"
+    />
+  </svg>
+);
+
+export const ClockIcon = ({ className, ...rest }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    viewBox="0 0 24 24"
+    className={className}
+    {...rest}
+  >
+    <path
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.8}
+      d="M12 7v5l3 2m6-2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+    />
+  </svg>
+);
+
+export const FilterIcon = ({ className, ...rest }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    viewBox="0 0 24 24"
+    className={className}
+    {...rest}
+  >
+    <path
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.8}
+      d="M5 5h14l-5.5 6.25V17l-3 2v-7.75z"
+    />
+  </svg>
+);
+
+export const GridIcon = ({ className, ...rest }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    viewBox="0 0 24 24"
+    className={className}
+    {...rest}
+  >
+    <path
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.8}
+      d="M5 5h5v5H5zm9 0h5v5h-5zM5 14h5v5H5zm9 0h5v5h-5z"
+    />
+  </svg>
+);
+
+export const FolderIcon = ({ className, ...rest }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    viewBox="0 0 24 24"
+    className={className}
+    {...rest}
+  >
+    <path
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.8}
+      d="M3 7.5A2.5 2.5 0 0 1 5.5 5h4l2 2h7A2.5 2.5 0 0 1 21 9.5v7A2.5 2.5 0 0 1 18.5 19h-13A2.5 2.5 0 0 1 3 16.5z"
+    />
+  </svg>
+);
+
+export const DocumentTextIcon = ({ className, ...rest }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    viewBox="0 0 24 24"
+    className={className}
+    {...rest}
+  >
+    <path
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.8}
+      d="M7 3h7l4 4v14H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm7 0v5h4M8 13h8M8 17h6"
+    />
+  </svg>
+);

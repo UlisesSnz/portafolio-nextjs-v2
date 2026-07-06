@@ -78,6 +78,7 @@ export async function getProjects() {
             },
             githubUrl,
             projectUrl,
+            "date": date,
             categories[]-> { name, "slug": slug.current }
         }`,
         {},
@@ -168,6 +169,7 @@ export async function getPostsBySlug(slug) {
     return client.fetch(
         groq`*[_type in ["project", "article"] && $slug in categories[]->slug.current]{
             _id, 
+            _type,
             name,
             "slug": "/" + select(_type == "article" => "blog", _type == "project" => "projects") + "/" + slug.current,
             shortDescription,
@@ -179,6 +181,7 @@ export async function getPostsBySlug(slug) {
             },
             githubUrl,
             projectUrl,
+            "date": date,
             categories[]-> { name, "slug": slug.current },
         }`,
         { slug },

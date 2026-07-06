@@ -2,8 +2,12 @@ import Link from 'next/link';
 import AnimatedText from '@/components/Animations/AnimatedText';
 import PostCard from '@/components/Post/PostCard';
 import Layout from '@/components/Shared/Layout';
+import ContentTypeControls from '@/components/Shared/ContentTypeControls';
+import SortControls from '@/components/Shared/SortControls';
 import { getCategories, getPostsBySlug, getRecentPosts } from '@/sanity/sanity.query';
 import ListCard from '@/components/Post/ListCard';
+import { normalizeContentSort, sortContentItems } from '@/utils/contentSort';
+import { filterContentItemsByType, normalizeContentTypeFilter } from '@/utils/contentTypeFilter';
 
 export const metadata = {
     title: "Categorías",
@@ -17,20 +21,40 @@ const formatSlug = (slug) => {
         .join(' ');
 };
 
-const posts = async ({ params }) => {
-    const resolvedParams = await params;
+const PostsPage = async ({ params, searchParams }) => {
+    const [resolvedParams, resolvedSearchParams] = await Promise.all([params, searchParams]);
     const slug = resolvedParams.posts;
-    const categories = await getCategories();
-    const recentPosts = await getRecentPosts();
-    const posts = await getPostsBySlug(slug);
+    const activeSort = normalizeContentSort(resolvedSearchParams?.sort);
+    const activeType = normalizeContentTypeFilter(resolvedSearchParams?.type);
+    const [categories, recentPosts, postsBySlug] = await Promise.all([
+        getCategories(),
+        getRecentPosts(),
+        getPostsBySlug(slug),
+    ]);
+    const posts = sortContentItems(
+        filterContentItemsByType(postsBySlug, activeType),
+        activeSort
+    );
 
     return (
     <main className="w-full mb-16 flex flex-col items-center justify-center dark:text-light">
       <Layout className="pt-16">
         <AnimatedText
           text={formatSlug(slug)}
-          className="mb-16 lg:!text-7xl sm:mb-8 sm:!text-6xl xs:!text-4xl"
+          className="mb-8 lg:!text-7xl sm:mb-6 sm:!text-6xl xs:!text-4xl"
         />
+        <div className="mb-12 flex w-full items-center justify-end gap-1 sm:mb-8">
+            <ContentTypeControls
+                activeType={activeType}
+                basePath={`/search/${slug}`}
+                query={{ sort: activeSort }}
+            />
+            <SortControls
+                activeSort={activeSort}
+                basePath={`/search/${slug}`}
+                query={{ type: activeType }}
+            />
+        </div>
         <div className="grid grid-cols-12 gap-y-8 gap-16 xl:gap-8 md:gap-x-0 mt-8">
             <div className="col-span-2 lg:col-span-12">
                 <details className="border-[1px] border-solid border-dark dark:border-light
@@ -44,7 +68,10 @@ const posts = async ({ params }) => {
                         {categories.map(category => (
                             <li key={category.slug} className="py-1">
                                 <Link
-                                    href={`/search/${category.slug}`}
+                                    href={{
+                                        pathname: `/search/${category.slug}`,
+                                        query: { sort: activeSort, type: activeType },
+                                    }}
                                     className="flex items-center justify-start transform transition-transform duration-300 hover:translate-x-2"
                                 >
                                     <span className={category.slug === slug ? 'underline underline-offset-2' : ''}>
@@ -89,4 +116,4 @@ const posts = async ({ params }) => {
     )
 }
 
-export default posts;
+export default PostsPage;
