@@ -6,14 +6,41 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 
 - Sin cambios pendientes.
 
-## Vista rapida (cierre Q2 2026)
+## Vista rapida (Q3 2026 en progreso)
 
-- Estado general: actualizacion mayor completada.
+- Estado general: mejoras de navegacion y descubrimiento de contenido en curso.
 - Stack actual: Next.js 16, React 19, Sanity 5, ESLint 9.
-- Calidad tecnica: lint y build validados en cierre de actualizacion.
-- Riesgos abiertos: no se registran bloqueantes al cierre.
+- Calidad tecnica: build validado con Turbopack tras integrar filtros de contenido.
+- Riesgos abiertos: no se registran bloqueantes activos.
 
 ## 2026
+
+### Q3 (Jul-Sep) - Navegacion y descubrimiento de contenido
+
+#### Resumen
+
+- Se agrego ordenamiento por URL en proyectos, blog y categorias.
+- Se incorporo un filtro por tipo de contenido en categorias para alternar entre proyectos y posts.
+- Se mantuvo el ordenamiento en servidor para conservar las paginas principales como Server Components.
+- Se valido la integracion con build de produccion usando Turbopack.
+
+#### Feature
+
+- Agregar controles reutilizables para ordenar contenido por fecha y nombre.
+- Permitir ordenar proyectos, posts y resultados de categorias con el parametro `sort`.
+- Agregar filtro de tipo en categorias con el parametro `type` para mostrar todos, proyectos o posts.
+- Preservar filtros activos al navegar entre categorias.
+- Incluir `date` y `_type` en consultas de Sanity necesarias para ordenar y filtrar listas combinadas.
+
+#### Style
+
+- Ajustar los filtros a una UI compacta alineada a la derecha con iconos outline.
+- Reutilizar iconos minimalistas desde el archivo compartido de iconos.
+- Marcar el elemento activo con color primario y fondo suave sin indicadores redundantes.
+
+#### Commits de referencia
+
+- [f874668](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/f874668) - feat: agregar filtros de contenido
 
 ### Q2 (Abr-Jun) - Modernizacion y estabilidad
 
