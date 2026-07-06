@@ -795,3 +795,27 @@ export const DocumentTextIcon = ({ className, ...rest }) => (
     />
   </svg>
 );
+
+export const TagIcon = ({ className, ...rest }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    viewBox="0 0 24 24"
+    className={className}
+    {...rest}
+  >
+    <path
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={1.8}
+      d="M4 6.5V12l7.5 7.5a2 2 0 0 0 2.83 0l5.17-5.17a2 2 0 0 0 0-2.83L12 4H6.5A2.5 2.5 0 0 0 4 6.5Z"
+    />
+    <path
+      fill="currentColor"
+      d="M8 8.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z"
+    />
+  </svg>
+);
