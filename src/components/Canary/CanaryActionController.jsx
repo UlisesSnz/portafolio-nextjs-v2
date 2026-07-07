@@ -323,15 +323,17 @@ const CanaryActionController = ({
     });
   }, []);
 
-  const moveCanaryTo = useCallback((targetPosition) => {
+  const moveCanaryTo = useCallback((targetPosition, facingDirection) => {
     const currentPosition = positionRef.current;
     const nextPosition = clampPosition(targetPosition);
     const nextDirection =
-      nextPosition > currentPosition
-        ? 1
-        : nextPosition < currentPosition
-          ? -1
-          : positionDirectionRef.current;
+      facingDirection === 1 || facingDirection === -1
+        ? facingDirection
+        : nextPosition > currentPosition
+          ? 1
+          : nextPosition < currentPosition
+            ? -1
+            : positionDirectionRef.current;
 
     positionRef.current = nextPosition;
     positionDirectionRef.current = nextDirection;
@@ -398,7 +400,7 @@ const CanaryActionController = ({
         options.move !== false &&
         !isReducedMotion
       ) {
-        moveCanaryTo(options.targetPosition);
+        moveCanaryTo(options.targetPosition, options.facingDirection);
       } else if (options.move !== false && !isReducedMotion) {
         moveCanary(normalizedAction);
       }
@@ -460,9 +462,11 @@ const CanaryActionController = ({
       const targetPosition = getCanaryPositionForCenter(targetCenterPosition);
       const distance = Math.abs(targetCenterPosition - canaryCenterPosition);
       const action = distance <= FLOWER_HOP_DISTANCE ? "hop" : "fly";
+      const facingDirection = flowerPosition >= canaryCenterPosition ? 1 : -1;
 
       requestAction(action, {
         duration: action === "hop" ? 680 : 1650,
+        facingDirection,
         ignoreCooldown: true,
         move: true,
         priority: action === "hop" ? 46 : 54,
