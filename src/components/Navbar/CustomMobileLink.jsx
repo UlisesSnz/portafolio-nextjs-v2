@@ -1,3 +1,5 @@
+'use client';
+
 import { usePathname, useRouter } from 'next/navigation';
 
 const CustomMobileLink = ({href, title, className="", toggle}) => {
@@ -11,7 +13,11 @@ const CustomMobileLink = ({href, title, className="", toggle}) => {
     }
 
     return(
-        <button href={href} className={`${className} relative group text-light dark:text-dark my-2`} onClick={handleClick}>
+        <button
+            type="button"
+            className={`${className} relative group text-light dark:text-dark my-2`}
+            onClick={handleClick}
+        >
             {title}
             <span
                 className={`

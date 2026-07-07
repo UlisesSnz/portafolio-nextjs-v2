@@ -3,6 +3,7 @@
 import { useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 import { FilterIcon, GridIcon, TagIcon } from "@/components/Shared/Icons";
+import { triggerCanaryAction } from "@/lib/canary/canaryActions";
 
 const iconByName = {
   filter: FilterIcon,
@@ -34,6 +35,14 @@ const toggleValue = (values, value) => {
     : [...values, value];
 };
 
+const notifyFilterInspect = (message) => {
+  triggerCanaryAction({
+    intent: "filterInspect",
+    message,
+    trigger: "onHover",
+  });
+};
+
 const MultiMenuFilterControl = ({
   activeValues = [],
   allLabel = "Todas",
@@ -57,6 +66,7 @@ const MultiMenuFilterControl = ({
     ? `${activeValues.length} ${unitLabel}`
     : allLabel;
   const TriggerIcon = iconByName[triggerIcon] || FilterIcon;
+  const triggerMessage = `${triggerLabel}: ${activeSummary}`;
 
   useEffect(() => {
     if (!isOpen) return;
@@ -95,9 +105,14 @@ const MultiMenuFilterControl = ({
           aria-label={`${triggerLabel}: ${activeSummary}`}
           aria-expanded={isOpen}
           aria-controls={menuId}
+          data-canary-click-intent="filterApply"
+          data-canary-hold="filter"
+          data-canary-message={triggerMessage}
           className={`flex h-10 w-10 items-center justify-center rounded-md text-dark/80 transition-colors duration-200 hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary dark:text-light/80 dark:hover:text-primaryDark dark:focus-visible:outline-primaryDark ${
             isOpen || hasActiveValues ? "text-primary dark:text-primaryDark" : ""
           }`}
+          onFocus={() => notifyFilterInspect(triggerMessage)}
+          onPointerEnter={() => notifyFilterInspect(triggerMessage)}
           onClick={() => setIsOpen((currentValue) => !currentValue)}
         >
           <TriggerIcon className="h-5 w-5 shrink-0" aria-hidden="true" />
@@ -117,6 +132,12 @@ const MultiMenuFilterControl = ({
                   }}
                   scroll={false}
                   aria-current={!hasActiveValues ? "page" : undefined}
+                  data-canary-click-intent="filterApply"
+                  data-canary-hold="filter"
+                  data-canary-message={allLabel}
+                  onFocus={() => notifyFilterInspect(allLabel)}
+                  onPointerEnter={() => notifyFilterInspect(allLabel)}
+                  onClick={() => setIsOpen(false)}
                   className={`flex min-h-10 w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium outline-none transition-colors duration-200 focus-visible:bg-dark/[0.06] dark:focus-visible:bg-light/[0.08] ${
                     !hasActiveValues
                       ? "bg-dark/[0.04] text-dark dark:bg-light/[0.07] dark:text-light"
@@ -149,6 +170,12 @@ const MultiMenuFilterControl = ({
                       }}
                       scroll={false}
                       aria-label={`${isActive ? "Quitar" : "Agregar"} ${label}`}
+                      data-canary-click-intent="filterApply"
+                      data-canary-hold="filter"
+                      data-canary-message={label}
+                      onFocus={() => notifyFilterInspect(label)}
+                      onPointerEnter={() => notifyFilterInspect(label)}
+                      onClick={() => setIsOpen(false)}
                       className={`flex min-h-10 w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium outline-none transition-colors duration-200 focus-visible:bg-dark/[0.06] dark:focus-visible:bg-light/[0.08] ${
                         isActive
                           ? "bg-dark/[0.04] text-dark dark:bg-light/[0.07] dark:text-light"

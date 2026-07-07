@@ -97,7 +97,11 @@ const Post = ({
                     {(githubUrl && projectUrl) && (
                         <div className="flex flex-col items-end justify-between pl-6 lg:w-full lg:pl-0 lg:pt-6">
                             <div className="mt-16 flex items-end">
-                                <Link href={githubUrl} target="_blank" className="w-10">
+                                <Link
+                                    href={githubUrl}
+                                    target="_blank"
+                                    className="w-10"
+                                >
                                     {" "}
                                     <GithubIcon />{" "}
                                 </Link>

@@ -3,6 +3,7 @@ import Layout from '@/components/Shared/Layout';
 import SortControls from '@/components/Shared/SortControls';
 import TagControls from '@/components/Shared/TagControls';
 import FeaturedProjectCard from '@/components/Projects/FeaturedProjectCard';
+import { CanaryActionController } from '@/components/Canary';
 import { getProjects } from '@/sanity/sanity.query';
 import { normalizeContentSort, sortContentItems } from '@/utils/contentSort';
 import {
@@ -27,6 +28,9 @@ const ProjectsPage = async ({ searchParams }) => {
     filterContentItemsByTags(allProjects, activeTags),
     activeSort
   );
+  const activeTagLabels = activeTags.map(
+    (tag) => tagOptions.find((option) => option.value === tag)?.label || tag
+  );
 
   return (
     <main className="w-full mb-16 flex flex-col items-center justify-center dark:text-light">
@@ -35,18 +39,29 @@ const ProjectsPage = async ({ searchParams }) => {
           text="La innovación vive en la imaginación"
           className="mb-8 lg:!text-7xl sm:mb-6 sm:!text-6xl xs:!text-4xl"
         />
-        <div className="mb-16 flex w-full items-center justify-end gap-1 sm:mb-8">
-          <TagControls
-            activeTags={activeTags}
-            basePath="/projects"
-            options={tagOptions}
-            query={{ sort: activeSort }}
+        <div className="mb-16 flex w-full items-center justify-between gap-6 sm:mb-8 sm:gap-3">
+          <CanaryActionController
+            context={{
+              pageType: "projects",
+              totalCount: projects.length,
+              activeTags: activeTagLabels,
+              activeSort,
+            }}
+            className="canary-toolbar flex-1"
           />
-          <SortControls
-            activeSort={activeSort}
-            basePath="/projects"
-            query={{ tags: formatContentTagsQuery(activeTags) }}
-          />
+          <div className="flex shrink-0 items-center justify-end gap-1">
+            <TagControls
+              activeTags={activeTags}
+              basePath="/projects"
+              options={tagOptions}
+              query={{ sort: activeSort }}
+            />
+            <SortControls
+              activeSort={activeSort}
+              basePath="/projects"
+              query={{ tags: formatContentTagsQuery(activeTags) }}
+            />
+          </div>
         </div>
         <div className="grid grid-cols-12 gap-24 gap-y-32 xl:gap-x-16 lg:gap-x-8 md:gap-y-24 sm:gap-x-0">
           {projects && projects.map(data => (

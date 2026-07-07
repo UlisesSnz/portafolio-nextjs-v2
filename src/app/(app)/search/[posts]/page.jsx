@@ -4,6 +4,7 @@ import PostCard from '@/components/Post/PostCard';
 import Layout from '@/components/Shared/Layout';
 import ContentTypeControls from '@/components/Shared/ContentTypeControls';
 import SortControls from '@/components/Shared/SortControls';
+import { CanaryActionController } from '@/components/Canary';
 import { getCategories, getPostsBySlug, getRecentPosts } from '@/sanity/sanity.query';
 import ListCard from '@/components/Post/ListCard';
 import { normalizeContentSort, sortContentItems } from '@/utils/contentSort';
@@ -35,6 +36,7 @@ const PostsPage = async ({ params, searchParams }) => {
         filterContentItemsByType(postsBySlug, activeType),
         activeSort
     );
+    const categoryName = categories.find(category => category.slug === slug)?.name || formatSlug(slug);
 
     return (
     <main className="w-full mb-16 flex flex-col items-center justify-center dark:text-light">
@@ -43,7 +45,18 @@ const PostsPage = async ({ params, searchParams }) => {
           text={formatSlug(slug)}
           className="mb-8 lg:!text-7xl sm:mb-6 sm:!text-6xl xs:!text-4xl"
         />
-        <div className="mb-12 flex w-full items-center justify-end gap-1 sm:mb-8">
+        <div className="mb-12 flex w-full items-center justify-between gap-6 sm:mb-8 sm:gap-3">
+          <CanaryActionController
+            context={{
+              pageType: "search",
+              totalCount: posts.length,
+              categoryName,
+              activeType,
+              activeSort,
+            }}
+            className="canary-toolbar flex-1"
+          />
+          <div className="flex shrink-0 items-center justify-end gap-1">
             <ContentTypeControls
                 activeType={activeType}
                 basePath={`/search/${slug}`}
@@ -54,6 +67,7 @@ const PostsPage = async ({ params, searchParams }) => {
                 basePath={`/search/${slug}`}
                 query={{ type: activeType }}
             />
+          </div>
         </div>
         <div className="grid grid-cols-12 gap-y-8 gap-16 xl:gap-8 md:gap-x-0 mt-8">
             <div className="col-span-2 lg:col-span-12">

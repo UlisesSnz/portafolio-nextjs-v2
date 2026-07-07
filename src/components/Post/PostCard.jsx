@@ -47,7 +47,11 @@ const PostCard = ({title, summary, categories, img, link, github }) => {
               Continuar leyendo
             </Link>
             {github && (
-              <Link href={github} target="_blank" className="w-7 md:w-5">
+              <Link
+                href={github}
+                target="_blank"
+                className="w-7 md:w-5"
+              >
                 <GithubIcon />{" "}
               </Link>
             )}

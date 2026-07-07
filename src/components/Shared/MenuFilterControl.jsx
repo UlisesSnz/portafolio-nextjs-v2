@@ -12,6 +12,7 @@ import {
   FolderIcon,
   GridIcon,
 } from "@/components/Shared/Icons";
+import { triggerCanaryAction } from "@/lib/canary/canaryActions";
 
 const iconByName = {
   arrowDown: ArrowDownIcon,
@@ -36,6 +37,14 @@ const buildQuery = (query, paramName, value) => {
   return nextQuery;
 };
 
+const notifyFilterInspect = (message) => {
+  triggerCanaryAction({
+    intent: "filterInspect",
+    message,
+    trigger: "onHover",
+  });
+};
+
 const MenuFilterControl = ({
   activeValue,
   ariaLabel,
@@ -54,6 +63,7 @@ const MenuFilterControl = ({
   const activeOption =
     options.find(({ value }) => value === activeValue) || options[0];
   const TriggerIcon = iconByName[triggerIcon] || FilterIcon;
+  const triggerMessage = `${triggerLabel}: ${activeOption.label}`;
 
   useEffect(() => {
     if (!isOpen) return;
@@ -92,9 +102,14 @@ const MenuFilterControl = ({
           aria-label={`${triggerLabel}: ${activeOption.label}`}
           aria-expanded={isOpen}
           aria-controls={menuId}
+          data-canary-click-intent="filterApply"
+          data-canary-hold="filter"
+          data-canary-message={triggerMessage}
           className={`flex h-10 w-10 items-center justify-center rounded-md text-dark/80 transition-colors duration-200 hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary dark:text-light/80 dark:hover:text-primaryDark dark:focus-visible:outline-primaryDark ${
             isOpen ? "text-primary dark:text-primaryDark" : ""
           }`}
+          onFocus={() => notifyFilterInspect(triggerMessage)}
+          onPointerEnter={() => notifyFilterInspect(triggerMessage)}
           onClick={() => setIsOpen((currentValue) => !currentValue)}
         >
           <TriggerIcon className="h-5 w-5 shrink-0" aria-hidden="true" />
@@ -119,6 +134,11 @@ const MenuFilterControl = ({
                       }}
                       scroll={false}
                       aria-current={isActive ? "page" : undefined}
+                      data-canary-click-intent="filterApply"
+                      data-canary-hold="filter"
+                      data-canary-message={label}
+                      onFocus={() => notifyFilterInspect(label)}
+                      onPointerEnter={() => notifyFilterInspect(label)}
                       onClick={() => setIsOpen(false)}
                       className={`flex min-h-10 w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium outline-none transition-colors duration-200 focus-visible:bg-dark/[0.06] dark:focus-visible:bg-light/[0.08] ${
                         isActive
