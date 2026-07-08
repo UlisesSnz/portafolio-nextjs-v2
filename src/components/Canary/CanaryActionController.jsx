@@ -53,10 +53,15 @@ const FLOWER_APPROACH_GAP = 5;
 const FLOWER_HOP_DISTANCE = 0.32;
 const TOOLBAR_BUBBLE_GAP = 10;
 const TOOLBAR_BUBBLE_READABLE_WIDTH = 156;
+const TOUCH_FILTER_MESSAGE_DURATION = 3400;
+const TOUCH_POINTER_WINDOW = 1400;
 const flowerPositions = [0.13, 0.26, 0.39, 0.54, 0.69, 0.84];
 
 const canaryDatasetSelector =
   "[data-canary-intent], [data-canary-click-intent], [data-canary-action], [data-canary-click-action], [data-canary-hold]";
+
+const isTouchLikePointer = (pointerType) =>
+  pointerType === "touch" || pointerType === "pen";
 
 const readCanaryDataset = (target, trigger) => {
   const element = target?.closest?.(canaryDatasetSelector);
@@ -180,6 +185,7 @@ const CanaryActionController = ({
   const heldFilterElementRef = useRef(null);
   const hoverReleaseTimerRef = useRef(null);
   const hoverTimerRef = useRef(null);
+  const lastPointerRef = useRef({ timestamp: 0, type: "mouse" });
   const lastDatasetElementRef = useRef(null);
   const messageRef = useRef("");
   const messageTimerRef = useRef(null);
@@ -187,6 +193,7 @@ const CanaryActionController = ({
   const positionRef = useRef(initialRuntimeState.position);
   const stageRef = useRef(null);
   const stageWidthRef = useRef(0);
+  const touchFilterReleaseTimerRef = useRef(null);
   const actionStateRef = useRef({
     action: DEFAULT_CANARY_ACTION,
     priority: 0,
@@ -592,8 +599,48 @@ const CanaryActionController = ({
       clearTimeoutRef(hoverReleaseTimerRef);
     };
 
+    const clearTouchFilterReleaseTimer = () => {
+      clearTimeoutRef(touchFilterReleaseTimerRef);
+    };
+
+    const isRecentTouchInteraction = () => {
+      const lastPointer = lastPointerRef.current;
+
+      return (
+        isTouchLikePointer(lastPointer.type) &&
+        Date.now() - lastPointer.timestamp < TOUCH_POINTER_WINDOW
+      );
+    };
+
+    const scheduleTouchFilterRelease = (
+      element,
+      messageToClear = messageRef.current
+    ) => {
+      clearTouchFilterReleaseTimer();
+
+      touchFilterReleaseTimerRef.current = window.setTimeout(() => {
+        if (heldFilterElementRef.current !== element) {
+          return;
+        }
+
+        heldFilterElementRef.current = null;
+        setIsReadingFilter(false);
+
+        if (messageRef.current === messageToClear) {
+          updateMessage("");
+
+          if (actionStateRef.current.action === "talk") {
+            resetActionToDefault();
+          }
+        }
+
+        touchFilterReleaseTimerRef.current = null;
+      }, TOUCH_FILTER_MESSAGE_DURATION);
+    };
+
     const holdFilterReading = (element) => {
       clearHoverReleaseTimer();
+      clearTouchFilterReleaseTimer();
       heldFilterElementRef.current = element;
       setIsReadingFilter(true);
     };
@@ -604,6 +651,7 @@ const CanaryActionController = ({
       }
 
       clearHoverReleaseTimer();
+      clearTouchFilterReleaseTimer();
       const messageToClear = messageRef.current;
 
       hoverReleaseTimerRef.current = window.setTimeout(() => {
@@ -654,6 +702,13 @@ const CanaryActionController = ({
       }, detail.hoverDelay ?? 180);
     };
 
+    const handlePointerDown = (event) => {
+      lastPointerRef.current = {
+        timestamp: Date.now(),
+        type: event.pointerType || "mouse",
+      };
+    };
+
     const handlePointerOver = (event) => {
       const element = event.target.closest(canaryDatasetSelector);
 
@@ -695,6 +750,14 @@ const CanaryActionController = ({
 
       clearHoverTimer();
       lastDatasetElementRef.current = null;
+
+      if (isTouchLikePointer(event.pointerType)) {
+        if (heldFilterElementRef.current === element) {
+          scheduleTouchFilterRelease(element);
+        }
+
+        return;
+      }
 
       if (heldFilterElementRef.current === element) {
         releaseFilterReading(element);
@@ -742,27 +805,51 @@ const CanaryActionController = ({
       }
 
       if (heldFilterElementRef.current === element) {
+        if (isRecentTouchInteraction()) {
+          scheduleTouchFilterRelease(element);
+          return;
+        }
+
         releaseFilterReading(element);
       }
     };
 
     const handleClick = (event) => {
+      const element = event.target.closest(canaryDatasetSelector);
       const detail = readCanaryDataset(event.target, "onClick");
 
       if (detail) {
         clearHoverTimer();
+        const shouldHoldFilterTap =
+          element?.dataset.canaryHold === "filter" &&
+          isRecentTouchInteraction();
+        const pickedMessage =
+          detail.message || pickMessageForTrigger("onClick")?.message;
+
+        if (shouldHoldFilterTap) {
+          holdFilterReading(element);
+        }
+
         requestAction(detail.action, {
-          message: detail.message || pickMessageForTrigger("onClick")?.message,
+          message: pickedMessage,
           duration: detail.duration,
-          messageDuration: detail.messageDuration,
+          messageDuration: shouldHoldFilterTap
+            ? TOUCH_FILTER_MESSAGE_DURATION
+            : detail.messageDuration,
           force: detail.force,
-          ignoreCooldown: detail.ignoreCooldown,
+          holdMessage: shouldHoldFilterTap ? true : detail.holdMessage,
+          ignoreCooldown: shouldHoldFilterTap ? true : detail.ignoreCooldown,
           move: detail.move,
           priority: detail.priority,
         });
+
+        if (shouldHoldFilterTap) {
+          scheduleTouchFilterRelease(element, pickedMessage);
+        }
       }
     };
 
+    document.addEventListener("pointerdown", handlePointerDown, true);
     document.addEventListener("pointerover", handlePointerOver, true);
     document.addEventListener("pointerout", handlePointerOut, true);
     document.addEventListener("focusin", handleFocusIn, true);
@@ -772,6 +859,8 @@ const CanaryActionController = ({
     return () => {
       clearHoverTimer();
       clearHoverReleaseTimer();
+      clearTouchFilterReleaseTimer();
+      document.removeEventListener("pointerdown", handlePointerDown, true);
       document.removeEventListener("pointerover", handlePointerOver, true);
       document.removeEventListener("pointerout", handlePointerOut, true);
       document.removeEventListener("focusin", handleFocusIn, true);
