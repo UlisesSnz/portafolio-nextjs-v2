@@ -58,6 +58,7 @@ html {
 .canary-toolbar .canary-bubble-anchor {
     top: 50%;
     bottom: auto;
+    max-width: min(18rem, var(--canary-bubble-max-width, calc(100% - var(--canary-size) - 0.75rem)));
 }
 
 .canary-toolbar .canary-bubble-anchor[data-side="right"] {
@@ -336,6 +337,10 @@ html {
     .canary-stage {
         width: 100%;
         min-width: 100%;
+    }
+
+    .canary-toolbar .canary-bubble-anchor {
+        max-width: min(11rem, var(--canary-bubble-max-width, calc(100% - var(--canary-size) - 0.5rem)));
     }
 }
 

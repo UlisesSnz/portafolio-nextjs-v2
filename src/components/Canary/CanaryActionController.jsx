@@ -51,6 +51,8 @@ const FLOWER_APPROACH_DELAY = 1200;
 const FLOWER_APPROACH_OFFSET = 0.04;
 const FLOWER_APPROACH_GAP = 5;
 const FLOWER_HOP_DISTANCE = 0.32;
+const TOOLBAR_BUBBLE_GAP = 10;
+const TOOLBAR_BUBBLE_READABLE_WIDTH = 156;
 const flowerPositions = [0.13, 0.26, 0.39, 0.54, 0.69, 0.84];
 
 const canaryDatasetSelector =
@@ -1005,6 +1007,7 @@ const CanaryActionController = ({
   const positionPercent = canaryPosition * 100;
   const travelDuration = travelDurations[displayAction] || "520ms";
   const isInlinePlacement = className.includes("canary-inline");
+  const isToolbarPlacement = className.includes("canary-toolbar");
   const canaryCenterPosition = getCanaryCenterForStage(
     canaryPosition,
     stageWidth,
@@ -1012,25 +1015,66 @@ const CanaryActionController = ({
   );
   const isFlowerVisible =
     flowerState.visible && context.pageType !== "notFound";
+  const canaryCenterPx = canaryCenterPosition * stageWidth;
+  const canaryHalfWidthPx = size / 2;
+  const leftBubbleSpace = Math.max(
+    0,
+    canaryCenterPx - canaryHalfWidthPx - TOOLBAR_BUBBLE_GAP
+  );
+  const rightBubbleSpace = Math.max(
+    0,
+    stageWidth - canaryCenterPx - canaryHalfWidthPx - TOOLBAR_BUBBLE_GAP
+  );
   const bubbleSide = (() => {
     if (isInlinePlacement) {
       return "right";
     }
 
+    const pickAvailableToolbarSide = (preferredSide) => {
+      if (!isToolbarPlacement || !stageWidth) {
+        return preferredSide;
+      }
+
+      const preferredSpace =
+        preferredSide === "left" ? leftBubbleSpace : rightBubbleSpace;
+      const alternateSpace =
+        preferredSide === "left" ? rightBubbleSpace : leftBubbleSpace;
+
+      if (
+        preferredSpace < TOOLBAR_BUBBLE_READABLE_WIDTH &&
+        alternateSpace > preferredSpace
+      ) {
+        return preferredSide === "left" ? "right" : "left";
+      }
+
+      return preferredSide;
+    };
+
     if (canaryCenterPosition > 0.72) {
-      return "left";
+      return pickAvailableToolbarSide("left");
     }
 
     if (canaryCenterPosition < 0.2) {
-      return "right";
+      return pickAvailableToolbarSide("right");
     }
 
     if (isFlowerVisible) {
-      return flowerState.position >= canaryCenterPosition ? "left" : "right";
+      return pickAvailableToolbarSide(
+        flowerState.position >= canaryCenterPosition ? "left" : "right"
+      );
     }
 
-    return canaryCenterPosition > 0.68 ? "left" : "right";
+    return pickAvailableToolbarSide(
+      canaryCenterPosition > 0.68 ? "left" : "right"
+    );
   })();
+  const bubbleMaxWidth =
+    isToolbarPlacement && stageWidth
+      ? Math.max(
+          1,
+          bubbleSide === "left" ? leftBubbleSpace : rightBubbleSpace
+        )
+      : undefined;
   const canaryHalfWidthPosition =
     stageWidth && stageWidth > size ? size / 2 / stageWidth : 0;
   const bubblePosition = clampPosition(
@@ -1046,6 +1090,10 @@ const CanaryActionController = ({
         className="canary-stage"
         style={{
           "--canary-size": `${size}px`,
+          "--canary-bubble-max-width":
+            typeof bubbleMaxWidth === "number"
+              ? `${bubbleMaxWidth}px`
+              : undefined,
           "--canary-bubble-position": bubblePosition,
           "--canary-position": canaryPosition,
         }}

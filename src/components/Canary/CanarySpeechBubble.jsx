@@ -25,7 +25,7 @@ const CanarySpeechBubble = ({ action = "talk", message, side = "right" }) => {
     <div
       role="status"
       aria-live="polite"
-      className={`relative max-w-[30rem] rounded-md border-2 px-3 py-2 text-sm font-semibold leading-snug sm:max-w-full xs:text-xs ${toneClass}`}
+      className={`relative max-w-full break-words rounded-md border-2 px-3 py-2 text-sm font-semibold leading-snug xs:text-xs ${toneClass}`}
     >
       <span aria-hidden="true" className={arrowClass} />
       {message}
