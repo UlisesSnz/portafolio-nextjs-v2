@@ -12,11 +12,11 @@ import {
   getContentTagOptions,
   normalizeContentTags,
 } from '@/utils/contentTagFilter';
+import { getStaticPageMetadata } from '@/utils/seoMetadata';
 
-export const metadata = {
-  title: "Blog",
-  description: `Lee artículos, tutoriales y experiencias sobre desarrollo web en mi blog personal.`,
-};
+export async function generateMetadata() {
+  return getStaticPageMetadata('blog');
+}
 
 const BlogPage = async ({ searchParams }) => {
   const resolvedSearchParams = await searchParams;

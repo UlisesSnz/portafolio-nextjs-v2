@@ -8,11 +8,11 @@ import AnimatedNumbers from '@/components/About/AnimatedNumbers';
 import { getEducation, getJob, getProfile } from '@/sanity/sanity.query';
 import { PortableText } from 'next-sanity';
 import PortableTextComponents from '@/components/Shared/PortableTextComponents ';
+import { getStaticPageMetadata } from '@/utils/seoMetadata';
 
-export const metadata = {
-    title: "Sobre mí",
-    description: `Conoce más sobre mi trayectoria profesional y personal.`,
-};
+export async function generateMetadata() {
+    return getStaticPageMetadata('about');
+}
 
 const about = async () => {
     const profile = await getProfile();

@@ -5,15 +5,11 @@ import Layout from '@/components/Shared/Layout';
 import ContentTypeControls from '@/components/Shared/ContentTypeControls';
 import SortControls from '@/components/Shared/SortControls';
 import { CanaryActionController } from '@/components/Canary';
-import { getCategories, getPostsBySlug, getRecentPosts } from '@/sanity/sanity.query';
+import { getCategories, getCategorySeo, getPostsBySlug, getRecentPosts } from '@/sanity/sanity.query';
 import ListCard from '@/components/Post/ListCard';
 import { normalizeContentSort, sortContentItems } from '@/utils/contentSort';
 import { filterContentItemsByType, normalizeContentTypeFilter } from '@/utils/contentTypeFilter';
-
-export const metadata = {
-    title: "Categorías",
-    description: `Aquí encontrara todos mis posts y proyectos.`,
-};
+import { buildMetadata } from '@/utils/seoMetadata';
 
 const formatSlug = (slug) => {
     return slug
@@ -21,6 +17,24 @@ const formatSlug = (slug) => {
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');
 };
+
+export async function generateMetadata({ params }) {
+    const { posts: slug } = await params;
+    let seo;
+
+    try {
+        seo = await getCategorySeo(slug);
+    } catch (error) {
+        console.error(`No fue posible cargar el SEO de la categoría ${slug}.`, error);
+    }
+
+    return buildMetadata({
+        seo,
+        title: formatSlug(slug),
+        description: 'Explora mis artículos y proyectos organizados por categoría.',
+        pathname: `/search/${slug}`,
+    });
+}
 
 const PostsPage = async ({ params, searchParams }) => {
     const [resolvedParams, resolvedSearchParams] = await Promise.all([params, searchParams]);

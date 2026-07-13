@@ -4,11 +4,11 @@ import Layout from '@/components/Shared/Layout';
 import LottieAnimation from '@/components/Contact/LottieAnimation';
 import ContactForm from '@/components/Contact/ContactForm';
 import siteMetadata from '@/utils/siteMetaData';
+import { getStaticPageMetadata } from '@/utils/seoMetadata';
 
-export const metadata = {
-    title: "Contactame",
-    description: `Contáctame a través del formulario disponible en esta página o envíame un correo electrónico a ${siteMetadata.email}`,
-};
+export async function generateMetadata() {
+    return getStaticPageMetadata('contact');
+}
 
 const contact = () => {
     return (

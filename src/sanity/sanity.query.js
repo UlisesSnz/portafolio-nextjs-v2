@@ -1,5 +1,6 @@
 import { groq } from 'next-sanity';
 import { client } from './lib/client';
+import { SEO_DEFAULT_DOCUMENT_ID, SEO_PAGE_BY_KEY } from './seoPages';
 
 const DEFAULT_REVALIDATE_SECONDS = 300;
 const DEFAULT_FETCH_OPTIONS = {
@@ -8,6 +9,70 @@ const DEFAULT_FETCH_OPTIONS = {
 const NO_STORE_FETCH_OPTIONS = {
     cache: 'no-store',
 };
+
+const PAGE_SEO_QUERY = groq`{
+    "title": coalesce(
+        *[_id == $pageId][0].seo.title,
+        *[_id == $defaultId][0].seo.title
+    ),
+    "description": coalesce(
+        *[_id == $pageId][0].seo.description,
+        *[_id == $defaultId][0].seo.description
+    ),
+    "image": coalesce(
+        *[_id == $pageId][0].seo.image,
+        *[_id == $defaultId][0].seo.image
+    )
+}`;
+
+export async function getPageSeo(pageKey) {
+    const page = SEO_PAGE_BY_KEY[pageKey];
+
+    if (!page) {
+        throw new Error(`Página SEO no soportada: ${pageKey}`);
+    }
+
+    return client.fetch(
+        PAGE_SEO_QUERY,
+        { pageId: page.documentId, defaultId: SEO_DEFAULT_DOCUMENT_ID },
+        DEFAULT_FETCH_OPTIONS
+    );
+}
+
+export async function getDefaultSeo() {
+    return client.fetch(
+        PAGE_SEO_QUERY,
+        { pageId: SEO_DEFAULT_DOCUMENT_ID, defaultId: SEO_DEFAULT_DOCUMENT_ID },
+        DEFAULT_FETCH_OPTIONS
+    );
+}
+
+export async function getCategorySeo(slug) {
+    return client.fetch(
+        groq`{
+            "title": coalesce(
+                *[_type == "category" && slug.current == $slug][0].seo.title,
+                *[_type == "category" && slug.current == $slug][0].name
+            ),
+            "description": coalesce(
+                *[_type == "category" && slug.current == $slug][0].seo.description,
+                *[_id == $categoriesId][0].seo.description,
+                *[_id == $defaultId][0].seo.description
+            ),
+            "image": coalesce(
+                *[_type == "category" && slug.current == $slug][0].seo.image,
+                *[_id == $categoriesId][0].seo.image,
+                *[_id == $defaultId][0].seo.image
+            )
+        }`,
+        {
+            slug,
+            categoriesId: SEO_PAGE_BY_KEY.categories.documentId,
+            defaultId: SEO_DEFAULT_DOCUMENT_ID,
+        },
+        DEFAULT_FETCH_OPTIONS
+    );
+}
 
 export async function getProfile() {
     return client.fetch(
@@ -95,10 +160,10 @@ export async function getSingleProject(slug) {
             _id,
             name,
             shortDescription,
-            openGraphDescription,
-            openGraphImage{
-                alt,
-                asset
+            "seo": {
+                "title": coalesce(seo.title, name),
+                "description": coalesce(seo.description, shortDescription),
+                "image": coalesce(seo.image, coverImage)
             },
             coverImage {
                 alt,
@@ -219,10 +284,10 @@ export async function getSingleArticle(slug) {
             _id,
             name,
             shortDescription,
-            openGraphDescription,
-            openGraphImage{
-                alt,
-                asset
+            "seo": {
+                "title": coalesce(seo.title, name),
+                "description": coalesce(seo.description, shortDescription),
+                "image": coalesce(seo.image, coverImage)
             },
             coverImage {
                 alt,

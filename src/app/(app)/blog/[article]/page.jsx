@@ -2,7 +2,7 @@ import { getArticles, getSingleArticle } from '@/sanity/sanity.query';
 import Post from '@/components/Post';
 import { notFound } from 'next/navigation';
 import siteMetadata from '@/utils/siteMetaData';
-import { urlFor } from '@/sanity/lib/image';
+import { buildMetadata } from '@/utils/seoMetadata';
 
 export const dynamic = 'force-static';
 
@@ -22,39 +22,13 @@ export async function generateMetadata({ params }) {
     return {};
   }
 
-  const shareUrl = `${siteMetadata.siteUrl}/blog/${slug}`;
-  const description = article.openGraphDescription || article.shortDescription || siteMetadata.description;
-  const openGraphImageUrl = article.openGraphImage
-    ? urlFor(article.openGraphImage).width(1200).height(630).fit('crop').url()
-    : article.coverImage?.image;
-
-  return {
+  return buildMetadata({
+    seo: article.seo,
     title: article.name,
-    description,
-    alternates: {
-      canonical: shareUrl,
-    },
-    openGraph: {
-      title: article.name,
-      description,
-      url: shareUrl,
-      siteName: siteMetadata.title,
-      locale: siteMetadata.locale,
-      type: 'article',
-      images: openGraphImageUrl ? [{
-        url: openGraphImageUrl,
-        width: 1200,
-        height: 630,
-        alt: article.openGraphImage?.alt || article.coverImage?.alt || article.name,
-      }] : undefined,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: article.name,
-      description,
-      images: openGraphImageUrl ? [openGraphImageUrl] : undefined,
-    },
-  };
+    description: article.shortDescription,
+    pathname: `/blog/${slug}`,
+    type: 'article',
+  });
 }
 
 const article = async ({ params, searchParams }) => {

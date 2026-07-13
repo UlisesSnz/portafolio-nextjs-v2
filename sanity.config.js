@@ -20,7 +20,15 @@ export default defineConfig({
   projectId,
   dataset,
   // Add and edit the content schema in the './sanity/schemaTypes' folder
-  schema,
+  schema: {
+    ...schema,
+    templates: (templates) => templates.filter((template) => template.schemaType !== 'seoPage'),
+  },
+  document: {
+    actions: (actions, context) => context.schemaType === 'seoPage'
+      ? actions.filter((action) => action.action !== 'duplicate')
+      : actions,
+  },
   plugins: [
     structureTool({structure}),
     codeInput(),

@@ -1,6 +1,6 @@
-import { defineField } from 'sanity';
+import { defineField, defineType } from 'sanity';
 
-const project = {
+const project = defineType({
     name: "project",
     title: "Project",
     description: "Project Schema",
@@ -20,12 +20,9 @@ const project = {
             validation: (rule) => rule.max(180).required(),
         }),
         defineField({
-            name: "openGraphDescription",
-            title: "Open Graph Description",
-            type: "text",
-            description: "Description used when sharing this project on social media.",
-            rows: 3,
-            validation: (rule) => rule.max(200),
+            name: "seo",
+            title: "SEO",
+            type: "seo",
         }),
         defineField({
             name: "slug",
@@ -49,20 +46,6 @@ const project = {
                 },
             ],
         },
-        defineField({
-            name: "openGraphImage",
-            title: "Open Graph Image",
-            type: "image",
-            description: "Image used in social previews. Recommended size: 1200x630 px.",
-            options: { hotspot: true },
-            fields: [
-                defineField({
-                    name: "alt",
-                    title: "Alt",
-                    type: "string",
-                }),
-            ],
-        }),
         {
             name: "githubUrl",
             title: "GitHub URL",
@@ -143,6 +126,6 @@ const project = {
             initialValue: () => new Date().toISOString().split('T')[0],
         }),
     ],
-};
+});
 
 export default project;

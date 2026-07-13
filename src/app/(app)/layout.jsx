@@ -5,40 +5,53 @@ import Footer from '@/components/Footer';
 import siteMetadata from '@/utils/siteMetaData';
 import Script from 'next/script';
 import { Analytics } from "@vercel/analytics/next"
+import { getDefaultSeo } from '@/sanity/sanity.query';
+import { buildMetadata } from '@/utils/seoMetadata';
 
 const montserrat = Montserrat({
     subsets: ["latin"],
     variable: "--font-mont",
 });
 
-export const metadata = {
-    metadataBase: new URL(siteMetadata.siteUrl),
-    title: {
-        template: `%s | ${siteMetadata.title}`,
-        default: siteMetadata.title,
-    },
-    description: siteMetadata.description,
-    openGraph: {
-        title: siteMetadata.title,
+export async function generateMetadata() {
+    let seo;
+
+    try {
+        seo = await getDefaultSeo();
+    } catch (error) {
+        console.error('No fue posible cargar el SEO predeterminado.', error);
+    }
+
+    const brandTitle = seo?.title || siteMetadata.title;
+    const metadata = buildMetadata({
+        seo,
+        title: brandTitle,
         description: siteMetadata.description,
-        url: siteMetadata.siteUrl,
-        siteName: siteMetadata.title,
-        locale: siteMetadata.locale,
-        type: "website",
-    },
-    robots: {
-        index: true,
-        follow: true,
-        googleBot: {
+        pathname: '/',
+        absoluteTitle: true,
+    });
+
+    return {
+        ...metadata,
+        metadataBase: new URL(siteMetadata.siteUrl),
+        title: {
+            template: `%s | ${brandTitle}`,
+            default: brandTitle,
+        },
+        robots: {
             index: true,
             follow: true,
-            noimageindex: true,
-            "max-video-preview": -1,
-            "max-image-preview": "large",
-            "max-snippet": -1,
+            googleBot: {
+                index: true,
+                follow: true,
+                noimageindex: true,
+                "max-video-preview": -1,
+                "max-image-preview": "large",
+                "max-snippet": -1,
+            },
         },
-    },
-};
+    };
+}
 
 export default function RootLayout({ children }) {
     return (

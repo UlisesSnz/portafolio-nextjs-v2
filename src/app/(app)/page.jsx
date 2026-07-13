@@ -7,6 +7,11 @@ import { LinkArrow } from '@/components/Shared/Icons';
 import HireMe from '../../components/Home/HireMe';
 import lighBulb from '../../../public/images/svgs/spotlight.svg';
 import { getProfile } from '@/sanity/sanity.query';
+import { getStaticPageMetadata } from '@/utils/seoMetadata';
+
+export async function generateMetadata() {
+    return getStaticPageMetadata('home');
+}
 
 export default async function Home() {
     const profile = await getProfile();

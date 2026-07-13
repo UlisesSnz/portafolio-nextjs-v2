@@ -12,11 +12,11 @@ import {
   getContentTagOptions,
   normalizeContentTags,
 } from '@/utils/contentTagFilter';
+import { getStaticPageMetadata } from '@/utils/seoMetadata';
 
-export const metadata = {
-  title: "Proyectos",
-  description: `Conoce algunos proyectos que muestran mi habilidad en desarrollo web.`,
-};
+export async function generateMetadata() {
+  return getStaticPageMetadata('projects');
+}
 
 const ProjectsPage = async ({ searchParams }) => {
   const resolvedSearchParams = await searchParams;
