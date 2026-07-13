@@ -1,5 +1,5 @@
 import { timingSafeEqual } from 'node:crypto';
-import { revalidatePath, revalidateTag } from 'next/cache';
+import { revalidateTag } from 'next/cache';
 
 export const runtime = 'nodejs';
 
@@ -60,8 +60,6 @@ export async function POST(request) {
     for (const tag of tags) {
         revalidateTag(`sanity:${tag}`, { expire: 0 });
     }
-
-    revalidatePath('/', 'layout');
 
     return Response.json({ revalidated: tags.length });
 }
