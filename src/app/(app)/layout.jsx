@@ -8,6 +8,7 @@ import { Analytics } from "@vercel/analytics/next"
 import { getDefaultSeo } from '@/sanity/sanity.query';
 import { SanityLive } from '@/sanity/lib/live';
 import { refreshPublishedContent } from '@/sanity/lib/liveAction';
+import { ProductionSanityLive } from '@/sanity/lib/ProductionSanityLive';
 import { buildMetadata } from '@/utils/seoMetadata';
 
 const montserrat = Montserrat({
@@ -75,11 +76,14 @@ export default function RootLayout({ children }) {
                 <Footer />
                 <div id='modal' />
                 <Analytics />
-                <SanityLive
-                    includeDrafts={false}
-                    waitFor={isProduction ? 'function' : undefined}
-                    action={isProduction ? 'refresh' : refreshPublishedContent}
-                />
+                {isProduction ? (
+                    <ProductionSanityLive />
+                ) : (
+                    <SanityLive
+                        includeDrafts={false}
+                        action={refreshPublishedContent}
+                    />
+                )}
             </body>
         </html>
     );
