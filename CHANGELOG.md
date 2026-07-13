@@ -8,14 +8,14 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 
 ## Vista rapida (Q3 2026 en progreso)
 
-- Estado general: mejoras de navegacion y descubrimiento de contenido en curso.
+- Estado general: mejoras de navegacion, descubrimiento de contenido, SEO, contenido en tiempo real y experiencia interactiva en curso.
 - Stack actual: Next.js 16, React 19, Sanity 5, ESLint 9.
-- Calidad tecnica: build validado con Turbopack tras integrar filtros de contenido.
+- Calidad tecnica: lint y build de produccion validados tras integrar filtros, SEO administrable, Sanity Live y Canary.
 - Riesgos abiertos: no se registran bloqueantes activos.
 
 ## 2026
 
-### Q3 (Jul-Sep) - Navegacion y descubrimiento de contenido
+### Q3 (Jul-Sep) - Navegacion, descubrimiento de contenido, SEO y experiencia interactiva
 
 #### Resumen
 
@@ -23,7 +23,17 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 - Se agrego filtrado multi-select por etiquetas en proyectos y blog.
 - Se incorporo un filtro por tipo de contenido en categorias para alternar entre proyectos y posts.
 - Se mantuvo el ordenamiento en servidor para conservar las paginas principales como Server Components.
-- Se valido la integracion con build de produccion usando Turbopack.
+- Se habilito SEO administrable desde Sanity para todas las rutas publicas indexables.
+- Se centralizo la generacion de title, meta description, canonical, Open Graph y Twitter Cards.
+- Se unifico el modelo SEO de articulos, proyectos y categorias y se retiro la compatibilidad con los campos obsoletos.
+- Se sustituyo la revalidacion fija de cinco minutos por Sanity Live para reflejar publicaciones en menos de diez segundos.
+- Se desplego una Sync Tag Function que invalida el cache de Vercel antes de refrescar las pestanas abiertas.
+- Se separaron las lecturas publicas, el listener de comentarios y las escrituras autenticadas para evitar tokens en el navegador.
+- Se retiro el Deploy Hook heredado `Sanity Deploy`; los despliegues por push a GitHub permanecen activos.
+- Se integro Canary como mascota virtual contextual en blog, proyectos y categorias.
+- Se agrego una flor ambiental para dar dinamismo a la mascota y conservar su estado entre vistas.
+- Se ajusto la lectura de vinetas de Canary en mobile y la convivencia con los controles de filtros.
+- Se valido la integracion de filtros, SEO y Canary con build de produccion usando Turbopack.
 
 #### Feature
 
@@ -33,6 +43,38 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 - Agregar filtro multi-select de etiquetas en proyectos y blog con el parametro `tags`.
 - Preservar filtros activos al navegar entre categorias.
 - Incluir `date` y `_type` en consultas de Sanity necesarias para ordenar y filtrar listas combinadas.
+- Crear un objeto SEO reutilizable con titulo opcional, meta description e imagen Open Graph.
+- Agregar una seccion SEO en Studio con documentos de pagina de ID fijo y valores predeterminados.
+- Generar metadata dinamica para inicio, sobre mi, contacto, proyectos, blog y categorias.
+- Aplicar fallbacks de contenido y canonical sin parametros de filtros, orden o comentarios.
+- Reutilizar el objeto SEO en articulos, proyectos y categorias sin mantener campos legacy.
+- Migrar las consultas editoriales a `sanityFetch` con perspectiva published, CDN y etiquetas de sincronizacion.
+- Montar `SanityLive` solo en el layout publico y mantener Studio fuera de la suscripcion en tiempo real.
+- Agregar el endpoint autenticado `/api/revalidate-tags` para invalidar sync tags y el cache de las rutas publicas.
+- Desplegar la funcion `invalidate-tags` en Sanity Blueprints con runtime Node.js 24 y alcance exclusivo al dataset production.
+- Reducir `generateStaticParams` a consultas minimas de slugs publicados y conservar la generacion bajo demanda.
+- Mantener los comentarios visibles y `client.listen` en el navegador sin credenciales, con las escrituras en un cliente exclusivo de servidor.
+- Integrar Canary como mascota contextual en las barras de filtros de proyectos, blog y categorias.
+- Crear un motor de acciones extensible para mapear intenciones del sitio a estados de Canary.
+- Separar render de sprites, dialogos, acciones y estado persistente para facilitar nuevas animaciones.
+- Agregar vinetas contextuales con mensajes automaticos para listados, filtros y estados sin resultados.
+- Incorporar Flower como animacion ambiental que atrae a Canary y se comporta como lampara en modo oscuro.
+
+#### Chore
+
+- Actualizar `next-sanity` a la version 13 e incorporar las dependencias de Sanity Blueprints y Functions.
+- Configurar las variables privadas de Vercel y de la funcion de sync tags sin versionar secretos.
+- Rotar el token de escritura de comentarios, revocar el token publico anterior y eliminar `NEXT_PUBLIC_SANITY_TOKEN`.
+- Eliminar el Deploy Hook `Sanity Deploy` para evitar builds completos en cada publicacion del CMS.
+
+#### Fix
+
+- Invalidar las rutas publicas junto con los sync tags para evitar respuestas del Full Route Cache con contenido anterior.
+- Sincronizar las pestanas del sitio mediante `BroadcastChannel` cuando una conexion de Sanity Live recibe la actualizacion.
+- Mantener `defineLive` en el limite de servidor y usar una version editorial para coordinar el refresco entre pestanas.
+- Orientar a Canary hacia la flor cuando aparece cerca sin requerir desplazamiento.
+- Evitar que la vineta de Canary choque con los botones de filtros en mobile.
+- Mantener visible la vineta tras taps en filtros para permitir lectura en interacciones tactiles.
 
 #### Style
 
@@ -40,11 +82,21 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 - Reutilizar iconos minimalistas desde el archivo compartido de iconos.
 - Agregar icono de etiqueta reconocible para el filtro de tags.
 - Marcar el elemento activo con color primario y fondo suave sin indicadores redundantes.
+- Alinear Canary, Flower y la vineta con la fila compacta de controles.
 
 #### Commits de referencia
 
 - [f874668](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/f874668) - feat: agregar filtros de contenido
 - [e134146](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/e134146) - feat: agregar filtro de tags
+- [6807f3e](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/6807f3e) - feat: agregar SEO administrable desde Sanity
+- [e080f98](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/e080f98) - feat: agregar actualizacion automatica de contenido
+- [a990c32](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/a990c32) - fix: asegurar invalidacion del cache de rutas
+- [2f05a8a](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/2f05a8a) - fix: sincronizar actualizaciones entre pestanas
+- [12bd9fa](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/12bd9fa) - fix: mantener Sanity Live en el servidor
+- [22f7551](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/22f7551) - feat: integrar Canary como mascota contextual
+- [bb97aea](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/bb97aea) - fix: orientar Canary hacia la flor cercana
+- [b526831](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/b526831) - fix: evitar choque de vineta de Canary en movil
+- [9296193](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/9296193) - fix: mantener vineta de Canary tras tap en filtros
 
 ### Q2 (Abr-Jun) - Modernizacion y estabilidad
 
