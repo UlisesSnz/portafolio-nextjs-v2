@@ -7,6 +7,7 @@
 
 # testing
 /coverage
+/.playwright-cli/
 
 # next.js
 /.next/
@@ -30,3 +31,9 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# sanity blueprints local state
+.sanity/blueprint.config.json
+
+# sanity function install artifacts
+/functions/*/node_modules/

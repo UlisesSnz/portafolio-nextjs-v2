@@ -1,4 +1,4 @@
-import { getArticles, getSingleArticle } from '@/sanity/sanity.query';
+import { getArticleSlugs, getSingleArticle } from '@/sanity/sanity.query';
 import Post from '@/components/Post';
 import { notFound } from 'next/navigation';
 import siteMetadata from '@/utils/siteMetaData';
@@ -7,7 +7,7 @@ import { buildMetadata } from '@/utils/seoMetadata';
 export const dynamic = 'force-static';
 
 export async function generateStaticParams() {
-  const articles = await getArticles();
+  const articles = await getArticleSlugs();
   return articles.map(article => ({
     article: article.slug,
   }));

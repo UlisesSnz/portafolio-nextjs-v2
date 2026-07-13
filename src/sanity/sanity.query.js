@@ -1,14 +1,19 @@
+import 'server-only';
+
 import { groq } from 'next-sanity';
-import { client } from './lib/client';
+import { sanityFetch } from './lib/live';
 import { SEO_DEFAULT_DOCUMENT_ID, SEO_PAGE_BY_KEY } from './seoPages';
 
-const DEFAULT_REVALIDATE_SECONDS = 300;
-const DEFAULT_FETCH_OPTIONS = {
-    next: { revalidate: DEFAULT_REVALIDATE_SECONDS },
-};
-const NO_STORE_FETCH_OPTIONS = {
-    cache: 'no-store',
-};
+async function fetchPublished(query, params = {}) {
+    const { data } = await sanityFetch({
+        query,
+        params,
+        perspective: 'published',
+        stega: false,
+    });
+
+    return data;
+}
 
 const PAGE_SEO_QUERY = groq`{
     "title": coalesce(
@@ -32,23 +37,21 @@ export async function getPageSeo(pageKey) {
         throw new Error(`Página SEO no soportada: ${pageKey}`);
     }
 
-    return client.fetch(
+    return fetchPublished(
         PAGE_SEO_QUERY,
-        { pageId: page.documentId, defaultId: SEO_DEFAULT_DOCUMENT_ID },
-        DEFAULT_FETCH_OPTIONS
+        { pageId: page.documentId, defaultId: SEO_DEFAULT_DOCUMENT_ID }
     );
 }
 
 export async function getDefaultSeo() {
-    return client.fetch(
+    return fetchPublished(
         PAGE_SEO_QUERY,
-        { pageId: SEO_DEFAULT_DOCUMENT_ID, defaultId: SEO_DEFAULT_DOCUMENT_ID },
-        DEFAULT_FETCH_OPTIONS
+        { pageId: SEO_DEFAULT_DOCUMENT_ID, defaultId: SEO_DEFAULT_DOCUMENT_ID }
     );
 }
 
 export async function getCategorySeo(slug) {
-    return client.fetch(
+    return fetchPublished(
         groq`{
             "title": coalesce(
                 *[_type == "category" && slug.current == $slug][0].seo.title,
@@ -69,13 +72,12 @@ export async function getCategorySeo(slug) {
             slug,
             categoriesId: SEO_PAGE_BY_KEY.categories.documentId,
             defaultId: SEO_DEFAULT_DOCUMENT_ID,
-        },
-        DEFAULT_FETCH_OPTIONS
+        }
     );
 }
 
 export async function getProfile() {
-    return client.fetch(
+    return fetchPublished(
         groq`*[_type == "profile"]{
             _id,
             fullName,
@@ -92,13 +94,12 @@ export async function getProfile() {
             developerStatistic,
             skills,
         }`,
-        {},
-        DEFAULT_FETCH_OPTIONS
+        {}
     );
 }
 
 export async function getJob() {
-    return client.fetch(
+    return fetchPublished(
         groq`*[_type == "job"]{
             _id,
             name,
@@ -108,13 +109,12 @@ export async function getJob() {
             description,
             years,
         }`,
-        {},
-        DEFAULT_FETCH_OPTIONS
+        {}
     );
 }
 
 export async function getEducation() {
-    return client.fetch(
+    return fetchPublished(
         groq`*[_type == "education"]{
             _id,
             name,
@@ -123,13 +123,12 @@ export async function getEducation() {
             description,
             years,
         }`,
-        {},
-        DEFAULT_FETCH_OPTIONS
+        {}
     );
 }
 
 export async function getProjects() {
-    return client.fetch(
+    return fetchPublished(
         groq`*[_type == "project"] | order(date desc) {
             _id, 
             name,
@@ -146,8 +145,7 @@ export async function getProjects() {
             "date": date,
             categories[]-> { name, "slug": slug.current }
         }`,
-        {},
-        DEFAULT_FETCH_OPTIONS
+        {}
     );
 }
 
@@ -155,7 +153,7 @@ export async function getSingleProject(slug) {
     const wpm = 180;
     const meanWordCharacterCount = 5;
 
-    return client.fetch(
+    return fetchPublished(
         groq`*[_type == "project" && slug.current == $slug][0]{
             _id,
             name,
@@ -188,50 +186,23 @@ export async function getSingleProject(slug) {
             categories[]-> { name, "slug": slug.current },
             "date": date,
         }`,
-        { slug },
-        DEFAULT_FETCH_OPTIONS
-    );
-}
-
-export async function getComments(postId, commentsOrder) {
-    return client.fetch(
-        groq`*[_type == "comment" && relatedDocument._ref == $postId] | order(_createdAt ${commentsOrder}){
-            _id,
-            name,
-            comment,
-            _createdAt,
-        }`,
-        { postId },
-        NO_STORE_FETCH_OPTIONS
-    );
-}
-
-export function getCommentsListen(postId, commentsOrder) {
-    return client.listen(
-        groq`*[_type == "comment" && relatedDocument._ref == $postId] | order(_createdAt ${commentsOrder}){
-            _id,
-            name,
-            comment,
-            _createdAt,
-        }`,
-        { postId }
+        { slug }
     );
 }
 
 export async function getCategories() {
-    return client.fetch(
+    return fetchPublished(
       groq`*[_type == "category"]{
         _id,
         name,
         "slug": slug.current
             }`,
-            {},
-            DEFAULT_FETCH_OPTIONS
+            {}
     );
 }
 
 export async function getPostsBySlug(slug) {
-    return client.fetch(
+    return fetchPublished(
         groq`*[_type in ["project", "article"] && $slug in categories[]->slug.current]{
             _id, 
             _type,
@@ -249,13 +220,12 @@ export async function getPostsBySlug(slug) {
             "date": date,
             categories[]-> { name, "slug": slug.current },
         }`,
-        { slug },
-        DEFAULT_FETCH_OPTIONS
+        { slug }
     );
 }
 
 export async function getArticles() {
-    return client.fetch(
+    return fetchPublished(
         groq`*[_type == "article"]{
             _id, 
             name,
@@ -270,8 +240,7 @@ export async function getArticles() {
             categories[]-> { name, "slug": slug.current },
             "date": date,
         }`,
-        {},
-        DEFAULT_FETCH_OPTIONS
+        {}
     );
 }
 
@@ -279,7 +248,7 @@ export async function getSingleArticle(slug) {
     const wpm = 180;
     const meanWordCharacterCount = 5;
 
-    return client.fetch(
+    return fetchPublished(
         groq`*[_type == "article" && slug.current == $slug][0]{
             _id,
             name,
@@ -310,13 +279,12 @@ export async function getSingleArticle(slug) {
             categories[]-> { name, "slug": slug.current },
             "date": date,
         }`,
-        { slug },
-        DEFAULT_FETCH_OPTIONS
+        { slug }
     );
 }
 
 export async function getRecentPosts() {
-    return client.fetch(
+    return fetchPublished(
         groq`*[_type in ["project", "article"]] | order(date desc) [0..4] {
             _id, 
             name,
@@ -331,7 +299,18 @@ export async function getRecentPosts() {
             categories[]-> { name, "slug": slug.current },
             "date": date,
         }`,
-        {},
-        DEFAULT_FETCH_OPTIONS
+        {}
     );
+}
+
+export async function getArticleSlugs() {
+    return fetchPublished(groq`*[_type == "article" && defined(slug.current)]{
+        "slug": slug.current
+    }`);
+}
+
+export async function getProjectSlugs() {
+    return fetchPublished(groq`*[_type == "project" && defined(slug.current)]{
+        "slug": slug.current
+    }`);
 }

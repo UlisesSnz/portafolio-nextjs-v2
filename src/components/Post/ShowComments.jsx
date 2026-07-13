@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
-import { getComments, getCommentsListen } from '@/sanity/sanity.query';
+import { getComments, getCommentsListen } from '@/sanity/comments.query';
 import Link from 'next/link';
 
 const ShowComments = ({ postId, slug, commentsOrder }) => {

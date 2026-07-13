@@ -6,6 +6,8 @@ import siteMetadata from '@/utils/siteMetaData';
 import Script from 'next/script';
 import { Analytics } from "@vercel/analytics/next"
 import { getDefaultSeo } from '@/sanity/sanity.query';
+import { SanityLive } from '@/sanity/lib/live';
+import { refreshPublishedContent } from '@/sanity/lib/liveAction';
 import { buildMetadata } from '@/utils/seoMetadata';
 
 const montserrat = Montserrat({
@@ -54,6 +56,8 @@ export async function generateMetadata() {
 }
 
 export default function RootLayout({ children }) {
+    const isProduction = process.env.VERCEL_ENV === 'production';
+
     return (
         <html lang="es" suppressHydrationWarning>
             <body className={`${montserrat.variable} font-mont bg-light dark:bg-dark w-full min-h-screen`}>
@@ -71,6 +75,11 @@ export default function RootLayout({ children }) {
                 <Footer />
                 <div id='modal' />
                 <Analytics />
+                <SanityLive
+                    includeDrafts={false}
+                    waitFor={isProduction ? 'function' : undefined}
+                    action={isProduction ? 'refresh' : refreshPublishedContent}
+                />
             </body>
         </html>
     );

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://schemas.sanity.io/blueprints/v2024-10-01/blueprint.schema.json",
+  "blueprintVersion": "2024-10-01",
+  "resources": [
+    {
+      "type": "sanity.function.sync-tag-invalidate",
+      "name": "invalidate-tags",
+      "displayName": "Invalidar caché de contenido publicado",
+      "src": "functions/invalidate-tags",
+      "runtime": "nodejs24.x",
+      "event": {
+        "resource": {
+          "type": "dataset",
+          "id": "5ra9quwh.production"
+        }
+      }
+    }
+  ]
+}

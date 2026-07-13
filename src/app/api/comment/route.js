@@ -1,7 +1,7 @@
-import { client } from '@/sanity/lib/client';
+import { getWriteClient } from '@/sanity/lib/writeClient';
 import { NextResponse } from 'next/server';
 
-export async function POST(req, res) {
+export async function POST(req) {
     const data = await req.json();
     const { name, email, comment, postId } = data;
 
@@ -15,7 +15,7 @@ export async function POST(req, res) {
     }
 
     try {
-        const newComment = await client.create({
+        const newComment = await getWriteClient().create({
         _type: 'comment',
         name,
         email,
