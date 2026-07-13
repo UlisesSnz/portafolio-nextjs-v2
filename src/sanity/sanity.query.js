@@ -50,6 +50,28 @@ export async function getDefaultSeo() {
     );
 }
 
+export async function getPublishedContentVersion() {
+    const documents = await fetchPublished(
+        groq`*[_type in $types] | order(_id asc){
+            _id,
+            _updatedAt
+        }`,
+        {
+            types: [
+                'article',
+                'category',
+                'education',
+                'job',
+                'profile',
+                'project',
+                'seoPage',
+            ],
+        }
+    );
+
+    return JSON.stringify(documents);
+}
+
 export async function getCategorySeo(slug) {
     return fetchPublished(
         groq`{

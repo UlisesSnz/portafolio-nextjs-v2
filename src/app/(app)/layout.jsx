@@ -5,10 +5,10 @@ import Footer from '@/components/Footer';
 import siteMetadata from '@/utils/siteMetaData';
 import Script from 'next/script';
 import { Analytics } from "@vercel/analytics/next"
-import { getDefaultSeo } from '@/sanity/sanity.query';
+import { getDefaultSeo, getPublishedContentVersion } from '@/sanity/sanity.query';
 import { SanityLive } from '@/sanity/lib/live';
 import { refreshPublishedContent } from '@/sanity/lib/liveAction';
-import { ProductionSanityLive } from '@/sanity/lib/ProductionSanityLive';
+import { SanityLiveTabSync } from '@/sanity/lib/SanityLiveTabSync';
 import { buildMetadata } from '@/utils/seoMetadata';
 
 const montserrat = Montserrat({
@@ -56,8 +56,11 @@ export async function generateMetadata() {
     };
 }
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
     const isProduction = process.env.VERCEL_ENV === 'production';
+    const contentVersion = isProduction
+        ? await getPublishedContentVersion()
+        : undefined;
 
     return (
         <html lang="es" suppressHydrationWarning>
@@ -77,7 +80,14 @@ export default function RootLayout({ children }) {
                 <div id='modal' />
                 <Analytics />
                 {isProduction ? (
-                    <ProductionSanityLive />
+                    <>
+                        <SanityLive
+                            includeDrafts={false}
+                            waitFor="function"
+                            action="refresh"
+                        />
+                        <SanityLiveTabSync version={contentVersion} />
+                    </>
                 ) : (
                     <SanityLive
                         includeDrafts={false}

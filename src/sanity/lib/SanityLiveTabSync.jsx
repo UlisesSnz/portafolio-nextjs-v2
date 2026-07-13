@@ -1,8 +1,7 @@
 'use client';
 
-import { startTransition, useEffect } from 'react';
+import { startTransition, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { SanityLive } from './live';
 
 const CHANNEL_NAME = 'sanity-live-refresh';
 const STORAGE_KEY = 'sanity-live-refresh';
@@ -17,12 +16,7 @@ function getTabId() {
     return tabId;
 }
 
-async function refreshPublishedTabs() {
-    const message = {
-        source: getTabId(),
-        timestamp: Date.now(),
-    };
-
+function notifyOtherTabs(message) {
     if ('BroadcastChannel' in window) {
         const channel = new BroadcastChannel(CHANNEL_NAME);
         channel.postMessage(message);
@@ -30,19 +24,39 @@ async function refreshPublishedTabs() {
     } else {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(message));
     }
-
-    return 'refresh';
 }
 
-export function ProductionSanityLive() {
+export function SanityLiveTabSync({ version }) {
     const router = useRouter();
+    const previousVersion = useRef(version);
+    const remoteVersion = useRef();
 
     useEffect(() => {
-        const refresh = (source) => {
-            if (source === getTabId()) {
+        if (previousVersion.current === version) {
+            return;
+        }
+
+        previousVersion.current = version;
+
+        if (remoteVersion.current === version) {
+            remoteVersion.current = undefined;
+            return;
+        }
+
+        notifyOtherTabs({
+            source: getTabId(),
+            timestamp: Date.now(),
+            version,
+        });
+    }, [version]);
+
+    useEffect(() => {
+        const refresh = (message) => {
+            if (!message || message.source === getTabId()) {
                 return;
             }
 
+            remoteVersion.current = message.version;
             startTransition(() => router.refresh());
         };
 
@@ -52,9 +66,9 @@ export function ProductionSanityLive() {
             }
 
             try {
-                refresh(JSON.parse(event.newValue).source);
+                refresh(JSON.parse(event.newValue));
             } catch {
-                refresh();
+                refresh({});
             }
         };
 
@@ -62,7 +76,7 @@ export function ProductionSanityLive() {
 
         if ('BroadcastChannel' in window) {
             channel = new BroadcastChannel(CHANNEL_NAME);
-            channel.addEventListener('message', (event) => refresh(event.data?.source));
+            channel.addEventListener('message', (event) => refresh(event.data));
         } else {
             window.addEventListener('storage', handleStorage);
         }
@@ -73,11 +87,5 @@ export function ProductionSanityLive() {
         };
     }, [router]);
 
-    return (
-        <SanityLive
-            includeDrafts={false}
-            waitFor="function"
-            action={refreshPublishedTabs}
-        />
-    );
+    return null;
 }
