@@ -4300,7 +4300,7 @@
         },
         "description[231].children[1].text": {
           "source": "frases reflexivas",
-          "en": "Reflective Quotes"
+          "en": "reflexive phrases"
         },
         "description[231].children[2].text": {
           "source": " y las ",
@@ -4320,7 +4320,7 @@
         },
         "description[233].children[0].text": {
           "source": "Reflexiva:",
-          "en": "Reflective:"
+          "en": "Reflexive:"
         },
         "description[233].children[2].text": {
           "source": "John and Mary hate themselves when they fight.",
@@ -7261,6 +7261,6 @@
   "review": {
     "locale": "en",
     "approach": "Machine-assisted first pass with editorial overrides for titles, terminology and key copy.",
-    "reviewedOverrides": 102
+    "reviewedOverrides": 104
   }
 }

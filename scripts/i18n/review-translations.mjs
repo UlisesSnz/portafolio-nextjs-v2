@@ -80,6 +80,8 @@ const TEXT_OVERRIDES = {
   'Doble posesivo': 'Double Possessive',
   'Pronombres personales sujeto': 'Subject Pronouns',
   'Pronombres personales objeto': 'Object Pronouns',
+  'frases reflexivas': 'reflexive phrases',
+  'Reflexiva:': 'Reflexive:',
   'Composición': 'Structure',
 }
 
