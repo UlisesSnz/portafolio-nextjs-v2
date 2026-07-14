@@ -97,6 +97,8 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 - Alinear Canary, Flower y la vineta con la fila compacta de controles.
 - Igualar tamano, alineacion y contraste del selector de idioma con el control de tema.
 - Animar estrellas sutiles alrededor del icono de idioma y respetar `prefers-reduced-motion`.
+- Unificar la separacion entre los iconos sociales y los controles de idioma y tema.
+- Aumentar a 28 px los controles de idioma y tema en mobile y separar visualmente las utilidades de las redes sociales.
 
 #### Commits de referencia
 
@@ -117,6 +119,7 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 - [247b1e0](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/247b1e0) - fix: mejorar revision editorial del contenido ingles
 - [f99897e](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/f99897e) - fix: corregir terminologia de pronombres reflexivos
 - [ecab222](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/ecab222) - feat: mejorar selector de idioma animado
+- [1718031](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/1718031) - style: unificar controles de navegacion
 
 ### Q2 (Abr-Jun) - Modernizacion y estabilidad
 
