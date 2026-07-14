@@ -31,7 +31,7 @@ const LanguageSwitcher = ({ className = '' }) => {
       )}
       aria-label={accessibleLabel}
       title={accessibleLabel}
-      className={`ml-3 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-dark p-1 text-light transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-light dark:bg-light dark:text-dark dark:focus-visible:ring-primaryDark dark:focus-visible:ring-offset-dark ${className}`}
+      className={`mx-3 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-dark p-1 text-light transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-light dark:bg-light dark:text-dark dark:focus-visible:ring-primaryDark dark:focus-visible:ring-offset-dark ${className}`}
     >
       <GlobeIcon className="h-full w-full" aria-hidden="true" />
     </a>

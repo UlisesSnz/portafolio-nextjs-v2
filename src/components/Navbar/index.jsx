@@ -84,6 +84,11 @@ const Navbar = ({ englishEnabled = false }) => {
                 <nav className="flex items-center justify-center flex-wrap">
                     <SocialLinks />
 
+                    <span
+                        aria-hidden="true"
+                        className="h-5 w-px shrink-0 bg-dark/30 dark:bg-light/30"
+                    />
+
                     {englishEnabled && (
                         <Suspense fallback={null}>
                             <LanguageSwitcher />
@@ -132,18 +137,23 @@ const Navbar = ({ englishEnabled = false }) => {
                     <nav className="flex items-center justify-center flex-wrap mt-2">
                         <MobileSocialLinks />
 
+                        <span
+                            aria-hidden="true"
+                            className="h-5 w-px shrink-0 bg-light/40 dark:bg-dark/40"
+                        />
+
                         {englishEnabled && (
                             <Suspense fallback={null}>
-                                <LanguageSwitcher className="sm:ml-1" />
+                                <LanguageSwitcher className="sm:mx-1 sm:h-7 sm:w-7" />
                             </Suspense>
                         )}
 
                         <button
                             onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}
                             aria-label={t('switchTheme', { mode: t(mode === 'light' ? 'dark' : 'light') })}
-                            className={`ml-3 sm:ml-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full p-1
+                            className={`ml-3 sm:ml-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full p-1 sm:h-7 sm:w-7
                                 ${mode === 'light' ? 'bg-dark text-light' : 'bg-light text-dark'}
-                            `}
+                        `}
                         >
                             {
                                 mode === 'dark'
