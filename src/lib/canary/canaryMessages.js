@@ -1,149 +1,110 @@
-import { normalizeCanaryAction } from "./canaryActions";
-
-const formatter = new Intl.DateTimeFormat("es", {
-  day: "numeric",
-  month: "long",
-  year: "numeric",
-});
-
-const pluralize = (count, singular, plural) => (count === 1 ? singular : plural);
+import { normalizeCanaryAction } from './canaryActions';
 
 export const normalizeCanaryDialogues = (dialogues = []) => {
-  if (!Array.isArray(dialogues)) {
-    return [];
-  }
+  if (!Array.isArray(dialogues)) return [];
 
   return dialogues
     .filter((dialogue) => dialogue?.enabled !== false && dialogue?.message)
     .map((dialogue) => ({
       _key: dialogue._key,
       message: dialogue.message,
-      action: normalizeCanaryAction(dialogue.action, "talk"),
-      trigger: dialogue.trigger || "auto",
+      action: normalizeCanaryAction(dialogue.action, 'talk'),
+      trigger: dialogue.trigger || 'auto',
     }));
 };
 
-export const getCanaryDialoguesForTrigger = (dialogues = [], trigger = "auto") =>
-  normalizeCanaryDialogues(dialogues).filter(
-    (dialogue) => dialogue.trigger === trigger
-  );
+export const getCanaryDialoguesForTrigger = (dialogues = [], trigger = 'auto') =>
+  normalizeCanaryDialogues(dialogues).filter((dialogue) => dialogue.trigger === trigger);
 
 export const pickCanaryMessage = (messages = [], seed = 0) => {
   const availableMessages = messages.filter((message) => message?.message);
-
-  if (!availableMessages.length) {
-    return null;
-  }
+  if (!availableMessages.length) return null;
 
   return availableMessages[Math.abs(seed) % availableMessages.length];
 };
 
-export const buildCanaryContextMessages = (context = {}) => {
+export const buildCanaryContextMessages = (context = {}, t, formatDate) => {
   const messages = [];
-  const pageType = context.pageType || "site";
-  const contentLabel = context.contentType === "project" ? "proyecto" : "post";
+  const pageType = context.pageType || 'site';
+  const contentType = context.contentType === 'project' ? t('project') : t('post');
   const categories = Array.isArray(context.categories) ? context.categories : [];
   const activeTags = Array.isArray(context.activeTags) ? context.activeTags : [];
 
-  if (pageType === "blog") {
+  if (pageType === 'blog') {
     messages.push({
-      message: `Hay ${context.totalCount ?? 0} ${pluralize(
-        context.totalCount,
-        "post",
-        "posts"
-      )} en esta vista.`,
-      action: context.totalCount === 0 ? "alert" : "talk",
-      trigger: "auto",
+      message: t('blogCount', { count: context.totalCount ?? 0 }),
+      action: context.totalCount === 0 ? 'alert' : 'talk',
+      trigger: 'auto',
     });
   }
 
-  if (pageType === "projects") {
+  if (pageType === 'projects') {
     messages.push({
-      message: `Estoy viendo ${context.totalCount ?? 0} ${pluralize(
-        context.totalCount,
-        "proyecto",
-        "proyectos"
-      )}.`,
-      action: context.totalCount === 0 ? "alert" : "talk",
-      trigger: "auto",
+      message: t('projectCount', { count: context.totalCount ?? 0 }),
+      action: context.totalCount === 0 ? 'alert' : 'talk',
+      trigger: 'auto',
     });
   }
 
-  if (pageType === "search") {
+  if (pageType === 'search') {
+    const category = context.categoryName || t('categoryFallback');
     messages.push({
-      message:
-        context.totalCount === 0
-          ? `No encontré resultados para ${context.categoryName || "esta categoría"}.`
-          : `Encontré ${context.totalCount} ${pluralize(
-              context.totalCount,
-              "resultado",
-              "resultados"
-            )} para ${context.categoryName || "esta categoría"}.`,
-      action: context.totalCount === 0 ? "alert" : "talk",
-      trigger: "auto",
+      message: context.totalCount === 0
+        ? t('searchEmpty', { category })
+        : t('searchCount', { count: context.totalCount, category }),
+      action: context.totalCount === 0 ? 'alert' : 'talk',
+      trigger: 'auto',
     });
   }
 
-  if (pageType === "detail") {
+  if (pageType === 'detail') {
     if (context.date) {
       messages.push({
-        message: `Este ${contentLabel} fue publicado el ${formatter.format(
-          new Date(context.date)
-        )}.`,
-        action: "talk",
-        trigger: "auto",
+        message: t('published', { type: contentType, date: formatDate(context.date) }),
+        action: 'talk',
+        trigger: 'auto',
       });
     }
 
     if (context.estimatedReadingTime) {
       messages.push({
-        message: `Se lee en unos ${context.estimatedReadingTime} minutos.`,
-        action: "talk",
-        trigger: "onHover",
+        message: t('reading', { minutes: context.estimatedReadingTime }),
+        action: 'talk',
+        trigger: 'onHover',
       });
     }
 
     if (categories.length) {
       messages.push({
-        message: `Lo tengo marcado en ${categories
-          .map((category) => `#${category.name}`)
-          .join(", ")}.`,
-        action: "talk",
-        trigger: "onHover",
+        message: t('marked', { categories: categories.map(({ name }) => `#${name}`).join(', ') }),
+        action: 'talk',
+        trigger: 'onHover',
       });
     }
   }
 
-  if (pageType === "notFound") {
-    messages.push({
-      message: "Esta ruta no existe. Yo también estoy confundido.",
-      action: "glitch",
-      trigger: "auto",
-    });
+  if (pageType === 'notFound') {
+    messages.push({ message: t('notFound'), action: 'glitch', trigger: 'auto' });
   }
 
   if (activeTags.length) {
     messages.push({
-      message: `Filtro activo: ${activeTags.join(", ")}.`,
-      action: "talk",
-      trigger: "auto",
+      message: t('activeFilter', { tags: activeTags.join(', ') }),
+      action: 'talk',
+      trigger: 'auto',
     });
   }
 
-  if (context.activeType && context.activeType !== "all") {
+  if (context.activeType && context.activeType !== 'all') {
     messages.push({
-      message: `Solo estoy mirando ${context.activeType === "projects" ? "proyectos" : "posts"}.`,
-      action: "talk",
-      trigger: "auto",
+      message: t(context.activeType === 'projects' ? 'onlyProjects' : 'onlyPosts'),
+      action: 'talk',
+      trigger: 'auto',
     });
   }
 
   if (context.activeSort) {
-    messages.push({
-      message: "El orden cambió; voy siguiendo el rastro.",
-      action: "talk",
-      trigger: "onHover",
-    });
+    messages.push({ message: t('sortChanged'), action: 'talk', trigger: 'onHover' });
   }
 
   return messages;

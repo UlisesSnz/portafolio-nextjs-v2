@@ -12,3 +12,12 @@ export const SEO_PAGE_DEFINITIONS = [
 export const SEO_PAGE_BY_KEY = Object.fromEntries(
   SEO_PAGE_DEFINITIONS.map((page) => [page.key, page])
 );
+
+export const getSeoDocumentId = (pageKey, locale) => {
+  if (pageKey === 'default') return `${SEO_DEFAULT_DOCUMENT_ID}-${locale}`;
+
+  const page = SEO_PAGE_BY_KEY[pageKey];
+  if (!page) throw new Error(`Página SEO no soportada: ${pageKey}`);
+
+  return `${page.documentId}-${locale}`;
+};

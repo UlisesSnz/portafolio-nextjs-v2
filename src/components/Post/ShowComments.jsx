@@ -1,9 +1,12 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
 import { getComments, getCommentsListen } from '@/sanity/comments.query';
-import Link from 'next/link';
+import { useFormatter, useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 
-const ShowComments = ({ postId, slug, commentsOrder }) => {
+const ShowComments = ({ postId, contentType, slug, commentsOrder }) => {
+    const t = useTranslations('Comments');
+    const format = useFormatter();
     const [comments, setComments] = useState([]);
     const [loading, setLoading] = useState(true);
     const subscriptionRef = useRef(null);
@@ -48,17 +51,17 @@ const ShowComments = ({ postId, slug, commentsOrder }) => {
 
     return (
         <>
-            <h3 className="font-bold text-4xl w-full text-center my-16 mt-32">Todos los comentarios</h3>
+            <h3 className="font-bold text-4xl w-full text-center my-16 mt-32">{t('all')}</h3>
             {loading &&
                 <div className="animate-pulse">
-                    <p>Cargando comentarios...</p>
+                    <p>{t('loading')}</p>
                 </div>
             }
-            {!loading && comments.length === 0 && <p>Aún no hay comentarios, sé el primero en compartir tu opinión.</p>}
+            {!loading && comments.length === 0 && <p>{t('empty')}</p>}
             {!loading && comments.length > 1 && (
                 <div>
                     <Link
-                        href={`/projects/${slug}?comments=desc`}
+                        href={{ pathname: `/${contentType === 'article' ? 'blog' : 'projects'}/${slug}`, query: { comments: 'desc' } }}
                         scroll={false}
                         className={`mr-3 font-semibold
                             ${commentsOrder === 'desc'
@@ -67,10 +70,10 @@ const ShowComments = ({ postId, slug, commentsOrder }) => {
                             }
                         `}
                     >
-                        Más recientes
+                        {t('newest')}
                     </Link>
                     <Link
-                        href={`/projects/${slug}?comments=asc`}
+                        href={{ pathname: `/${contentType === 'article' ? 'blog' : 'projects'}/${slug}`, query: { comments: 'asc' } }}
                         scroll={false}
                         className={`mr-3 font-semibold
                             ${commentsOrder !== 'desc'
@@ -79,7 +82,7 @@ const ShowComments = ({ postId, slug, commentsOrder }) => {
                             }
                         `}
                     >
-                        Más antiguos
+                        {t('oldest')}
                     </Link>
                 </div>
             )}
@@ -91,7 +94,7 @@ const ShowComments = ({ postId, slug, commentsOrder }) => {
                         {comment.comment}
                     </p>
                     <small className="text-dark/75 dark:text-light/75">
-                        {new Date(comment._createdAt).toLocaleString()}
+                        {format.dateTime(new Date(comment._createdAt), 'commentDate')}
                     </small>
                 </div>
             ))}

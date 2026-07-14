@@ -3,13 +3,20 @@ import { NextResponse } from 'next/server';
 
 export async function POST(req) {
     const data = await req.json();
-    const { name, email, comment, postId } = data;
+    const { name, email, comment, postId, contentType } = data;
 
-    if (!name || !email || !comment || !postId) {
+    if (!name || !email || !comment || !postId || !contentType) {
         return NextResponse.json(
             {
-                message: "Todos los campos son obligatorios",
+                code: 'MISSING_FIELDS',
             },
+            { status: 400 }
+        );
+    }
+
+    if (!['article', 'project'].includes(contentType)) {
+        return NextResponse.json(
+            { code: 'INVALID_CONTENT_TYPE' },
             { status: 400 }
         );
     }
@@ -26,12 +33,12 @@ export async function POST(req) {
         },
     });
     return NextResponse.json(
-        { message: 'Gracias. Lo revisaré muy pronto.', comment: newComment },
+        { code: 'COMMENT_CREATED', comment: newComment },
         { status: 201 }
     );
     } catch (error) {
         return NextResponse.json(
-            { message: 'Por favor vuelve a intentar enviar el comentario.', error: error.message },
+            { code: 'COMMENT_CREATE_FAILED', error: error.message },
             { status: 500 }
         );
     }

@@ -1,11 +1,13 @@
 'use client';
 import Image from 'next/image';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import { motion } from 'framer-motion';
+import { useFormatter } from 'next-intl';
 
 const FramerImage = motion(Image);
 
 const FeaturedArticleCard = ({img, title, categories, summary, link, date}) => {
+    const format = useFormatter();
     return (
       <li className="relative col-span-1 w-full p-4 bg-light border border-solid border-dark rounded-2xl dark:bg-dark dark:border-light">
   
@@ -23,7 +25,7 @@ const FeaturedArticleCard = ({img, title, categories, summary, link, date}) => {
           />
         </Link>
         <div className="flex items-center justify-between text-sm mt-2">
-          <span className="text-primary font-semibold dark:text-primaryDark">{date}</span>
+          <span className="text-primary font-semibold dark:text-primaryDark">{format.dateTime(new Date(`${date}T00:00:00Z`), 'contentDate')}</span>
         </div>
         <Link href={link}>
           <h2 className="capitalize text-2xl font-bold my-2 mt-2 hover:underline xs:text-lg ">{title}</h2>

@@ -1,6 +1,6 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter } from '@/i18n/navigation';
 
 const CustomMobileLink = ({href, title, className="", toggle}) => {
     const router = useRouter()

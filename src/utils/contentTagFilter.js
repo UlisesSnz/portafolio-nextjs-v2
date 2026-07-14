@@ -1,18 +1,18 @@
-const tagCollator = new Intl.Collator("es", {
-  numeric: true,
-  sensitivity: "base",
-});
-
-export function getContentTagOptions(items) {
+export function getContentTagOptions(items, locale = "es") {
+  const tagCollator = new Intl.Collator(locale === "es" ? "es-MX" : "en", {
+    numeric: true,
+    sensitivity: "base",
+  });
   const tagsBySlug = new Map();
   const contentItems = Array.isArray(items) ? items : [];
 
   contentItems.forEach((item) => {
     item?.categories?.forEach((category) => {
-      if (!category?.slug || !category?.name) return;
+      const stableKey = category?.key || category?.slug;
+      if (!stableKey || !category?.name) return;
 
-      tagsBySlug.set(category.slug, {
-        value: category.slug,
+      tagsBySlug.set(stableKey, {
+        value: stableKey,
         label: category.name,
       });
     });
@@ -57,7 +57,7 @@ export function filterContentItemsByTags(items, tags = []) {
   const activeTagSet = new Set(activeTags);
 
   return contentItems.filter((item) =>
-    item?.categories?.some((category) => activeTagSet.has(category?.slug))
+    item?.categories?.some((category) => activeTagSet.has(category?.key || category?.slug))
   );
 }
 

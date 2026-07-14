@@ -1,8 +1,11 @@
+import { languageField, localizedPreview } from './localization';
+
 const job = {
     name: "job",
     title: "Job",
     type: "document",
     fields: [
+        languageField,
         {
             name: "name",
             title: "Company Name",
@@ -59,6 +62,10 @@ const job = {
             },
         },
     ],
+    preview: {
+        select: { title: 'name', subtitle: 'jobTitle', language: 'language' },
+        prepare: localizedPreview,
+    },
 };
 
 export default job;

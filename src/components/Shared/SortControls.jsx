@@ -1,15 +1,6 @@
 import MenuFilterControl from "@/components/Shared/MenuFilterControl";
 import { CONTENT_SORT_OPTIONS } from "@/utils/contentSort";
-
-const SORT_OPTIONS = CONTENT_SORT_OPTIONS.map((option) => ({
-  ...option,
-  icon:
-    option.value === "date-desc"
-      ? "clock"
-      : option.value === "name-desc"
-        ? "arrowDown"
-        : "arrowUp",
-}));
+import { useTranslations } from 'next-intl';
 
 const SortControls = ({
   activeSort,
@@ -17,17 +8,30 @@ const SortControls = ({
   className = "",
   query = {},
 }) => {
+  const t = useTranslations('Filters');
+  const labelKeys = {
+    'date-desc': 'latest',
+    'date-asc': 'oldest',
+    'name-asc': 'alphabeticalAsc',
+    'name-desc': 'alphabeticalDesc',
+  };
+  const options = CONTENT_SORT_OPTIONS.map((option) => ({
+    ...option,
+    label: t(labelKeys[option.value]),
+    icon: option.value === 'date-desc' ? 'clock' : option.value === 'name-desc' ? 'arrowDown' : 'arrowUp',
+  }));
+
   return (
     <MenuFilterControl
       activeValue={activeSort}
-      ariaLabel="Ordenar contenido"
+      ariaLabel={t('sortAria')}
       basePath={basePath}
       className={className}
-      options={SORT_OPTIONS}
+      options={options}
       paramName="sort"
       query={query}
       triggerIcon="sort"
-      triggerLabel="Ordenar por"
+      triggerLabel={t('sort')}
     />
   );
 };

@@ -4,8 +4,11 @@ import { useState } from 'react';
 import emailjs from '@emailjs/browser';
 import { toast } from 'sonner';
 import { SendIcon } from '../Shared/Icons';
+import { useLocale, useTranslations } from 'next-intl';
 
-const AddComment = ({ postId, postTitle }) => {
+const AddComment = ({ postId, postTitle, contentType, slug }) => {
+    const t = useTranslations('Comments');
+    const locale = useLocale();
     const [loading, setLoading] = useState(false);
 
     const {
@@ -20,15 +23,16 @@ const AddComment = ({ postId, postTitle }) => {
         const { name, email, comment } = data;
         const res = await fetch('/api/comment', {
             method: 'POST',
-            body: JSON.stringify({ name, email, comment, postId }),
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ name, email, comment, postId, contentType }),
         });
         const result = await res.json();
         if (!res.ok) {
             setLoading(false);
             console.log(result.error)
-            toast.error('Algo salió mal',
+            toast.error(t('error'),
                 {
-                    description: result.message || 'Por favor vuelve a intentar enviar el comentario.',
+                    description: t('errorDescription'),
                 }
             )
             return;
@@ -38,6 +42,7 @@ const AddComment = ({ postId, postTitle }) => {
             process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID_COMMENT,
             {
                 post: postTitle,
+                post_url: `${window.location.origin}/${locale}/${contentType === 'article' ? 'blog' : 'projects'}/${slug}`,
                 name,
                 email,
                 comment,
@@ -46,17 +51,17 @@ const AddComment = ({ postId, postTitle }) => {
         )
             .then(() => {
                 setLoading(false);
-                toast.success('Comentario enviado',
+                toast.success(t('sent'),
                     {
-                        description: result.message || 'Gracias. Lo revisaré muy pronto.',
+                        description: t('sentDescription'),
                     }
                 )
                 reset();
             },error => {
                 setLoading(false);
-                toast.error('Error al notificar',
+                toast.error(t('notificationError'),
                     {
-                        description: 'Se guardó tu comentario, pero ocurrió un error al intentar enviarme una notificación.',
+                        description: t('notificationErrorDescription'),
                     }
                 )
             }
@@ -70,12 +75,11 @@ const AddComment = ({ postId, postTitle }) => {
                 className="flex flex-col border border-solid border-dark dark:border-light rounded-xl p-8 space-y-6"
             >
                 <p className="mb-4">
-                    Comparte tu opinión o plantea tus preguntas. Ten la seguridad de que me tomaré el tiempo
-                    de leer y responder cada comentario.
+                    {t('intro')}
                 </p>
                 <div className="flex flex-row sm:flex-col gap-6">
                     <div className="w-1/2 sm:w-full flex flex-col">
-                        <label className="mb-2 text-sm sm:text-xs font-semibold" htmlFor="comment-name">Nombre</label>
+                        <label className="mb-2 text-sm sm:text-xs font-semibold" htmlFor="comment-name">{t('name')}</label>
                         <input
                             id="comment-name"
                             {...register("name", { required: true, maxLength: 80 })}
@@ -86,8 +90,8 @@ const AddComment = ({ postId, postTitle }) => {
                     </div>
                     <div className="w-1/2 sm:w-full flex flex-col">
                         <label className="mb-2 text-sm sm:text-xs font-semibold" htmlFor="comment-email">
-                            Email&nbsp;
-                            <span className="text-dark/75 dark:text-light/75 text-xs font-normal">(Tu email no será publicado)</span>
+                            {t('email')}&nbsp;
+                            <span className="text-dark/75 dark:text-light/75 text-xs font-normal">{t('emailPrivacy')}</span>
                         </label>
                         <input
                             id="comment-email"
@@ -99,7 +103,7 @@ const AddComment = ({ postId, postTitle }) => {
                     </div>
                 </div>
                 <div className="flex flex-col">
-                    <label className="mb-2 text-sm sm:text-xs font-semibold" htmlFor="comment-content">Comentario</label>
+                    <label className="mb-2 text-sm sm:text-xs font-semibold" htmlFor="comment-content">{t('comment')}</label>
                     <textarea
                         id="comment-content"
                         {...register("comment", { required: true, maxLength: 400 })}
@@ -118,8 +122,8 @@ const AddComment = ({ postId, postTitle }) => {
                 >
                     {
                         loading
-                            ? 'Enviando'
-                            : <>Enviar <SendIcon className={"h-auto ml-1 !w-6 md:!w-4"} /></>
+                            ? t('sending')
+                            : <>{t('send')} <SendIcon className={"h-auto ml-1 !w-6 md:!w-4"} /></>
                     }
                 </button>
             </form>

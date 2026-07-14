@@ -1,12 +1,14 @@
 'use client';
 import Image from 'next/image';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import { motion } from 'framer-motion';
 import { GithubIcon } from '../Shared/Icons';
+import { useTranslations } from 'next-intl';
 
 const FramerImage = motion(Image);
 
 const PostCard = ({title, summary, categories, img, link, github }) => {
+    const t = useTranslations('Post');
     return(
       <article
         className="w-full flex flex-col items-center justify-center rounded-2xl
@@ -44,7 +46,7 @@ const PostCard = ({title, summary, categories, img, link, github }) => {
           <p className="my-2 font-medium text-dark dark:text-light sm:text-sm">{summary}</p>
           <div className="w-full mt-2 flex items-center justify-between">
             <Link href={link} className="text-lg font-semibold underline underline-offset-2 md:text-base">
-              Continuar leyendo
+              {t('continueReading')}
             </Link>
             {github && (
               <Link

@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import Link from 'next/link';
+import { useFormatter, useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import { PortableText } from 'next-sanity';
 import AnimatedText from '@/components/Animations/AnimatedText';
 import { GithubIcon, Pencil } from '@/components/Shared/Icons';
@@ -13,6 +14,7 @@ import fallBackImage from '../../../public/images/profile/developer.png';
 
 const Post = ({
         postId,
+        contentType,
         title,
         estimatedReadingTime,
         coverImage,
@@ -26,6 +28,8 @@ const Post = ({
         date,
         shareUrl
     }) => {
+    const t = useTranslations();
+    const format = useFormatter();
     const imageSrc = coverImage?.image || fallBackImage;
     const imageWidth = coverImage?.imageWidth || 1200;
     const imageHeight = coverImage?.imageHeight || 675;
@@ -40,17 +44,19 @@ const Post = ({
                     />
                     <div className="flex items-center justify-center sm:flex-wrap">
                         <div className="underline underline-offset-2 sm:mb-2">
-                            <a href="../about" className="flex items-center">
+                            <Link href="/about" className="flex items-center">
                                 <span className="flex font-os font-bold dark:font-semibold text-dark/75 dark:text-light/75">
-                                    <Pencil className={"h-auto ml-1 !w-6 md:!w-4"} />Ulises Sánchez
+                                    <Pencil className={"h-auto ml-1 !w-6 md:!w-4"} />{t('Post.author')}
                                 </span>
-                            </a>
+                            </Link>
                         </div>
                         <span className="text-md font-medium mx-8 text-placeholder text-dark/75 dark:text-light/75 sm:mx-4 sm:text-sm sm:mb-2">
-                            {`${estimatedReadingTime} mn de lectura`}
+                            {t('Post.readingTime', { minutes: estimatedReadingTime })}
                         </span>
                         <span className="text-md font-medium text-placeholder text-dark/75 dark:text-light/75 sm:text-sm sm:mb-2">
-                            {`Act. el ${new Date(date).toLocaleDateString()}`}
+                            {t('Post.updated', {
+                                date: format.dateTime(new Date(`${date}T00:00:00Z`), 'contentDate'),
+                            })}
                         </span>
                         <SharePostLinks
                             title={title}
@@ -61,15 +67,15 @@ const Post = ({
                     <div className="text-md mt-6 mb-8 w-full text-center font-medium capitalize text-placeholder text-dark/75 dark:text-light/75 sm:mt-4 sm:mb-6 sm:text-sm sm:leading-snug">
                         {categories && categories.length > 0 && (
                             <span className="flex flex-wrap justify-center gap-2">
-                                Categorías:
+                                {t('Post.categories')}
                                 {categories.map(category => (
-                                    <a
+                                    <Link
                                         key={category.slug}
                                         href={`/search/${category.slug}`}
                                         className="font-semibold capitalize text-primary dark:text-primaryDark underline underline-offset-2"
                                     >
                                         #{category.name}
-                                    </a>
+                                    </Link>
                                 ))}
                             </span>
                         )}
@@ -97,26 +103,26 @@ const Post = ({
                     {(githubUrl && projectUrl) && (
                         <div className="flex flex-col items-end justify-between pl-6 lg:w-full lg:pl-0 lg:pt-6">
                             <div className="mt-16 flex items-end">
-                                <Link
+                                <a
                                     href={githubUrl}
                                     target="_blank"
                                     className="w-10"
                                 >
                                     {" "}
                                     <GithubIcon />{" "}
-                                </Link>
-                                <Link
+                                </a>
+                                <a
                                     href={projectUrl}
                                     target="_blank"
                                     className="ml-4 rounded-lg bg-dark text-light p-2 px-6 text-lg font-semibold dark:bg-light dark:text-dark
                                     sm:px-4 sm:text-base"
                                 >
-                                    Ver Proyecto
-                                </Link>
+                                    {t('Projects.viewProject')}
+                                </a>
                             </div>
                         </div>
                     )}
-                    <Comments postId={postId} title={title} slug={slug} commentsOrder={commentsOrder} />
+                    <Comments postId={postId} contentType={contentType} title={title} slug={slug} commentsOrder={commentsOrder} />
                 </Layout>
             </article>
             <Toaster theme='system' duration={3000} />

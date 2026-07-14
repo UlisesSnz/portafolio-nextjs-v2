@@ -1,8 +1,11 @@
+import { languageField, localizedPreview } from './localization';
+
 const education = {
     name: "education",
     title: "Education",
     type: "document",
     fields: [
+        languageField,
         {
             name: "name",
             title: "Knowledge Name",
@@ -57,6 +60,10 @@ const education = {
             },
         },
     ],
+    preview: {
+        select: { title: 'name', subtitle: 'studyCenter', language: 'language' },
+        prepare: localizedPreview,
+    },
 };
 
 export default education;

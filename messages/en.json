@@ -1,0 +1,176 @@
+{
+  "Navigation": {
+    "home": "Home",
+    "contact": "Contact",
+    "projects": "Projects",
+    "blog": "Blog",
+    "about": "About me",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "switchTheme": "Switch to {mode} mode",
+    "dark": "dark",
+    "light": "light",
+    "switchLanguage": "Change language",
+    "spanish": "Spanish",
+    "english": "English",
+    "visitGitHub": "Visit my GitHub profile",
+    "visitLinkedIn": "Visit my LinkedIn profile",
+    "visitYouTube": "Visit my YouTube channel"
+  },
+  "Home": {
+    "developerAlt": "Developer",
+    "resume": "Résumé",
+    "downloadResume": "Download résumé",
+    "contact": "Contact",
+    "ideaAlt": "Light bulb representing an idea",
+    "emailAria": "Open an email client to send a message to {email}"
+  },
+  "About": {
+    "title": "A little more about me",
+    "biography": "Biography",
+    "programmingLanguages": "Programming languages",
+    "completedProjects": "Completed projects",
+    "technologies": "Technologies learned",
+    "skills": "Skills",
+    "experience": "Experience",
+    "education": "Education",
+    "present": "Present",
+    "certificate": "Certificate"
+  },
+  "Contact": {
+    "title": "Let's connect!",
+    "intro": "Contact me using the form below or send an email to <email>{address}</email>.",
+    "greeting": "Hello! My name is",
+    "namePlaceholder": "your name",
+    "wantContact": "and I would like to get in touch. You can email me at",
+    "emailPlaceholder": "you@email",
+    "orPhone": "or call me on",
+    "phonePlaceholder": "your phone",
+    "details": ". Here are some details about what I would like to discuss:",
+    "messagePlaceholder": "It is about...",
+    "sending": "Sending",
+    "send": "Send",
+    "sent": "Message sent",
+    "sentDescription": "Thank you. I will get back to you as soon as possible.",
+    "error": "Something went wrong",
+    "errorDescription": "Please try sending the message again."
+  },
+  "Projects": {
+    "title": "Innovation lives in imagination",
+    "viewProject": "View project"
+  },
+  "Blog": {
+    "title": "Words can change the world"
+  },
+  "Search": {
+    "categories": "Categories",
+    "recent": "Recent Code and Ideas"
+  },
+  "Filters": {
+    "all": "All",
+    "allContent": "All",
+    "projects": "Projects",
+    "posts": "Posts",
+    "filterType": "Filter by content type",
+    "filterBy": "Filter by",
+    "filterTags": "Filter tags",
+    "filterTagsAria": "Filter by tags",
+    "tag": "tag",
+    "tags": "tags",
+    "sort": "Sort by",
+    "sortAria": "Sort content",
+    "latest": "Latest activity",
+    "oldest": "Oldest",
+    "alphabeticalAsc": "Alphabetical (A-Z)",
+    "alphabeticalDesc": "Alphabetical (Z-A)",
+    "add": "Add {label}",
+    "remove": "Remove {label}"
+  },
+  "Post": {
+    "author": "Ulises Sánchez",
+    "readingTime": "{minutes, plural, one {# min read} other {# min read}}",
+    "updated": "Updated {date}",
+    "categories": "Categories:",
+    "tableOfContents": "Table of contents",
+    "continueReading": "Continue reading"
+  },
+  "Comments": {
+    "title": "Comments",
+    "intro": "Share your thoughts or ask a question. I take the time to read and reply to every comment.",
+    "name": "Name",
+    "email": "Email",
+    "emailPrivacy": "(Your email will not be published)",
+    "comment": "Comment",
+    "sending": "Sending",
+    "send": "Send",
+    "sent": "Comment sent",
+    "sentDescription": "Thank you. I will review it soon.",
+    "error": "Something went wrong",
+    "errorDescription": "Please try sending the comment again.",
+    "notificationError": "Notification failed",
+    "notificationErrorDescription": "Your comment was saved, but I could not be notified.",
+    "all": "All comments",
+    "loading": "Loading comments...",
+    "empty": "There are no comments yet. Be the first to share your thoughts.",
+    "newest": "Newest",
+    "oldest": "Oldest"
+  },
+  "Share": {
+    "trigger": "Share",
+    "aria": "Share post",
+    "title": "Share",
+    "social": "Share on social media",
+    "copy": "Copy link",
+    "copied": "Link copied",
+    "copyError": "The link could not be copied",
+    "shareOn": "Share on {network}",
+    "close": "Close"
+  },
+  "Code": {
+    "copy": "Copy",
+    "copied": "Copied",
+    "copyAria": "Copy code",
+    "imageAlt": "Image"
+  },
+  "Footer": {
+    "rights": "All rights reserved.",
+    "built": "Built with",
+    "about": "About Me"
+  },
+  "NotFound": {
+    "title": "Page not found",
+    "description": "The page you are looking for does not exist or has moved.",
+    "home": "Back to home"
+  },
+  "Canary": {
+    "activateGlitch": "Activate Canary glitch",
+    "blogCount": "There {count, plural, =0 {are no posts} one {is # post} other {are # posts}} in this view.",
+    "projectCount": "I can see {count, plural, =0 {no projects} one {# project} other {# projects}}.",
+    "searchEmpty": "I found no results for {category}.",
+    "searchCount": "I found {count, plural, one {# result} other {# results}} for {category}.",
+    "published": "This {type} was published on {date}.",
+    "reading": "It takes about {minutes} minutes to read.",
+    "marked": "I have tagged it with {categories}.",
+    "notFound": "This route does not exist. I am confused too.",
+    "activeFilter": "Active filter: {tags}.",
+    "onlyProjects": "I am only looking at projects.",
+    "onlyPosts": "I am only looking at posts.",
+    "sortChanged": "The order changed; I am following the trail.",
+    "categoryFallback": "this category",
+    "project": "project",
+    "post": "post"
+  },
+  "Metadata": {
+    "siteDescription": "A web portfolio built with Next.js, Tailwind CSS and Sanity.",
+    "aboutTitle": "About me",
+    "aboutDescription": "Learn more about my professional and personal journey.",
+    "contactTitle": "Contact me",
+    "contactDescription": "Use the contact form or send me an email at {email}.",
+    "projectsTitle": "Projects",
+    "projectsDescription": "Explore projects that showcase my web development experience.",
+    "blogTitle": "Blog",
+    "blogDescription": "Read articles, tutorials and experiences from my personal web development blog.",
+    "categoriesTitle": "Categories",
+    "categoriesDescription": "Explore my articles and projects by category."
+  }
+}

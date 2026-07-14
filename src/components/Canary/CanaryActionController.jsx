@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { usePathname } from "next/navigation";
+import { useFormatter, useTranslations } from 'next-intl';
+import { usePathname } from '@/i18n/navigation';
 import CanaryFlower from "./CanaryFlower";
 import CanarySprite from "./CanarySprite";
 import CanarySpeechBubble from "./CanarySpeechBubble";
@@ -169,6 +170,8 @@ const CanaryActionController = ({
   initialAction,
   size = DEFAULT_CANARY_SIZE,
 }) => {
+  const t = useTranslations('Canary');
+  const format = useFormatter();
   const pathname = usePathname();
   const [initialRuntimeState] = useState(() => readCanaryRuntimeState());
   const actionTimerRef = useRef(null);
@@ -239,8 +242,12 @@ const CanaryActionController = ({
     [dialogues]
   );
   const contextMessages = useMemo(
-    () => buildCanaryContextMessages(context),
-    [context]
+    () => buildCanaryContextMessages(
+      context,
+      t,
+      (date) => format.dateTime(new Date(`${date}T00:00:00Z`), 'contentDate')
+    ),
+    [context, format, t]
   );
   const entryKey = [
     pathname,
@@ -1205,7 +1212,7 @@ const CanaryActionController = ({
         >
           <button
             type="button"
-            aria-label="Activar glitch de Canary"
+            aria-label={t('activateGlitch')}
             className="canary-hitbox shrink-0 rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary dark:focus-visible:outline-primaryDark"
             onClick={() =>
               requestAction("glitch", {

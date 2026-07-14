@@ -1,7 +1,10 @@
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import { toPlainText } from 'next-sanity';
 import slugify from 'slugify';
 import PortableTextCodeBlock from './PortableTextCodeBlock';
+import siteMetadata from '@/utils/siteMetaData';
 
 const tableAlignmentClassMap = {
   left: 'text-left',
@@ -99,6 +102,64 @@ const renderTable = ({ rows, hasHeader = true, columnAlignments = [] }) => {
   );
 };
 
+const PortableImage = ({ value }) => {
+  const t = useTranslations('Code');
+  const caption = value?.caption?.trim();
+
+  return (
+    <figure className="my-10 sm:my-8">
+      <Image
+        src={value.image}
+        alt={value.alt || t('imageAlt')}
+        width={value.imageWidth || 1200}
+        height={value.imageHeight || 675}
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw"
+        className="rounded-xl w-full h-auto"
+      />
+      {caption && (
+        <figcaption className="mt-4 text-sm leading-6 italic text-dark/70 dark:text-light/70">
+          {caption}
+        </figcaption>
+      )}
+    </figure>
+  );
+};
+
+const PortableLink = ({ children, value }) => {
+  const href = value?.href || '#';
+  let internalHref = href.startsWith('/') ? href : null;
+
+  if (href.startsWith('http')) {
+    try {
+      const target = new URL(href);
+      const site = new URL(siteMetadata.siteUrl);
+      if (target.hostname.replace(/^www\./, '') === site.hostname.replace(/^www\./, '')) {
+        internalHref = `${target.pathname.replace(/^\/(es|en)(?=\/|$)/, '') || '/'}${target.search}${target.hash}`;
+      }
+    } catch {
+      internalHref = null;
+    }
+  }
+
+  const isExternal = href.startsWith('http') && !internalHref;
+  const className = 'underline underline-offset-4 hover:opacity-80 transition';
+
+  if (internalHref) {
+    return <Link href={internalHref} className={className}>{children}</Link>;
+  }
+
+  return (
+    <a
+      href={href}
+      target={isExternal ? '_blank' : undefined}
+      rel={isExternal ? 'noopener noreferrer' : undefined}
+      className={className}
+    >
+      {children}
+    </a>
+  );
+};
+
 const PortableTextComponents = {
   types: {
     portableTable: ({ value }) => renderTable({
@@ -109,27 +170,7 @@ const PortableTextComponents = {
     code: ({ value }) => (
       <PortableTextCodeBlock value={value} />
     ),
-    image: ({ value }) => {
-      const caption = value?.caption?.trim();
-
-      return (
-        <figure className="my-10 sm:my-8">
-          <Image
-            src={value.image}
-            alt={value.alt || 'Imagen'}
-            width={value.imageWidth || 1200}
-            height={value.imageHeight || 675}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 50vw"
-            className="rounded-xl w-full h-auto"
-          />
-          {caption && (
-            <figcaption className="mt-4 text-sm leading-6 italic text-dark/70 dark:text-light/70">
-              {caption}
-            </figcaption>
-          )}
-        </figure>
-      );
-    },
+    image: PortableImage,
   },
 
   block: {
@@ -178,19 +219,7 @@ const PortableTextComponents = {
         {children}
       </code>
     ),
-    link: ({ children, value }) => {
-      const target = value?.href?.startsWith('http') ? '_blank' : undefined;
-      return (
-        <a
-          href={value?.href}
-          target={target}
-          rel={target === '_blank' ? 'noopener noreferrer' : undefined}
-          className="underline underline-offset-4 hover:opacity-80 transition"
-        >
-          {children}
-        </a>
-      );
-    },
+    link: PortableLink,
   },
 };
 

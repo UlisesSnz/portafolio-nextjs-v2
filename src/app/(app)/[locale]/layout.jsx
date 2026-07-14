@@ -1,5 +1,8 @@
 import '@/styles/globals.css';
 import { Montserrat } from 'next/font/google';
+import { NextIntlClientProvider, hasLocale } from 'next-intl';
+import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
+import { notFound } from 'next/navigation';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import siteMetadata from '@/utils/siteMetaData';
@@ -10,17 +13,27 @@ import { SanityLive } from '@/sanity/lib/live';
 import { refreshPublishedContent } from '@/sanity/lib/liveAction';
 import { SanityLiveTabSync } from '@/sanity/lib/SanityLiveTabSync';
 import { buildMetadata } from '@/utils/seoMetadata';
+import { routing } from '@/i18n/routing';
+import { getLocaleDefinition } from '@/i18n/config';
+import { isEnglishEnabled } from '@/i18n/runtime';
+import { LocalePathProvider } from '@/components/Navbar/LocalePathContext';
 
 const montserrat = Montserrat({
     subsets: ["latin"],
     variable: "--font-mont",
 });
 
-export async function generateMetadata() {
+export function generateStaticParams() {
+    return routing.locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({ params }) {
+    const { locale } = await params;
+    const t = await getTranslations({ locale, namespace: 'Metadata' });
     let seo;
 
     try {
-        seo = await getDefaultSeo();
+        seo = await getDefaultSeo(locale);
     } catch (error) {
         console.error('No fue posible cargar el SEO predeterminado.', error);
     }
@@ -29,8 +42,9 @@ export async function generateMetadata() {
     const metadata = buildMetadata({
         seo,
         title: brandTitle,
-        description: siteMetadata.description,
+        description: t('siteDescription'),
         pathname: '/',
+        locale,
         absoluteTitle: true,
     });
 
@@ -56,16 +70,26 @@ export async function generateMetadata() {
     };
 }
 
-export default async function RootLayout({ children }) {
+export default async function RootLayout({ children, params }) {
+    const { locale } = await params;
+
+    if (!hasLocale(routing.locales, locale)) {
+        notFound();
+    }
+
+    setRequestLocale(locale);
+    const messages = await getMessages();
+    const localeDefinition = getLocaleDefinition(locale);
+    const englishEnabled = isEnglishEnabled();
     const isProduction = process.env.VERCEL_ENV === 'production';
     const contentVersion = isProduction
-        ? await getPublishedContentVersion()
+        ? await getPublishedContentVersion(locale)
         : undefined;
 
     return (
-        <html lang="es" suppressHydrationWarning>
+        <html lang={localeDefinition.regionalLocale} suppressHydrationWarning>
             <body className={`${montserrat.variable} font-mont bg-light dark:bg-dark w-full min-h-screen`}>
-                <Script id='theme-switcher' strategy='beforeInteractive' >
+                <Script id='theme-switcher' strategy='afterInteractive'>
                     {`
                         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
                             document.documentElement.classList.add('dark')
@@ -74,9 +98,13 @@ export default async function RootLayout({ children }) {
                         }
                     `}
                 </Script>
-                <Navbar />
-                {children}
-                <Footer />
+                <NextIntlClientProvider messages={messages}>
+                    <LocalePathProvider>
+                        <Navbar englishEnabled={englishEnabled} />
+                        {children}
+                        <Footer />
+                    </LocalePathProvider>
+                </NextIntlClientProvider>
                 <div id='modal' />
                 <Analytics />
                 {isProduction ? (

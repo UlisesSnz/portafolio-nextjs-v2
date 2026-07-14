@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity';
+import { isUniqueSlugInLanguage, languageField, localizedPreview } from './localization';
 
 const project = defineType({
     name: "project",
@@ -6,6 +7,7 @@ const project = defineType({
     description: "Project Schema",
     type: "document",
     fields: [
+        languageField,
         {
             name: "name",
             title: "Name",
@@ -29,7 +31,7 @@ const project = defineType({
             title: "Slug",
             type: "slug",
             description: "Add a custom slug for the URL or generate one from the name",
-            options: { source: "name" },
+            options: { source: "name", isUnique: isUniqueSlugInLanguage },
             validation: (rule) => rule.required(),
         }),
         {
@@ -115,7 +117,12 @@ const project = defineType({
             name: "categories",
             title: "Categories",
             type: "array",
-            of: [{ type: "reference", to: [{ type: "category" }] }],
+            of: [{ type: "reference", to: [{ type: "category" }], options: {
+                filter: ({ document }) => ({
+                    filter: 'language == $language',
+                    params: { language: document.language },
+                }),
+            } }],
         },
         defineField({
             name: "date",
@@ -126,6 +133,10 @@ const project = defineType({
             initialValue: () => new Date().toISOString().split('T')[0],
         }),
     ],
+    preview: {
+        select: { title: 'name', subtitle: 'date', media: 'coverImage', language: 'language' },
+        prepare: localizedPreview,
+    },
 });
 
 export default project;

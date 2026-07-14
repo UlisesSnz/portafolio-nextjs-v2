@@ -1,15 +1,6 @@
 import MenuFilterControl from "@/components/Shared/MenuFilterControl";
 import { CONTENT_TYPE_FILTER_OPTIONS } from "@/utils/contentTypeFilter";
-
-const TYPE_OPTIONS = CONTENT_TYPE_FILTER_OPTIONS.map((option) => ({
-  ...option,
-  icon:
-    option.value === "projects"
-      ? "folder"
-      : option.value === "posts"
-        ? "document"
-        : "grid",
-}));
+import { useTranslations } from 'next-intl';
 
 const ContentTypeControls = ({
   activeType,
@@ -17,17 +8,24 @@ const ContentTypeControls = ({
   className = "",
   query = {},
 }) => {
+  const t = useTranslations('Filters');
+  const options = CONTENT_TYPE_FILTER_OPTIONS.map((option) => ({
+    ...option,
+    label: t(option.value === 'all' ? 'allContent' : option.value),
+    icon: option.value === 'projects' ? 'folder' : option.value === 'posts' ? 'document' : 'grid',
+  }));
+
   return (
     <MenuFilterControl
       activeValue={activeType}
-      ariaLabel="Filtrar por tipo de contenido"
+      ariaLabel={t('filterType')}
       basePath={basePath}
       className={className}
-      options={TYPE_OPTIONS}
+      options={options}
       paramName="type"
       query={query}
       triggerIcon="filter"
-      triggerLabel="Filtrar por"
+      triggerLabel={t('filterBy')}
     />
   );
 };

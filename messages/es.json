@@ -1,0 +1,176 @@
+{
+  "Navigation": {
+    "home": "Inicio",
+    "contact": "Contactar",
+    "projects": "Proyectos",
+    "blog": "Blog",
+    "about": "Sobre mí",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "switchTheme": "Cambiar a modo {mode}",
+    "dark": "oscuro",
+    "light": "claro",
+    "switchLanguage": "Cambiar idioma",
+    "spanish": "Español",
+    "english": "Inglés",
+    "visitGitHub": "Visitar mi perfil en GitHub",
+    "visitLinkedIn": "Visitar mi perfil en LinkedIn",
+    "visitYouTube": "Visitar mi canal en YouTube"
+  },
+  "Home": {
+    "developerAlt": "Desarrollador",
+    "resume": "Currículum",
+    "downloadResume": "Descargar currículum",
+    "contact": "Contactar",
+    "ideaAlt": "Foco que hace referencia a tener una idea",
+    "emailAria": "Abrir cliente de correo para enviar un mensaje a {email}"
+  },
+  "About": {
+    "title": "Solo un poco más de mí",
+    "biography": "Biografía",
+    "programmingLanguages": "Lenguajes de programación",
+    "completedProjects": "Proyectos completados",
+    "technologies": "Tecnologías aprendidas",
+    "skills": "Habilidades",
+    "experience": "Experiencia",
+    "education": "Educación",
+    "present": "Presente",
+    "certificate": "Certificado"
+  },
+  "Contact": {
+    "title": "¡Conectemos!",
+    "intro": "Contáctame a través del siguiente formulario o envíame un correo electrónico a <email>{address}</email>.",
+    "greeting": "¡Hola! Mi nombre es",
+    "namePlaceholder": "tu nombre",
+    "wantContact": "y me gustaría contactar contigo. Puedes enviarme un email a",
+    "emailPlaceholder": "tu@email",
+    "orPhone": "o comunicarte al número de teléfono",
+    "phonePlaceholder": "tu teléfono",
+    "details": ". Aquí están algunos detalles sobre lo que me gustaría conversar:",
+    "messagePlaceholder": "Se trata de...",
+    "sending": "Enviando",
+    "send": "Enviar",
+    "sent": "Mensaje enviado",
+    "sentDescription": "Gracias. Me comunicaré contigo lo antes posible.",
+    "error": "Algo salió mal",
+    "errorDescription": "Por favor vuelve a intentar enviar el mensaje."
+  },
+  "Projects": {
+    "title": "La innovación vive en la imaginación",
+    "viewProject": "Ver proyecto"
+  },
+  "Blog": {
+    "title": "Las palabras cambian al mundo"
+  },
+  "Search": {
+    "categories": "Categorías",
+    "recent": "Código e Ideas Recientes"
+  },
+  "Filters": {
+    "all": "Todas",
+    "allContent": "Todos",
+    "projects": "Proyectos",
+    "posts": "Posts",
+    "filterType": "Filtrar por tipo de contenido",
+    "filterBy": "Filtrar por",
+    "filterTags": "Filtrar etiquetas",
+    "filterTagsAria": "Filtrar por etiquetas",
+    "tag": "etiqueta",
+    "tags": "etiquetas",
+    "sort": "Ordenar por",
+    "sortAria": "Ordenar contenido",
+    "latest": "Última actividad",
+    "oldest": "Más antiguos",
+    "alphabeticalAsc": "Alfabético (A-Z)",
+    "alphabeticalDesc": "Alfabético (Z-A)",
+    "add": "Agregar {label}",
+    "remove": "Quitar {label}"
+  },
+  "Post": {
+    "author": "Ulises Sánchez",
+    "readingTime": "{minutes, plural, one {# min de lectura} other {# min de lectura}}",
+    "updated": "Act. el {date}",
+    "categories": "Categorías:",
+    "tableOfContents": "Tabla de contenido",
+    "continueReading": "Continuar leyendo"
+  },
+  "Comments": {
+    "title": "Comentarios",
+    "intro": "Comparte tu opinión o plantea tus preguntas. Ten la seguridad de que me tomaré el tiempo de leer y responder cada comentario.",
+    "name": "Nombre",
+    "email": "Email",
+    "emailPrivacy": "(Tu email no será publicado)",
+    "comment": "Comentario",
+    "sending": "Enviando",
+    "send": "Enviar",
+    "sent": "Comentario enviado",
+    "sentDescription": "Gracias. Lo revisaré muy pronto.",
+    "error": "Algo salió mal",
+    "errorDescription": "Por favor vuelve a intentar enviar el comentario.",
+    "notificationError": "Error al notificar",
+    "notificationErrorDescription": "Se guardó tu comentario, pero ocurrió un error al intentar enviarme una notificación.",
+    "all": "Todos los comentarios",
+    "loading": "Cargando comentarios...",
+    "empty": "Aún no hay comentarios, sé el primero en compartir tu opinión.",
+    "newest": "Más recientes",
+    "oldest": "Más antiguos"
+  },
+  "Share": {
+    "trigger": "Compartir",
+    "aria": "Compartir publicación",
+    "title": "Compartir",
+    "social": "Compartir en redes sociales",
+    "copy": "Copiar enlace",
+    "copied": "Enlace copiado",
+    "copyError": "No se pudo copiar el enlace",
+    "shareOn": "Compartir en {network}",
+    "close": "Cerrar"
+  },
+  "Code": {
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "copyAria": "Copiar código",
+    "imageAlt": "Imagen"
+  },
+  "Footer": {
+    "rights": "Derechos Reservados.",
+    "built": "Construido Con",
+    "about": "Sobre Mí"
+  },
+  "NotFound": {
+    "title": "Página no encontrada",
+    "description": "La página que buscas no existe o fue movida.",
+    "home": "Volver al inicio"
+  },
+  "Canary": {
+    "activateGlitch": "Activar glitch de Canary",
+    "blogCount": "Hay {count, plural, =0 {0 posts} one {# post} other {# posts}} en esta vista.",
+    "projectCount": "Estoy viendo {count, plural, =0 {0 proyectos} one {# proyecto} other {# proyectos}}.",
+    "searchEmpty": "No encontré resultados para {category}.",
+    "searchCount": "Encontré {count, plural, one {# resultado} other {# resultados}} para {category}.",
+    "published": "Este {type} fue publicado el {date}.",
+    "reading": "Se lee en unos {minutes} minutos.",
+    "marked": "Lo tengo marcado en {categories}.",
+    "notFound": "Esta ruta no existe. Yo también estoy confundido.",
+    "activeFilter": "Filtro activo: {tags}.",
+    "onlyProjects": "Solo estoy mirando proyectos.",
+    "onlyPosts": "Solo estoy mirando posts.",
+    "sortChanged": "El orden cambió; voy siguiendo el rastro.",
+    "categoryFallback": "esta categoría",
+    "project": "proyecto",
+    "post": "post"
+  },
+  "Metadata": {
+    "siteDescription": "Un portafolio web creado con Next.js, Tailwind CSS y Sanity.",
+    "aboutTitle": "Sobre mí",
+    "aboutDescription": "Conoce más sobre mi trayectoria profesional y personal.",
+    "contactTitle": "Contáctame",
+    "contactDescription": "Contáctame mediante el formulario o envíame un correo electrónico a {email}.",
+    "projectsTitle": "Proyectos",
+    "projectsDescription": "Conoce algunos proyectos que muestran mi experiencia en desarrollo web.",
+    "blogTitle": "Blog",
+    "blogDescription": "Lee artículos, tutoriales y experiencias sobre desarrollo web en mi blog personal.",
+    "categoriesTitle": "Categorías",
+    "categoriesDescription": "Explora mis artículos y proyectos organizados por categoría."
+  }
+}

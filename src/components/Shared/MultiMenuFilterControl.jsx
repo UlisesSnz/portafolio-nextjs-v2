@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import Link from "next/link";
+import { Link } from '@/i18n/navigation';
 import { FilterIcon, GridIcon, TagIcon } from "@/components/Shared/Icons";
 import { triggerCanaryAction } from "@/lib/canary/canaryActions";
+import { useTranslations } from 'next-intl';
 
 const iconByName = {
   filter: FilterIcon,
@@ -56,6 +57,7 @@ const MultiMenuFilterControl = ({
   triggerLabel,
   unitLabel = "seleccionadas",
 }) => {
+  const t = useTranslations('Filters');
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef(null);
   const buttonRef = useRef(null);
@@ -169,7 +171,7 @@ const MultiMenuFilterControl = ({
                         query: buildQuery(query, paramName, nextValues),
                       }}
                       scroll={false}
-                      aria-label={`${isActive ? "Quitar" : "Agregar"} ${label}`}
+                      aria-label={t(isActive ? 'remove' : 'add', { label })}
                       data-canary-click-intent="filterApply"
                       data-canary-hold="filter"
                       data-canary-message={label}

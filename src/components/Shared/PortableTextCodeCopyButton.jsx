@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 const copyTextToClipboard = async (text) => {
   if (!text) {
@@ -31,6 +32,7 @@ const copyTextToClipboard = async (text) => {
 };
 
 const PortableTextCodeCopyButton = ({ code }) => {
+  const t = useTranslations('Code');
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -50,10 +52,10 @@ const PortableTextCodeCopyButton = ({ code }) => {
     <button
       type="button"
       onClick={handleCopy}
-      aria-label="Copiar codigo"
+      aria-label={t('copyAria')}
       className="rounded-md border border-dark/20 bg-dark/5 px-2.5 py-1 text-xs font-medium text-dark/85 transition hover:bg-dark/10 dark:border-light/20 dark:bg-light/10 dark:!text-light dark:hover:bg-light/15"
     >
-      {copied ? 'Copiado' : 'Copiar'}
+      {copied ? t('copied') : t('copy')}
     </button>
   );
 };

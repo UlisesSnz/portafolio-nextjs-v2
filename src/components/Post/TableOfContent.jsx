@@ -1,4 +1,5 @@
 import slugify from 'slugify';
+import { useTranslations } from 'next-intl';
 
 const nestHeadings = (blocks) => {
     const treeNodes = [];
@@ -80,13 +81,14 @@ const RenderTableOfContent = ({ elements, className }) => {
 }
 
 const TableOfContent = ({ headings }) => {
+    const t = useTranslations('Post');
     return (
         <details className="border-[1px] border-solid border-dark dark:border-light
             rounded-xl p-4 sticky top-6 max-h-[80vh] overflow-hidden overflow-y-auto"
             open
         >
             <summary className="text-lg font-bold cursor-pointer">
-                Tabla de Contenido
+                {t('tableOfContents')}
             </summary>
             <RenderTableOfContent elements={nestHeadings(headings)} />
         </details>

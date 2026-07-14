@@ -1,37 +1,39 @@
 import { SendIcon } from '../Shared/Icons';
+import { useTranslations } from 'next-intl';
 
 const ContactFormInputs = ({ register, handleSubmit, onSubmit, loading }) => {
+    const t = useTranslations('Contact');
     
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="leading-relaxed">
-            ¡Hola! Mi nombre es{" "}
+            {t('greeting')}{" "}
             <input
                 type="text"
-                placeholder="tu nombre"
+                placeholder={t('namePlaceholder')}
                 {...register("name", { required: true, maxLength: 80 })}
                 className="outline-none border-0 p-0 mx-2 focus:ring-0 placeholder:text-center placeholder:text-sm border-b border-gray 
                 focus:border-gray bg-transparent sm:w-1/2 w-1/3"
             />
-            y me gustaría contactar contigo. Puedes enviarme un email a
+            {t('wantContact')}
             <input
                 type="email"
-                placeholder="tu@email"
+                placeholder={t('emailPlaceholder')}
                 {...register("email", { required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i })} 
                 className="outline-none border-0 p-0 mx-2 focus:ring-0 placeholder:text-center placeholder:text-sm border-b border-gray 
                 focus:border-gray bg-transparent sm:w-1/2 w-1/3"
             />
-            o comunicarte al número de teléfono
+            {t('orPhone')}
             <input
                 type="tel"
-                placeholder="tu teléfono"
+                placeholder={t('phonePlaceholder')}
                 {...register("phone", { required: true, maxLength: 20 })}
                 className="outline-none border-0 p-0 mx-2 focus:ring-0 placeholder:text-center placeholder:text-sm border-b border-gray 
                 focus:border-gray bg-transparent sm:w-1/3"
             />
-            . Aquí están algunos detalles sobre lo que me gustaría conversar: <br />
+            {t('details')} <br />
             <textarea
                 {...register("message", { required: true, maxLength: 200 })} 
-                placeholder="Se trata de..."
+                placeholder={t('messagePlaceholder')}
                 rows={3}
                 className="mt-1 sm:mt-0 w-full outline-none border-0 p-0 mx-0 focus:ring-0 placeholder:text-sm border-b border-gray focus:border-gray bg-transparent"
             />
@@ -46,8 +48,8 @@ const ContactFormInputs = ({ register, handleSubmit, onSubmit, loading }) => {
             >
                 {
                     loading
-                        ? 'Enviando'
-                        : <>Enviar <SendIcon className={"h-auto ml-1 !w-6 md:!w-4"} /></>
+                        ? t('sending')
+                        : <>{t('send')} <SendIcon className={"h-auto ml-1 !w-6 md:!w-4"} /></>
                 }
             </button>
         </form>

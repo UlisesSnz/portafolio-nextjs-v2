@@ -2,6 +2,7 @@
 import { useRef } from 'react';
 import { motion, useScroll } from 'framer-motion';
 import Lilcon from './Lilcon';
+import { useTranslations } from 'next-intl';
 
 const Details = ({ position, company, companyLink, time, address, work }) => {
   const ref = useRef(null)
@@ -34,6 +35,7 @@ const Details = ({ position, company, companyLink, time, address, work }) => {
 }
 
 const Experience = ({ job }) => {
+  const t = useTranslations('About');
   const ref = useRef(null);
   
   const {scrollYProgress} = useScroll({
@@ -44,7 +46,7 @@ const Experience = ({ job }) => {
   return (
     <div className="my-64 md:my-32">
       <h2 className="font-bold text-8xl mb-16 w-full text-center md:text-6xl xs:text-4xl">
-        Experiencia
+        {t('experience')}
       </h2>
 
       <div ref={ref} className="w-[75%] mx-auto relative lg:w-[90%] md:w-full">
@@ -63,7 +65,7 @@ const Experience = ({ job }) => {
               time={
                 data.years.endYear
                   ? `${data.years.startYear}-${data.years.endYear}`
-                  : `${data.years.startYear}-Presente`
+                  : `${data.years.startYear}-${t('present')}`
               }
               address={data.location}
               work={data.description}

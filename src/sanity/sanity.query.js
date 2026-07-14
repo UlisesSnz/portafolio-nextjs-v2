@@ -2,337 +2,369 @@ import 'server-only';
 
 import { groq } from 'next-sanity';
 import { sanityFetch } from './lib/live';
-import { SEO_DEFAULT_DOCUMENT_ID, SEO_PAGE_BY_KEY } from './seoPages';
+import { getSeoDocumentId } from './seoPages';
+
+const localizedFilter = groq`(
+  language == $locale ||
+  ($locale == "es" && !defined(language))
+)`;
+
+const categoryFields = groq`
+  _id,
+  name,
+  "key": coalesce(key, slug.current),
+  "slug": slug.current,
+  language
+`;
+
+const categoryProjection = groq`{ ${categoryFields} }`;
+
+const categoryDetailProjection = groq`{
+  ${categoryFields},
+  "translations": *[
+    _type == "translation.metadata" && references(^._id)
+  ][0].translations[].value->{ language, "slug": slug.current }
+}`;
+
+const cardFields = groq`
+  _id,
+  _type,
+  name,
+  "slug": slug.current,
+  shortDescription,
+  coverImage {
+    alt,
+    "image": asset->url,
+    "imageWidth": asset->metadata.dimensions.width,
+    "imageHeight": asset->metadata.dimensions.height
+  },
+  githubUrl,
+  projectUrl,
+  "date": date,
+  categories[]-> ${categoryProjection}
+`;
+
+const cardProjection = groq`{ ${cardFields} }`;
+
+const detailProjection = groq`{
+  _id,
+  _type,
+  name,
+  "slug": slug.current,
+  language,
+  shortDescription,
+  "seo": {
+    "title": coalesce(seo.title, name),
+    "description": coalesce(seo.description, shortDescription),
+    "image": coalesce(seo.image, coverImage)
+  },
+  coverImage {
+    alt,
+    "image": asset->url,
+    "imageWidth": asset->metadata.dimensions.width,
+    "imageHeight": asset->metadata.dimensions.height
+  },
+  githubUrl,
+  projectUrl,
+  description[]{
+    ...,
+    _type == "image" => {
+      "image": asset->url,
+      alt,
+      caption,
+      "imageWidth": asset->metadata.dimensions.width,
+      "imageHeight": asset->metadata.dimensions.height
+    }
+  },
+  "headings": description[style in ["h2", "h3"]],
+  "estimatedReadingTime": round(length(pt::text(description)) / 5 / 180),
+  categories[]-> ${categoryProjection},
+  "date": date,
+  "translations": *[
+    _type == "translation.metadata" && references(^._id)
+  ][0].translations[].value->{
+    language,
+    "slug": slug.current
+  }
+}`;
 
 async function fetchPublished(query, params = {}) {
-    const { data } = await sanityFetch({
-        query,
-        params,
-        perspective: 'published',
-        stega: false,
-    });
+  const { data } = await sanityFetch({
+    query,
+    params,
+    perspective: 'published',
+    stega: false,
+  });
 
-    return data;
+  return data;
 }
 
 const PAGE_SEO_QUERY = groq`{
-    "title": coalesce(
-        *[_id == $pageId][0].seo.title,
-        *[_id == $defaultId][0].seo.title
-    ),
-    "description": coalesce(
-        *[_id == $pageId][0].seo.description,
-        *[_id == $defaultId][0].seo.description
-    ),
-    "image": coalesce(
-        *[_id == $pageId][0].seo.image,
-        *[_id == $defaultId][0].seo.image
-    )
+  "title": coalesce(
+    *[_id == $pageId][0].seo.title,
+    *[_id == $defaultId][0].seo.title
+  ),
+  "description": coalesce(
+    *[_id == $pageId][0].seo.description,
+    *[_id == $defaultId][0].seo.description
+  ),
+  "image": coalesce(
+    *[_id == $pageId][0].seo.image,
+    *[_id == $defaultId][0].seo.image
+  )
 }`;
 
-export async function getPageSeo(pageKey) {
-    const page = SEO_PAGE_BY_KEY[pageKey];
+export async function getPageSeo(pageKey, locale) {
+  return fetchPublished(PAGE_SEO_QUERY, {
+    pageId: getSeoDocumentId(pageKey, locale),
+    defaultId: getSeoDocumentId('default', locale),
+  });
+}
 
-    if (!page) {
-        throw new Error(`Página SEO no soportada: ${pageKey}`);
+export async function getDefaultSeo(locale) {
+  const defaultId = getSeoDocumentId('default', locale);
+  return fetchPublished(PAGE_SEO_QUERY, { pageId: defaultId, defaultId });
+}
+
+export async function getPublishedContentVersion(locale) {
+  const documents = await fetchPublished(
+    groq`*[
+      _type in $types &&
+      (
+        _type == "translation.metadata" ||
+        language == $locale ||
+        ($locale == "es" && !defined(language))
+      )
+    ] | order(_id asc){ _id, _updatedAt }`,
+    {
+      locale,
+      types: [
+        'article',
+        'category',
+        'education',
+        'job',
+        'profile',
+        'project',
+        'seoPage',
+        'translation.metadata',
+      ],
     }
+  );
 
-    return fetchPublished(
-        PAGE_SEO_QUERY,
-        { pageId: page.documentId, defaultId: SEO_DEFAULT_DOCUMENT_ID }
-    );
+  return JSON.stringify(documents);
 }
 
-export async function getDefaultSeo() {
-    return fetchPublished(
-        PAGE_SEO_QUERY,
-        { pageId: SEO_DEFAULT_DOCUMENT_ID, defaultId: SEO_DEFAULT_DOCUMENT_ID }
-    );
+export async function getCategorySeo(slug, locale) {
+  return fetchPublished(
+    groq`{
+      "title": coalesce(
+        *[_type == "category" && ${localizedFilter} && slug.current == $slug][0].seo.title,
+        *[_type == "category" && ${localizedFilter} && slug.current == $slug][0].name
+      ),
+      "description": coalesce(
+        *[_type == "category" && ${localizedFilter} && slug.current == $slug][0].seo.description,
+        *[_id == $categoriesId][0].seo.description,
+        *[_id == $defaultId][0].seo.description
+      ),
+      "image": coalesce(
+        *[_type == "category" && ${localizedFilter} && slug.current == $slug][0].seo.image,
+        *[_id == $categoriesId][0].seo.image,
+        *[_id == $defaultId][0].seo.image
+      )
+    }`,
+    {
+      slug,
+      locale,
+      categoriesId: getSeoDocumentId('categories', locale),
+      defaultId: getSeoDocumentId('default', locale),
+    }
+  );
 }
 
-export async function getPublishedContentVersion() {
-    const documents = await fetchPublished(
-        groq`*[_type in $types] | order(_id asc){
-            _id,
-            _updatedAt
-        }`,
-        {
-            types: [
-                'article',
-                'category',
-                'education',
-                'job',
-                'profile',
-                'project',
-                'seoPage',
-            ],
-        }
-    );
-
-    return JSON.stringify(documents);
+export async function getProfile(locale) {
+  return fetchPublished(
+    groq`*[_type == "profile" && ${localizedFilter}][0]{
+      _id,
+      fullName,
+      headline,
+      shortBiography,
+      "resumeURL": resumeURL.asset->url,
+      profileImage {
+        alt,
+        "image": asset->url,
+        "imageWidth": asset->metadata.dimensions.width,
+        "imageHeight": asset->metadata.dimensions.height
+      },
+      fullBiography,
+      developerStatistic,
+      skills
+    }`,
+    { locale }
+  );
 }
 
-export async function getCategorySeo(slug) {
-    return fetchPublished(
-        groq`{
-            "title": coalesce(
-                *[_type == "category" && slug.current == $slug][0].seo.title,
-                *[_type == "category" && slug.current == $slug][0].name
-            ),
-            "description": coalesce(
-                *[_type == "category" && slug.current == $slug][0].seo.description,
-                *[_id == $categoriesId][0].seo.description,
-                *[_id == $defaultId][0].seo.description
-            ),
-            "image": coalesce(
-                *[_type == "category" && slug.current == $slug][0].seo.image,
-                *[_id == $categoriesId][0].seo.image,
-                *[_id == $defaultId][0].seo.image
-            )
-        }`,
-        {
-            slug,
-            categoriesId: SEO_PAGE_BY_KEY.categories.documentId,
-            defaultId: SEO_DEFAULT_DOCUMENT_ID,
-        }
-    );
+export async function getJob(locale) {
+  return fetchPublished(
+    groq`*[_type == "job" && ${localizedFilter}] | order(years.startYear desc){
+      _id,
+      name,
+      jobTitle,
+      location,
+      url,
+      description,
+      years
+    }`,
+    { locale }
+  );
 }
 
-export async function getProfile() {
-    return fetchPublished(
-        groq`*[_type == "profile"]{
-            _id,
-            fullName,
-            headline,
-            shortBiography,
-            "resumeURL": resumeURL.asset->url,
-            profileImage {
-                alt,
-                "image": asset->url,
-                "imageWidth": asset->metadata.dimensions.width,
-                "imageHeight": asset->metadata.dimensions.height
-            },
-            fullBiography,
-            developerStatistic,
-            skills,
-        }`,
-        {}
-    );
+export async function getEducation(locale) {
+  return fetchPublished(
+    groq`*[_type == "education" && ${localizedFilter}] | order(years.startYear desc){
+      _id,
+      name,
+      studyCenter,
+      "certificateURL": certificateURL.asset->url,
+      description,
+      years
+    }`,
+    { locale }
+  );
 }
 
-export async function getJob() {
-    return fetchPublished(
-        groq`*[_type == "job"]{
-            _id,
-            name,
-            jobTitle,
-            location,
-            url,
-            description,
-            years,
-        }`,
-        {}
-    );
+export async function getProjects(locale) {
+  return fetchPublished(
+    groq`*[_type == "project" && ${localizedFilter}] | order(date desc) ${cardProjection}`,
+    { locale }
+  );
 }
 
-export async function getEducation() {
-    return fetchPublished(
-        groq`*[_type == "education"]{
-            _id,
-            name,
-            studyCenter,
-            "certificateURL": certificateURL.asset->url,
-            description,
-            years,
-        }`,
-        {}
-    );
+async function getLocalizedDetail(type, slug, locale) {
+  const result = await fetchPublished(
+    groq`{
+      "direct": *[
+        _type == $type && ${localizedFilter} && slug.current == $slug
+      ][0] ${detailProjection},
+      "translated": *[
+        _type == "translation.metadata" &&
+        count(translations[value->_type == $type && value->slug.current == $slug]) > 0
+      ][0].translations[_key == $locale][0].value-> ${detailProjection},
+      "sourceExists": count(*[_type == $type && slug.current == $slug]) > 0
+    }`,
+    { type, slug, locale }
+  );
+
+  return {
+    content: result?.direct || result?.translated || null,
+    sourceExists: Boolean(result?.sourceExists),
+  };
 }
 
-export async function getProjects() {
-    return fetchPublished(
-        groq`*[_type == "project"] | order(date desc) {
-            _id, 
-            name,
-            "slug": slug.current,
-            shortDescription,
-            coverImage {
-                alt,
-                "image": asset->url,
-                "imageWidth": asset->metadata.dimensions.width,
-                "imageHeight": asset->metadata.dimensions.height
-            },
-            githubUrl,
-            projectUrl,
-            "date": date,
-            categories[]-> { name, "slug": slug.current }
-        }`,
-        {}
-    );
+export function getSingleProject(slug, locale) {
+  return getLocalizedDetail('project', slug, locale);
 }
 
-export async function getSingleProject(slug) {
-    const wpm = 180;
-    const meanWordCharacterCount = 5;
-
-    return fetchPublished(
-        groq`*[_type == "project" && slug.current == $slug][0]{
-            _id,
-            name,
-            shortDescription,
-            "seo": {
-                "title": coalesce(seo.title, name),
-                "description": coalesce(seo.description, shortDescription),
-                "image": coalesce(seo.image, coverImage)
-            },
-            coverImage {
-                alt,
-                "image": asset->url,
-                "imageWidth": asset->metadata.dimensions.width,
-                "imageHeight": asset->metadata.dimensions.height
-            },
-            githubUrl,
-            projectUrl,
-            description[]{
-                ...,
-                _type == "image" => {
-                    "image": asset->url,
-                    alt,
-                    caption,
-                    "imageWidth": asset->metadata.dimensions.width,
-                    "imageHeight": asset->metadata.dimensions.height
-                }
-            },
-            "headings": description[style in ["h2", "h3"]],
-            "estimatedReadingTime": round(length(pt::text(description)) / ${meanWordCharacterCount} / ${wpm}),
-            categories[]-> { name, "slug": slug.current },
-            "date": date,
-        }`,
-        { slug }
-    );
+export async function getCategories(locale) {
+  return fetchPublished(
+    groq`*[_type == "category" && ${localizedFilter}] | order(name asc) ${categoryProjection}`,
+    { locale }
+  );
 }
 
-export async function getCategories() {
-    return fetchPublished(
-      groq`*[_type == "category"]{
-        _id,
-        name,
-        "slug": slug.current
-            }`,
-            {}
-    );
+export async function getCategoryBySlug(slug, locale) {
+  const result = await fetchPublished(
+    groq`{
+      "direct": *[
+        _type == "category" && ${localizedFilter} && slug.current == $slug
+      ][0] ${categoryDetailProjection},
+      "translated": *[
+        _type == "translation.metadata" &&
+        count(translations[value->_type == "category" && value->slug.current == $slug]) > 0
+      ][0].translations[_key == $locale][0].value-> ${categoryDetailProjection},
+      "sourceExists": count(*[_type == "category" && slug.current == $slug]) > 0
+    }`,
+    { slug, locale }
+  );
+
+  return {
+    content: result?.direct || result?.translated || null,
+    sourceExists: Boolean(result?.sourceExists),
+  };
 }
 
-export async function getPostsBySlug(slug) {
-    return fetchPublished(
-        groq`*[_type in ["project", "article"] && $slug in categories[]->slug.current]{
-            _id, 
-            _type,
-            name,
-            "slug": "/" + select(_type == "article" => "blog", _type == "project" => "projects") + "/" + slug.current,
-            shortDescription,
-            coverImage {
-                alt,
-                "image": asset->url,
-                "imageWidth": asset->metadata.dimensions.width,
-                "imageHeight": asset->metadata.dimensions.height
-            },
-            githubUrl,
-            projectUrl,
-            "date": date,
-            categories[]-> { name, "slug": slug.current },
-        }`,
-        { slug }
-    );
+export async function getPostsBySlug(slug, locale) {
+  return fetchPublished(
+    groq`*[
+      _type in ["project", "article"] &&
+      ${localizedFilter} &&
+      $slug in categories[]->slug.current
+    ] | order(date desc) {
+      ${cardFields},
+      "slug": "/" + select(
+        _type == "article" => "blog",
+        _type == "project" => "projects"
+      ) + "/" + slug.current
+    }`,
+    { slug, locale }
+  );
 }
 
-export async function getArticles() {
-    return fetchPublished(
-        groq`*[_type == "article"]{
-            _id, 
-            name,
-            "slug": slug.current,
-            shortDescription,
-            coverImage {
-                alt,
-                "image": asset->url,
-                "imageWidth": asset->metadata.dimensions.width,
-                "imageHeight": asset->metadata.dimensions.height
-            },
-            categories[]-> { name, "slug": slug.current },
-            "date": date,
-        }`,
-        {}
-    );
+export async function getArticles(locale) {
+  return fetchPublished(
+    groq`*[_type == "article" && ${localizedFilter}] | order(date desc) ${cardProjection}`,
+    { locale }
+  );
 }
 
-export async function getSingleArticle(slug) {
-    const wpm = 180;
-    const meanWordCharacterCount = 5;
-
-    return fetchPublished(
-        groq`*[_type == "article" && slug.current == $slug][0]{
-            _id,
-            name,
-            shortDescription,
-            "seo": {
-                "title": coalesce(seo.title, name),
-                "description": coalesce(seo.description, shortDescription),
-                "image": coalesce(seo.image, coverImage)
-            },
-            coverImage {
-                alt,
-                "image": asset->url,
-                "imageWidth": asset->metadata.dimensions.width,
-                "imageHeight": asset->metadata.dimensions.height
-            },
-            description[]{
-                ...,
-                _type == "image" => {
-                    "image": asset->url,
-                    alt,
-                    caption,
-                    "imageWidth": asset->metadata.dimensions.width,
-                    "imageHeight": asset->metadata.dimensions.height
-                }
-            },
-            "headings": description[style in ["h2", "h3"]],
-            "estimatedReadingTime": round(length(pt::text(description)) / ${meanWordCharacterCount} / ${wpm}),
-            categories[]-> { name, "slug": slug.current },
-            "date": date,
-        }`,
-        { slug }
-    );
+export function getSingleArticle(slug, locale) {
+  return getLocalizedDetail('article', slug, locale);
 }
 
-export async function getRecentPosts() {
-    return fetchPublished(
-        groq`*[_type in ["project", "article"]] | order(date desc) [0..4] {
-            _id, 
-            name,
-            "slug": "/" + select(_type == "article" => "blog", _type == "project" => "projects") + "/" + slug.current,
-            shortDescription,
-            coverImage {
-                alt,
-                "image": asset->url,
-                "imageWidth": asset->metadata.dimensions.width,
-                "imageHeight": asset->metadata.dimensions.height
-            },
-            categories[]-> { name, "slug": slug.current },
-            "date": date,
-        }`,
-        {}
-    );
+export async function getRecentPosts(locale) {
+  return fetchPublished(
+    groq`*[
+      _type in ["project", "article"] && ${localizedFilter}
+    ] | order(date desc) [0..4] {
+      ${cardFields},
+      "slug": "/" + select(
+        _type == "article" => "blog",
+        _type == "project" => "projects"
+      ) + "/" + slug.current
+    }`,
+    { locale }
+  );
 }
 
-export async function getArticleSlugs() {
-    return fetchPublished(groq`*[_type == "article" && defined(slug.current)]{
-        "slug": slug.current
-    }`);
+export async function getArticleSlugs(locale) {
+  return fetchPublished(
+    groq`*[_type == "article" && ${localizedFilter} && defined(slug.current)]{
+      "slug": slug.current
+    }`,
+    { locale }
+  );
 }
 
-export async function getProjectSlugs() {
-    return fetchPublished(groq`*[_type == "project" && defined(slug.current)]{
-        "slug": slug.current
-    }`);
+export async function getProjectSlugs(locale) {
+  return fetchPublished(
+    groq`*[_type == "project" && ${localizedFilter} && defined(slug.current)]{
+      "slug": slug.current
+    }`,
+    { locale }
+  );
+}
+
+export async function getSitemapContent() {
+  return fetchPublished(groq`*[
+    _type in ["article", "project", "category"] &&
+    defined(slug.current)
+  ]{
+    _id,
+    _type,
+    "language": coalesce(language, "es"),
+    "slug": slug.current,
+    _updatedAt,
+    "translations": *[
+      _type == "translation.metadata" && references(^._id)
+    ][0].translations[].value->{ language, "slug": slug.current }
+  }`);
 }

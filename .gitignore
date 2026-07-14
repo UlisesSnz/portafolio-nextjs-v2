@@ -9,6 +9,10 @@
 /coverage
 /.playwright-cli/
 
+# i18n migration working files
+/.tmp-i18n/
+/scripts/i18n/translations.template.json
+
 # next.js
 /.next/
 /out/

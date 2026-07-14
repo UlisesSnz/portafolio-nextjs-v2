@@ -1,4 +1,5 @@
 import { defineField } from 'sanity';
+import { languageField, localizedPreview } from './localization';
 
 const profile = {
     name: "profile",
@@ -9,6 +10,7 @@ const profile = {
         { name: "about", title: "Shown On About Page" },
     ],
     fields: [
+        languageField,
         defineField({
             name: "fullName",
             title: "Full Name",
@@ -132,6 +134,10 @@ const profile = {
             of: [{ type: "string" }],
         },
     ],
+    preview: {
+        select: { title: 'fullName', subtitle: 'headline', language: 'language' },
+        prepare: localizedPreview,
+    },
 };
 
 export default profile;

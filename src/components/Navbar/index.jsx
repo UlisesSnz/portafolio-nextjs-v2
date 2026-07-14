@@ -1,5 +1,6 @@
 'use client';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { Suspense, useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { createRoot } from 'react-dom/client';
 import Logo from './Logo';
@@ -10,8 +11,10 @@ import CustomLink from './CustomLink';
 import CustomMobileLink from './CustomMobileLink';
 import SocialLinks from './SocialLinks';
 import MobileSocialLinks from './MobileSocialLinks';
+import LanguageSwitcher from './LanguageSwitcher';
 
-const Navbar = () => {
+const Navbar = ({ englishEnabled = false }) => {
+    const t = useTranslations('Navigation');
     const [mode, setMode] = useThemeSwitcher();
     const [isOpen, setIsOpen] = useState(false);
     const rootRef = useRef(null);
@@ -72,18 +75,24 @@ const Navbar = () => {
             </div>
             <div className="w-full flex justify-between items-center lg:hidden">
                 <nav>
-                    <CustomLink href="/" title="Inicio" className="mr-4" />
-                    <CustomLink href="/contact" title="Contactar" className="mx-4" />
-                    <CustomLink href="/projects" title="Proyectos" className="mx-4" />
-                    <CustomLink href="/blog" title="Blog" className="ml-4" />
+                    <CustomLink href="/" title={t('home')} className="mr-4" />
+                    <CustomLink href="/contact" title={t('contact')} className="mx-4" />
+                    <CustomLink href="/projects" title={t('projects')} className="mx-4" />
+                    <CustomLink href="/blog" title={t('blog')} className="ml-4" />
                 </nav>
             
                 <nav className="flex items-center justify-center flex-wrap">
                     <SocialLinks />
 
+                    {englishEnabled && (
+                        <Suspense fallback={null}>
+                            <LanguageSwitcher />
+                        </Suspense>
+                    )}
+
                     <button
                         onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}
-                        aria-label={`Cambiar a modo ${mode === 'light' ? 'oscuro' : 'claro'}`}
+                        aria-label={t('switchTheme', { mode: t(mode === 'light' ? 'dark' : 'light') })}
                         className={`w-6 ml-3 flex items-center justify-center rounded-full p-1
                                 ${mode === 'light' ? 'bg-dark text-light' : 'bg-light text-dark'}
                         `}
@@ -98,7 +107,7 @@ const Navbar = () => {
                 </nav>
             </div>
 
-            <button className="flex-col justify-center items-center hidden lg:flex mt-0" onClick={handleClick} aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}>
+            <button className="flex-col justify-center items-center hidden lg:flex mt-0" onClick={handleClick} aria-label={isOpen ? t('closeMenu') : t('openMenu')}>
                 <span className={`bg-dark dark:bg-light block transition-all duration-300 ease-out h-0.5 w-6 rounded-sm ${isOpen ? 'rotate-45 translate-y-1' : '-translate-y-0.5'}`}></span>
                 <span className={`bg-dark dark:bg-light block transition-all duration-300 ease-out h-0.5 w-6 rounded-sm my-0.5 ${isOpen ? 'opacity-0' : 'opacity-100'}`}></span>
                 <span className={`bg-dark dark:bg-light block transition-all duration-300 ease-out h-0.5 w-6 rounded-sm ${isOpen ? '-rotate-45 -translate-y-1' : 'translate-y-0.5'}`}></span>
@@ -114,18 +123,24 @@ const Navbar = () => {
                     bg-dark/90 dark:bg-light/75 rounded-lg backdrop-blur-md py-12"
                 >
                     <nav className="flex items-center flex-col justify-center">
-                        <CustomMobileLink href="/" title="Inicio" toggle={handleClick} />
-                        <CustomMobileLink href="/contact" title="Contactar" toggle={handleClick} />
-                        <CustomMobileLink href="/projects" title="Proyectos" toggle={handleClick} />
-                        <CustomMobileLink href="/blog" title="Blog" toggle={handleClick} />
+                        <CustomMobileLink href="/" title={t('home')} toggle={handleClick} />
+                        <CustomMobileLink href="/contact" title={t('contact')} toggle={handleClick} />
+                        <CustomMobileLink href="/projects" title={t('projects')} toggle={handleClick} />
+                        <CustomMobileLink href="/blog" title={t('blog')} toggle={handleClick} />
                     </nav>
                 
                     <nav className="flex items-center justify-center flex-wrap mt-2">
                         <MobileSocialLinks />
 
+                        {englishEnabled && (
+                            <Suspense fallback={null}>
+                                <LanguageSwitcher className="sm:ml-1" />
+                            </Suspense>
+                        )}
+
                         <button
                             onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}
-                            aria-label={`Cambiar a modo ${mode === 'light' ? 'oscuro' : 'claro'}`}
+                            aria-label={t('switchTheme', { mode: t(mode === 'light' ? 'dark' : 'light') })}
                             className={`ml-3 sm:ml-1 flex items-center justify-center rounded-full p-1
                                 ${mode === 'light' ? 'bg-dark text-light' : 'bg-light text-dark'}
                             `}

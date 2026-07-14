@@ -1,4 +1,5 @@
 import MultiMenuFilterControl from "@/components/Shared/MultiMenuFilterControl";
+import { useTranslations } from 'next-intl';
 
 const TagControls = ({
   activeTags,
@@ -7,19 +8,21 @@ const TagControls = ({
   options,
   query = {},
 }) => {
+  const t = useTranslations('Filters');
+
   return (
     <MultiMenuFilterControl
       activeValues={activeTags}
-      allLabel="Todas"
-      ariaLabel="Filtrar por etiquetas"
+      allLabel={t('all')}
+      ariaLabel={t('filterTagsAria')}
       basePath={basePath}
       className={className}
       options={options}
       paramName="tags"
       query={query}
       triggerIcon="tag"
-      triggerLabel="Filtrar etiquetas"
-      unitLabel={activeTags.length === 1 ? "etiqueta" : "etiquetas"}
+      triggerLabel={t('filterTags')}
+      unitLabel={activeTags.length === 1 ? t('tag') : t('tags')}
     />
   );
 };

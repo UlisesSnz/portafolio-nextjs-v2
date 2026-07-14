@@ -8,36 +8,35 @@ export const CONTENT_SORT_OPTIONS = [
 ];
 
 const VALID_SORT_VALUES = new Set(CONTENT_SORT_OPTIONS.map(({ value }) => value));
-const nameCollator = new Intl.Collator("es", {
-  numeric: true,
-  sensitivity: "base",
-});
-
 export function normalizeContentSort(sort) {
   const value = Array.isArray(sort) ? sort[0] : sort;
 
   return VALID_SORT_VALUES.has(value) ? value : DEFAULT_CONTENT_SORT;
 }
 
-export function sortContentItems(items, sort = DEFAULT_CONTENT_SORT) {
+export function sortContentItems(items, sort = DEFAULT_CONTENT_SORT, locale = "es") {
   const activeSort = normalizeContentSort(sort);
+  const nameCollator = new Intl.Collator(locale === "es" ? "es-MX" : "en", {
+    numeric: true,
+    sensitivity: "base",
+  });
 
   return [...(Array.isArray(items) ? items : [])].sort((itemA, itemB) => {
     if (activeSort === "name-asc") {
-      return compareNames(itemA, itemB) || compareDates(itemA, itemB, "desc");
+      return compareNames(itemA, itemB, nameCollator) || compareDates(itemA, itemB, "desc");
     }
 
     if (activeSort === "name-desc") {
-      return compareNames(itemB, itemA) || compareDates(itemA, itemB, "desc");
+      return compareNames(itemB, itemA, nameCollator) || compareDates(itemA, itemB, "desc");
     }
 
     const direction = activeSort === "date-asc" ? "asc" : "desc";
-    return compareDates(itemA, itemB, direction) || compareNames(itemA, itemB);
+  return compareDates(itemA, itemB, direction) || compareNames(itemA, itemB, nameCollator);
   });
 }
 
-function compareNames(itemA, itemB) {
-  return nameCollator.compare(itemA?.name || "", itemB?.name || "");
+function compareNames(itemA, itemB, collator) {
+  return collator.compare(itemA?.name || "", itemB?.name || "");
 }
 
 function compareDates(itemA, itemB, direction) {

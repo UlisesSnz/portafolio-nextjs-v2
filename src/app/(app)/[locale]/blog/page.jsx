@@ -13,20 +13,26 @@ import {
   normalizeContentTags,
 } from '@/utils/contentTagFilter';
 import { getStaticPageMetadata } from '@/utils/seoMetadata';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 
-export async function generateMetadata() {
-  return getStaticPageMetadata('blog');
+export async function generateMetadata({ params }) {
+  const { locale } = await params;
+  return getStaticPageMetadata('blog', locale);
 }
 
-const BlogPage = async ({ searchParams }) => {
+const BlogPage = async ({ params, searchParams }) => {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations('Blog');
   const resolvedSearchParams = await searchParams;
   const activeSort = normalizeContentSort(resolvedSearchParams?.sort);
-  const allArticles = await getArticles();
-  const tagOptions = getContentTagOptions(allArticles);
+  const allArticles = await getArticles(locale);
+  const tagOptions = getContentTagOptions(allArticles, locale);
   const activeTags = normalizeContentTags(resolvedSearchParams?.tags, tagOptions);
   const articles = sortContentItems(
     filterContentItemsByTags(allArticles, activeTags),
-    activeSort
+    activeSort,
+    locale
   );
   const activeTagLabels = activeTags.map(
     (tag) => tagOptions.find((option) => option.value === tag)?.label || tag
@@ -36,7 +42,7 @@ const BlogPage = async ({ searchParams }) => {
     <>
       <main className="w-full mb-16 flex flex-col items-center justify-center overflow-hidden dark:text-light">
         <Layout className="pt-16">
-          <AnimatedText text="Las palabras cambian al mundo" className="mb-8 lg:!text-7xl sm:mb-6 sm:!text-6xl xs:!text-4xl" />
+          <AnimatedText text={t('title')} className="mb-8 lg:!text-7xl sm:mb-6 sm:!text-6xl xs:!text-4xl" />
           <div className="mb-16 flex w-full items-center justify-between gap-6 sm:mb-8 sm:gap-3">
             <CanaryActionController
               context={{

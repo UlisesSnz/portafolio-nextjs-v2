@@ -3,17 +3,19 @@ import Layout from '@/components/Shared/Layout';
 import LottieAnimation from '@/components/Contact/LottieAnimation';
 import { useEffect } from 'react';
 import { toast, Toaster } from 'sonner';
+import { useTranslations } from 'next-intl';
 
 const NotFound = () => {
+  const t = useTranslations('NotFound');
   useEffect(() => {
-    const firstToast = toast.error('¿Te has perdido?', {
-      description: '¡Parece que tu búsqueda fue más épica que esta página!',
+    const firstToast = toast.error(t('title'), {
+      description: t('description'),
       duration: 4000,
     });
 
     const toastTimeout = setTimeout(() => {
-      toast.error('Página no encontrada', {
-        description: 'La página que buscas no existe o fue movida.',
+      toast.error(t('title'), {
+        description: t('description'),
         duration: Infinity,
       });
     }, 5000);
@@ -22,7 +24,7 @@ const NotFound = () => {
       toast.dismiss(firstToast);
       clearTimeout(toastTimeout);
     };
-  }, []);
+  }, [t]);
 
   return (
     <>

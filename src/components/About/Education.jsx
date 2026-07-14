@@ -2,8 +2,10 @@
 import { useRef } from 'react';
 import Lilcon from './Lilcon';
 import { motion, useScroll } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 
 const Details = ({ type, time, place, info, certificate }) => {
+  const t = useTranslations('About');
   const ref = useRef(null)
 
   return (
@@ -16,7 +18,7 @@ const Details = ({ type, time, place, info, certificate }) => {
           {type}
         </h3>
         <span className="capitalize font-medium text-dark/75 dark:text-light/75 xs:text-sm">
-          {time} | {place} {certificate ? <a href={certificate} target='_blank'>| <span className='underline underline-offset-2'>Certificado</span></a> : ''}
+          {time} | {place} {certificate ? <a href={certificate} target='_blank'>| <span className='underline underline-offset-2'>{t('certificate')}</span></a> : ''}
         </span>
         <p className="font-medium w-full md:text-sm">
           {info}
@@ -27,6 +29,7 @@ const Details = ({ type, time, place, info, certificate }) => {
 }
 
 const Education = ({ education }) => {
+  const t = useTranslations('About');
   const ref = useRef(null);
   
   const {scrollYProgress} = useScroll({
@@ -37,7 +40,7 @@ const Education = ({ education }) => {
   return (
     <div className="my-64 md:my-32">
       <h2 className="font-bold text-8xl mb-16 w-full text-center md:text-6xl xs:text-4xl">
-        Educación
+        {t('education')}
       </h2>
 
       <div ref={ref} className="w-[75%] mx-auto relative lg:w-[90%] md:w-full">

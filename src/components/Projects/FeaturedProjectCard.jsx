@@ -1,12 +1,14 @@
 'use client';
 import Image from 'next/image';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 import { motion } from 'framer-motion';
 import { GithubIcon } from '../Shared/Icons';
+import { useTranslations } from 'next-intl';
 
 const FramerImage = motion(Image);
 
 const FeaturedProjectCard = ({title, slug, summary, img, link, github, categories}) =>{
+    const t = useTranslations('Projects');
     return(
       <article className="w-full flex items-center justify-between relative rounded-br-2xl
         rounded-3xl border border-solid border-dark bg-light shadow-2xl p-12 dark:bg-dark dark:border-light
@@ -54,7 +56,7 @@ const FeaturedProjectCard = ({title, slug, summary, img, link, github, categorie
                     target="_blank"
                     className="text-lg font-semibold underline sm:pr-4 sm:text-base"
                   >
-                    Ver Proyecto
+                    {t('viewProject')}
                   </Link>
                 )}
                 {github && (

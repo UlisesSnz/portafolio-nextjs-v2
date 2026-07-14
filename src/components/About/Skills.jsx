@@ -1,11 +1,13 @@
 'use client';
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 
 const Skills = ({ skills }) => {
+  const t = useTranslations('About');
   return (
     <>
       <h2 className="font-bold text-8xl md:text-6xl xs:text-4xl mt-64 mb-16 md:mt-32 w-full text-center">
-        Habilidades
+        {t('skills')}
       </h2>
       <ul className="flex flex-wrap mt-8 justify-center">
         {skills.map((skill, id) => {

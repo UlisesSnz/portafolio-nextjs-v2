@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Copy, Facebook, Linkedin, Share, X } from "@/components/Shared/Icons";
 import { toast } from "sonner";
+import { useTranslations } from 'next-intl';
 
 const SharePostLinks = ({ title, shareUrl, triggerClassName = "" }) => {
+    const t = useTranslations('Share');
     const [isOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
@@ -65,9 +67,9 @@ const SharePostLinks = ({ title, shareUrl, triggerClassName = "" }) => {
     const handleCopy = async () => {
         try {
             await navigator.clipboard.writeText(shareUrl);
-            toast.success("Enlace copiado");
+            toast.success(t('copied'));
         } catch {
-            toast.error("No se pudo copiar el enlace");
+            toast.error(t('copyError'));
         }
     };
 
@@ -82,7 +84,7 @@ const SharePostLinks = ({ title, shareUrl, triggerClassName = "" }) => {
                 <div
                     role="dialog"
                     aria-modal="true"
-                    aria-label="Compartir publicación"
+                    aria-label={t('aria')}
                     className="relative w-full max-w-xl rounded-2xl border border-dark/10 bg-light px-6 py-6 text-dark shadow-2xl dark:border-light/20 dark:bg-dark dark:text-light sm:px-4"
                     onClick={(event) => event.stopPropagation()}
                 >
@@ -90,12 +92,12 @@ const SharePostLinks = ({ title, shareUrl, triggerClassName = "" }) => {
                         type="button"
                         onClick={() => setIsOpen(false)}
                         className="absolute right-4 top-4 text-xl leading-none text-dark/60 transition-colors hover:text-dark dark:text-light/60 dark:hover:text-light"
-                        aria-label="Cerrar ventana de compartir"
+                        aria-label={t('close')}
                     >
                         ×
                     </button>
 
-                    <h3 className="text-center text-2xl font-bold sm:text-xl">Compartir</h3>
+                    <h3 className="text-center text-2xl font-bold sm:text-xl">{t('title')}</h3>
 
                     <div className="mt-6 flex justify-between w-full items-center gap-2 rounded-lg bg-dark/[0.04] p-2 dark:bg-light/[0.08] sm:flex-col sm:items-stretch">
                         <p className="truncate px-2 text-sm sm:text-xs">{shareUrl}</p>
@@ -107,12 +109,12 @@ const SharePostLinks = ({ title, shareUrl, triggerClassName = "" }) => {
                             <span className="inline-flex h-4 w-4 shrink-0">
                                 <Copy />
                             </span>
-                            Copiar
+                            {t('copy')}
                         </button>
                     </div>
 
                     <div className="mt-6">
-                        <p className="mb-3 text-center text-sm text-dark/70 dark:text-light/70">Compartir en redes sociales</p>
+                        <p className="mb-3 text-center text-sm text-dark/70 dark:text-light/70">{t('social')}</p>
                         <div className="flex items-center justify-center gap-5">
                             {shareLinks.map(({ name, href, Icon }) => (
                                 <a
@@ -120,7 +122,7 @@ const SharePostLinks = ({ title, shareUrl, triggerClassName = "" }) => {
                                     href={href}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    aria-label={`Compartir en ${name}`}
+                                    aria-label={t('shareOn', { network: name })}
                                     className="inline-flex items-center justify-center text-dark dark:text-light w-7 md:w-5"
                                 >
                                     <Icon/>
@@ -141,7 +143,7 @@ const SharePostLinks = ({ title, shareUrl, triggerClassName = "" }) => {
                 className={`inline-flex items-center font-medium text-dark/75 dark:text-light/75 underline underline-offset-2 sm:text-sm ${triggerClassName}`}
             >
                 <Share className="mr-1 h-auto !w-5 md:!w-4" />
-                Compartir
+                {t('trigger')}
             </button>
             {isOpen && modalContainer ? createPortal(modal, modalContainer) : null}
         </>

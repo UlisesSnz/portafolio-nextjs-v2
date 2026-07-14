@@ -4,8 +4,10 @@ import { useForm } from 'react-hook-form';
 import emailjs from '@emailjs/browser';
 import { toast } from 'sonner';
 import ContactFormInputs from './ContactFormInputs';
+import { useTranslations } from 'next-intl';
 
 const ContactForm = () => {
+    const t = useTranslations('Contact');
     const [loading, setLoading] = useState(false);
 
     const {
@@ -36,18 +38,18 @@ const ContactForm = () => {
         )
             .then(() => {
                 setLoading(false);
-                toast.success('Mensaje enviado',
+                toast.success(t('sent'),
                     {
-                        description: 'Gracias. Me comunicaré contigo lo antes posible.',
+                        description: t('sentDescription'),
                     }
                 )
                 reset();
             },error => {
                 setLoading(false);
                 // console.log(error);
-                toast.error('Algo salió mal',
+                toast.error(t('error'),
                     {
-                        description: 'Por favor vuelve a intentar enviar el mensaje.',
+                        description: t('errorDescription'),
                     }
                 )
             }
