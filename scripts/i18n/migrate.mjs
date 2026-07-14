@@ -30,6 +30,10 @@ function clone(value) {
   return structuredClone(value)
 }
 
+function documentPatchSet(document) {
+  return Object.fromEntries(Object.entries(document).filter(([key]) => !key.startsWith('_')))
+}
+
 function seoId(key, locale) {
   return `seo-${key}-${locale}`
 }
@@ -162,6 +166,7 @@ function buildPlan(sourceDocuments, manifest) {
     metadataDocuments.push(metadata)
     const stage = source._type === 'category' ? stages[1] : stages[2]
     stage.mutations.push({kind: 'createIfNotExists', document: translated})
+    stage.mutations.push({kind: 'patch', id: translated._id, set: documentPatchSet(translated)})
     stage.mutations.push({kind: 'createIfNotExists', document: metadata})
     stages[4].mutations.push({kind: 'delete', id: legacyMetadataId(source._id)})
   }

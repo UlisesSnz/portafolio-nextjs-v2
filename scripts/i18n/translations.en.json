@@ -1010,7 +1010,7 @@
         },
         "description[54].children[1].text": {
           "source": "DIscos",
-          "en": "GOD"
+          "en": "Disks"
         },
         "description[54].children[2].text": {
           "source": ", este es bastante sencillo, Proxmox da unos valores por defecto, lo que se debe hacer es seleccionar el icono del bote de basura que se encuentra en la parte izquierda al lado de scsi0 ya que la imagen qcow2 de HAOS se importara después como disco, no desde este apartado.",
@@ -1086,11 +1086,11 @@
         },
         "description[60].children[5].text": {
           "source": "vmbr0",
-          "en": "VMMR0"
+          "en": "vmbr0"
         },
         "description[60].children[6].text": {
           "source": " y ",
-          "en": " y "
+          "en": " and "
         },
         "description[60].children[7].text": {
           "source": "Modelo",
@@ -2480,7 +2480,7 @@
         },
         "description[95].children[2].text": {
           "source": " y ",
-          "en": " y "
+          "en": " and "
         },
         "description[95].children[3].text": {
           "source": "to",
@@ -4148,7 +4148,7 @@
         },
         "description[220].children[1].text": {
           "source": " y ",
-          "en": " y "
+          "en": " and "
         },
         "description[220].children[2].text": {
           "source": "themselves",
@@ -4164,7 +4164,7 @@
         },
         "description[220].children[5].text": {
           "source": " y ",
-          "en": " y "
+          "en": " and "
         },
         "description[220].children[6].text": {
           "source": "them",
@@ -5092,11 +5092,11 @@
         },
         "description[305].children[1].text": {
           "source": "“haber” (to have)",
-          "en": "\"haber\" (to have)"
+          "en": "to have"
         },
         "description[305].children[2].text": {
           "source": " conjugado",
-          "en": " Conjugate"
+          "en": " conjugated"
         },
         "description[306].children[0].text": {
           "source": "El ",
@@ -5236,23 +5236,23 @@
         },
         "description[324].children[2].text": {
           "source": " significa ",
-          "en": " means "
+          "en": " is used to describe "
         },
         "description[324].children[3].text": {
           "source": "“ser”",
-          "en": "\"To be\""
+          "en": "identity"
         },
         "description[324].children[4].text": {
           "source": " y ",
-          "en": " y "
+          "en": " and "
         },
         "description[324].children[5].text": {
           "source": "“estar”",
-          "en": "\"To be\""
+          "en": "states or conditions"
         },
         "description[324].children[6].text": {
           "source": ".\nSe utiliza para describir características, estados, identidades, profesiones, lugares y más.",
-          "en": ".\nIt is used to describe characteristics, states, identities, professions, places, and more."
+          "en": ", including characteristics, professions, locations, and more."
         },
         "description[325].children[0].text": {
           "source": "Formación afirmativa",
@@ -5500,7 +5500,7 @@
         },
         "description[331].table.rows[1].cells[1]": {
           "source": "Am I?",
-          "en": "Anti-Mage?"
+          "en": "Am I?"
         },
         "description[331].table.rows[2].cells[0]": {
           "source": "¿Eres tú? / ¿Estás tú?",
@@ -5604,31 +5604,31 @@
         },
         "description[337].children[2].text": {
           "source": " significa ",
-          "en": " means "
+          "en": " can express "
         },
         "description[337].children[3].text": {
           "source": "“tener”",
-          "en": "\"have\""
+          "en": "possession"
         },
         "description[337].children[4].text": {
           "source": " y ",
-          "en": " y "
+          "en": " and "
         },
         "description[337].children[5].text": {
           "source": "“haber”",
-          "en": "\"haber\""
+          "en": "serve as an auxiliary verb"
         },
         "description[337].children[6].text": {
           "source": ".\nSe usa para expresar posesión (“tener”) y para formar los ",
-          "en": ".\nIt is used to express possession (\"to have\") and to form the "
+          "en": ". It is used to express possession and to form the "
         },
         "description[337].children[7].text": {
           "source": "tiempos perfectos",
-          "en": "Perfect tenses"
+          "en": "perfect tenses"
         },
         "description[337].children[8].text": {
           "source": " en inglés (“haber”).",
-          "en": " in English (\"haber\")."
+          "en": " in English."
         },
         "description[338].children[0].text": {
           "source": "Formación afirmativa",
@@ -5784,7 +5784,7 @@
         },
         "description[341].table.rows[3].cells[0]": {
           "source": "Él no tiene / Él no ha",
-          "en": "He ain't got / He hasn't"
+          "en": "He doesn't have / He hasn't"
         },
         "description[341].table.rows[3].cells[1]": {
           "source": "He has not",
@@ -5796,7 +5796,7 @@
         },
         "description[341].table.rows[4].cells[0]": {
           "source": "Ella no tiene / Ella no ha",
-          "en": "She ain't got / She hasn't"
+          "en": "She doesn't have / She hasn't"
         },
         "description[341].table.rows[4].cells[1]": {
           "source": "She has not",
@@ -5832,7 +5832,7 @@
         },
         "description[341].table.rows[7].cells[0]": {
           "source": "Ustedes no tienen / No han",
-          "en": "You don't have/haven't"
+          "en": "You don't have / You haven't"
         },
         "description[341].table.rows[7].cells[1]": {
           "source": "You have not",
@@ -5844,7 +5844,7 @@
         },
         "description[341].table.rows[8].cells[0]": {
           "source": "Ellos no tienen / No han",
-          "en": "They don't have/haven't"
+          "en": "They don't have / They haven't"
         },
         "description[341].table.rows[8].cells[1]": {
           "source": "They have not",
@@ -5872,7 +5872,7 @@
         },
         "description[344].table.rows[1].cells[0]": {
           "source": "¿Tengo yo? / ¿He yo?",
-          "en": "Do I have me? / Have I?"
+          "en": "Do I have? / Have I?"
         },
         "description[344].table.rows[1].cells[1]": {
           "source": "Have I?",
@@ -5880,7 +5880,7 @@
         },
         "description[344].table.rows[2].cells[0]": {
           "source": "¿Tienes tú? / ¿Has tú?",
-          "en": "Do you have you? / Do you?"
+          "en": "Do you have? / Have you?"
         },
         "description[344].table.rows[2].cells[1]": {
           "source": "Have you?",
@@ -5888,15 +5888,15 @@
         },
         "description[344].table.rows[3].cells[0]": {
           "source": "¿Tiene él? / ¿Ha él?",
-          "en": "Does he have it? / Has he?"
+          "en": "Does he have? / Has he?"
         },
         "description[344].table.rows[3].cells[1]": {
           "source": "Has he?",
-          "en": "Have you?"
+          "en": "Has he?"
         },
         "description[344].table.rows[4].cells[0]": {
           "source": "¿Tiene ella? / ¿Ha ella",
-          "en": "Does she have it? / Has she"
+          "en": "Does she have? / Has she?"
         },
         "description[344].table.rows[4].cells[1]": {
           "source": "Has she?",
@@ -5904,7 +5904,7 @@
         },
         "description[344].table.rows[5].cells[0]": {
           "source": "¿Tiene ello? / ¿Ha ello?",
-          "en": "Does it have that? / Has it?"
+          "en": "Does it have? / Has it?"
         },
         "description[344].table.rows[5].cells[1]": {
           "source": "Has it?",
@@ -5912,7 +5912,7 @@
         },
         "description[344].table.rows[6].cells[0]": {
           "source": "¿Tenemos nosotros? / ¿Hemos nosotros?",
-          "en": "Do we have us? / Have we?"
+          "en": "Do we have? / Have we?"
         },
         "description[344].table.rows[6].cells[1]": {
           "source": "Have we?",
@@ -5920,7 +5920,7 @@
         },
         "description[344].table.rows[7].cells[0]": {
           "source": "¿Tienen ustedes? / ¿Han ustedes?",
-          "en": "Do you have any? / Have you?"
+          "en": "Do you have? / Have you?"
         },
         "description[344].table.rows[7].cells[1]": {
           "source": "Have you?",
@@ -5928,7 +5928,7 @@
         },
         "description[344].table.rows[8].cells[0]": {
           "source": "¿Tienen ellos? / ¿Han ellos?",
-          "en": "Do they have them? / Have they?"
+          "en": "Do they have? / Have they?"
         },
         "description[344].table.rows[8].cells[1]": {
           "source": "Have they?",
@@ -5956,11 +5956,11 @@
         },
         "description[347].children[1].text": {
           "source": "la conjugación de “to have” para expresar “tener”",
-          "en": "the conjugation of \"to have\" to express \"to have\""
+          "en": "the use of \"to have\" to express possession"
         },
         "description[347].children[2].text": {
           "source": " en el sentido de posesión cotidiana se explica en el siguiente tema.",
-          "en": " in the sense of everyday possession is explained in the following topic."
+          "en": " is explained in the next section."
         },
         "description[348].children[0].text": {
           "source": "Resto de verbos",
@@ -5976,7 +5976,7 @@
         },
         "description[349].children[2].text": {
           "source": " (can, could, must, have to, might, may, should), se siguen las siguientes reglas.\nUsaremos el verbo ",
-          "en": " (can, could, must, have to, might, may, should), the following rules are followed.\nWe will use the verb "
+          "en": " (can, could, must, have to, might, may, should), these rules apply.\nWe will use the verb "
         },
         "description[349].children[3].text": {
           "source": "to walk (caminar)",
@@ -6036,7 +6036,7 @@
         },
         "description[352].table.rows[5].cells[0]": {
           "source": "Ello camina",
-          "en": "It is moving forward"
+          "en": "It walks"
         },
         "description[352].table.rows[5].cells[1]": {
           "source": "It walks",
@@ -6132,7 +6132,7 @@
         },
         "description[354].table.rows[5].cells[0]": {
           "source": "Ello no camina",
-          "en": "It does not work"
+          "en": "It does not walk"
         },
         "description[354].table.rows[5].cells[1]": {
           "source": "It does not walk",
@@ -6228,7 +6228,7 @@
         },
         "description[357].table.rows[5].cells[0]": {
           "source": "¿Camina ello?",
-          "en": "Does it work?"
+          "en": "Does it walk?"
         },
         "description[357].table.rows[5].cells[1]": {
           "source": "Does it walk?",
@@ -7068,7 +7068,7 @@
         },
         "description[82].children[5].text": {
           "source": "proyecto.local",
-          "en": "project.local"
+          "en": "proyecto.local"
         },
         "description[82].children[6].text": {
           "source": ", de igual manera cambié el ultimo valor de ",
@@ -7100,7 +7100,7 @@
         },
         "description[85].children[0].text": {
           "source": "Haber, esto es algo que no me enorgullece, pero al otro día de instalar Proxmox, lo rompí, quería quitar una alerta de la UI y accidentalmente el comando que ejecuté remplazo varias líneas del archivo proxmoxlib.js con la expresión 'data.status !== Active', estaba en problemas porque no había hecho un respaldo del archivo, no podía actualizar porque no había configurado la fuente de descarga de los paquetes.",
-          "en": "Haber, this is something I'm not proud of, but the day after installing Proxmox, I broke it, I wanted to remove a UI alert and accidentally the command I executed replaced several lines of the proxmoxlib.js file with the expression 'data.status !== Active', it was in trouble because I hadn't backed up the file, I couldn't update because I hadn't configured the download source of the packages."
+          "en": "To be honest, this is not something I'm proud of. The day after installing Proxmox, I broke it. I wanted to remove a UI warning, but the command I ran accidentally replaced several lines in proxmoxlib.js with the expression 'data.status !== Active'. I was in trouble because I had not backed up the file, and I could not update the system because I had not configured the package repository."
         },
         "description[87].children[0].text": {
           "source": "Respecto al comando, no lo comparto para no ser juzgado y porque seguramente no faltara el despistado o despistada que copie y pegue, tal cual me pasaba en el instituto que cuando pasaba las tareas hasta mi nombre copiaban.",
@@ -7261,6 +7261,6 @@
   "review": {
     "locale": "en",
     "approach": "Machine-assisted first pass with editorial overrides for titles, terminology and key copy.",
-    "reviewedOverrides": 60
+    "reviewedOverrides": 102
   }
 }

@@ -36,7 +36,7 @@ Las etapas son:
 4. crear los 14 singletons SEO y sus pares;
 5. eliminar metadata legacy privada, si existe de una ejecución anterior.
 
-Se usan IDs deterministas sin puntos, formato v6 con `language` y `createIfNotExists`, por lo que una ejecución interrumpida puede reanudarse sin duplicar documentos. Los IDs sin puntos permiten consultar los pares publicados sin un token desde un dataset público.
+Se usan IDs deterministas sin puntos, formato v6 con `language`, `createIfNotExists` y patches idempotentes, por lo que una ejecución interrumpida puede reanudarse sin duplicar documentos y una revisión editorial posterior puede actualizar las versiones inglesas. Los IDs sin puntos permiten consultar los pares publicados sin un token desde un dataset público.
 
 ## 4. Auditoría remota
 
