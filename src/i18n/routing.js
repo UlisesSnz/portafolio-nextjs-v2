@@ -7,4 +7,7 @@ export const routing = defineRouting({
   localePrefix: 'always',
   localeDetection: false,
   localeCookie: false,
+  // Metadata API owns canonical and hreflang links so dynamic translated
+  // slugs and the staged English rollout stay accurate.
+  alternateLinks: false,
 });
