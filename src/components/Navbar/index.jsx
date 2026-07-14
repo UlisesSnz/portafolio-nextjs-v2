@@ -93,7 +93,7 @@ const Navbar = ({ englishEnabled = false }) => {
                     <button
                         onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}
                         aria-label={t('switchTheme', { mode: t(mode === 'light' ? 'dark' : 'light') })}
-                        className={`w-6 ml-3 flex items-center justify-center rounded-full p-1
+                        className={`ml-3 flex h-6 w-6 shrink-0 items-center justify-center rounded-full p-1
                                 ${mode === 'light' ? 'bg-dark text-light' : 'bg-light text-dark'}
                         `}
                     >
@@ -141,7 +141,7 @@ const Navbar = ({ englishEnabled = false }) => {
                         <button
                             onClick={() => setMode(mode === 'light' ? 'dark' : 'light')}
                             aria-label={t('switchTheme', { mode: t(mode === 'light' ? 'dark' : 'light') })}
-                            className={`ml-3 sm:ml-1 flex items-center justify-center rounded-full p-1
+                            className={`ml-3 sm:ml-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full p-1
                                 ${mode === 'light' ? 'bg-dark text-light' : 'bg-light text-dark'}
                             `}
                         >

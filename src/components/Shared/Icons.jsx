@@ -111,6 +111,39 @@ export const YoutubeIcon = ({ className, ...rest }) => (
   </svg>
 )
 
+export const GlobeIcon = ({ className, ...rest }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    className={className}
+    {...rest}
+  >
+    <circle
+      cx="12"
+      cy="12"
+      r="7.25"
+      stroke="currentColor"
+      strokeWidth="1.5"
+    />
+    <path
+      d="M4.75 12h14.5M12 4.75c1.8 2 2.75 4.35 2.75 7.25S13.8 17.25 12 19.25M12 4.75C10.2 6.75 9.25 9.1 9.25 12s.95 5.25 2.75 7.25"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1.5"
+    />
+    <g fill="currentColor">
+      <circle className="language-star language-star-one" cx="3.2" cy="5" r="1" />
+      <circle className="language-star language-star-two" cx="20.9" cy="6.7" r="0.75" />
+      <circle className="language-star language-star-three" cx="3.4" cy="18.5" r="0.7" />
+      <circle className="language-star language-star-four" cx="20.4" cy="19.3" r="0.9" />
+    </g>
+  </svg>
+)
+
 export const SunIcon = ({ className, ...rest }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"

@@ -333,6 +333,40 @@ html {
     }
 }
 
+.language-star {
+    animation: language-star-twinkle 4.8s ease-in-out infinite;
+    opacity: 0.32;
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+.language-star-two {
+    animation-delay: -1.2s;
+}
+
+.language-star-three {
+    animation-delay: -2.5s;
+}
+
+.language-star-four {
+    animation-delay: -3.6s;
+}
+
+@keyframes language-star-twinkle {
+    0%, 100% {
+        opacity: 0.28;
+        transform: scale(0.68);
+    }
+    45% {
+        opacity: 1;
+        transform: scale(1.12);
+    }
+    72% {
+        opacity: 0.52;
+        transform: scale(0.86);
+    }
+}
+
 @media (max-width: 639px) {
     .canary-stage {
         width: 100%;
@@ -345,6 +379,12 @@ html {
 }
 
 @media (prefers-reduced-motion: reduce) {
+    .language-star {
+        animation: none !important;
+        opacity: 0.78;
+        transform: none !important;
+    }
+
     .canary-locomotion {
         transition: none !important;
     }

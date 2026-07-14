@@ -3,6 +3,7 @@
 import { useLocale, useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { usePathname } from '@/i18n/navigation';
+import { GlobeIcon } from '../Shared/Icons';
 import { useAlternatePathnames } from './LocalePathContext';
 
 const getLocaleHref = (locale, pathname, searchParams) => {
@@ -17,34 +18,23 @@ const LanguageSwitcher = ({ className = '' }) => {
   const searchParams = useSearchParams();
   const t = useTranslations('Navigation');
   const alternatePathnames = useAlternatePathnames();
+  const targetLocale = locale === 'es' ? 'en' : 'es';
+  const targetLanguage = t(targetLocale === 'es' ? 'spanish' : 'english');
+  const accessibleLabel = `${t('switchLanguage')}: ${targetLanguage}`;
 
   return (
-    <nav
-      aria-label={t('switchLanguage')}
-      className={`ml-3 flex items-center text-xs font-semibold tracking-wide ${className}`}
+    <a
+      href={getLocaleHref(
+        targetLocale,
+        alternatePathnames[targetLocale] || pathname,
+        searchParams
+      )}
+      aria-label={accessibleLabel}
+      title={accessibleLabel}
+      className={`ml-3 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-dark p-1 text-light transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-light dark:bg-light dark:text-dark dark:focus-visible:ring-primaryDark dark:focus-visible:ring-offset-dark ${className}`}
     >
-      {['es', 'en'].map((targetLocale, index) => (
-        <span key={targetLocale} className="flex items-center">
-          {index > 0 && <span className="px-1 text-dark/35 dark:text-light/35">/</span>}
-          <a
-            href={getLocaleHref(
-              targetLocale,
-              alternatePathnames[targetLocale] || pathname,
-              searchParams
-            )}
-            aria-current={locale === targetLocale ? 'page' : undefined}
-            aria-label={targetLocale === 'es' ? t('spanish') : t('english')}
-            className={
-              locale === targetLocale
-                ? 'text-primary dark:text-primaryDark'
-                : 'text-dark/60 hover:text-dark dark:text-light/60 dark:hover:text-light'
-            }
-          >
-            {targetLocale.toUpperCase()}
-          </a>
-        </span>
-      ))}
-    </nav>
+      <GlobeIcon className="h-full w-full" aria-hidden="true" />
+    </a>
   );
 };
 
