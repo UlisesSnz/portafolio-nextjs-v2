@@ -47,6 +47,10 @@ export function translationId(sourceId) {
 }
 
 export function metadataId(sourceId) {
+  return `translation-metadata-${sourceId}`
+}
+
+export function legacyMetadataId(sourceId) {
   return `translation.metadata-${sourceId}`
 }
 
@@ -87,13 +91,15 @@ export function createMetadataDocument(sourceDocument, translatedDocument) {
     schemaTypes: [sourceDocument._type],
     translations: [
       {
-        _key: 'es',
+        _key: 'translation-es',
         _type: 'internationalizedArrayReferenceValue',
+        language: 'es',
         value: {_type: 'reference', _ref: sourceDocument._id},
       },
       {
-        _key: 'en',
+        _key: 'translation-en',
         _type: 'internationalizedArrayReferenceValue',
+        language: 'en',
         value: {_type: 'reference', _ref: translatedDocument._id},
       },
     ],

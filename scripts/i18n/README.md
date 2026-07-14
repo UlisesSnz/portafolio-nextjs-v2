@@ -33,9 +33,10 @@ Las etapas son:
 1. marcar los 24 originales como español y fijar `category.key`;
 2. crear categorías inglesas y su metadata;
 3. crear el resto del contenido inglés con referencias remapeadas;
-4. crear los 14 singletons SEO y sus pares.
+4. crear los 14 singletons SEO y sus pares;
+5. eliminar metadata legacy privada, si existe de una ejecución anterior.
 
-Se usan IDs deterministas y `createIfNotExists`, por lo que una ejecución interrumpida puede reanudarse sin duplicar documentos.
+Se usan IDs deterministas sin puntos, formato v6 con `language` y `createIfNotExists`, por lo que una ejecución interrumpida puede reanudarse sin duplicar documentos. Los IDs sin puntos permiten consultar los pares publicados sin un token desde un dataset público.
 
 ## 4. Auditoría remota
 
@@ -43,4 +44,4 @@ Se usan IDs deterministas y `createIfNotExists`, por lo que una ejecución inter
 npm run i18n:audit
 ```
 
-La auditoría es de sólo lectura y valida conteos, pares, slugs y referencias. No actives `ENGLISH_ENABLED=true` hasta que termine correctamente.
+La auditoría es de sólo lectura y valida conteos, pares, formato v6, visibilidad pública, slugs y referencias. Usa `SANITY_API_READ_TOKEN` o, durante la migración, reutiliza `SANITY_API_WRITE_TOKEN` para detectar también metadata privada legacy. No actives `ENGLISH_ENABLED=true` hasta que termine correctamente.

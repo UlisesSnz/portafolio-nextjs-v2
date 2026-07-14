@@ -5,6 +5,7 @@ import {ENGLISH_SLUGS, SEO_DOCUMENTS} from './content-config.mjs'
 import {
   assertExpectedSource,
   createMetadataDocument,
+  legacyMetadataId,
   readNdjson,
   selectSourceDocuments,
   sourceHash,
@@ -113,6 +114,7 @@ function buildPlan(sourceDocuments, manifest) {
     {name: '2-categorias-en', mutations: []},
     {name: '3-contenido-en', mutations: []},
     {name: '4-seo-bilingue', mutations: []},
+    {name: '5-limpiar-metadata-privada-legacy', mutations: []},
   ]
   const translatedDocuments = []
   const metadataDocuments = []
@@ -161,6 +163,7 @@ function buildPlan(sourceDocuments, manifest) {
     const stage = source._type === 'category' ? stages[1] : stages[2]
     stage.mutations.push({kind: 'createIfNotExists', document: translated})
     stage.mutations.push({kind: 'createIfNotExists', document: metadata})
+    stages[4].mutations.push({kind: 'delete', id: legacyMetadataId(source._id)})
   }
 
   for (const definition of SEO_DOCUMENTS) {
@@ -170,6 +173,7 @@ function buildPlan(sourceDocuments, manifest) {
     stages[3].mutations.push({kind: 'createIfNotExists', document: spanish})
     stages[3].mutations.push({kind: 'createIfNotExists', document: english})
     stages[3].mutations.push({kind: 'createIfNotExists', document: metadata})
+    stages[4].mutations.push({kind: 'delete', id: legacyMetadataId(spanish._id)})
     metadataDocuments.push(metadata)
   }
 
@@ -224,6 +228,8 @@ async function applyStages(client, stages) {
     for (const mutation of stage.mutations) {
       if (mutation.kind === 'patch') {
         transaction = transaction.patch(mutation.id, {set: mutation.set})
+      } else if (mutation.kind === 'delete') {
+        transaction = transaction.delete(mutation.id)
       } else {
         transaction = transaction.createIfNotExists(mutation.document)
       }

@@ -248,7 +248,7 @@ async function getLocalizedDetail(type, slug, locale) {
       "translated": *[
         _type == "translation.metadata" &&
         count(translations[value->_type == $type && value->slug.current == $slug]) > 0
-      ][0].translations[_key == $locale][0].value-> ${detailProjection},
+      ][0].translations[language == $locale][0].value-> ${detailProjection},
       "sourceExists": count(*[_type == $type && slug.current == $slug]) > 0
     }`,
     { type, slug, locale }
@@ -280,7 +280,7 @@ export async function getCategoryBySlug(slug, locale) {
       "translated": *[
         _type == "translation.metadata" &&
         count(translations[value->_type == "category" && value->slug.current == $slug]) > 0
-      ][0].translations[_key == $locale][0].value-> ${categoryDetailProjection},
+      ][0].translations[language == $locale][0].value-> ${categoryDetailProjection},
       "sourceExists": count(*[_type == "category" && slug.current == $slug]) > 0
     }`,
     { slug, locale }
