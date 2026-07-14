@@ -8,14 +8,14 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 
 ## Vista rapida (Q3 2026 en progreso)
 
-- Estado general: mejoras de navegacion, descubrimiento de contenido, SEO, contenido en tiempo real y experiencia interactiva en curso.
+- Estado general: mejoras de navegacion, internacionalizacion, descubrimiento de contenido, SEO, contenido en tiempo real y experiencia interactiva en curso.
 - Stack actual: Next.js 16, React 19, Sanity 5, ESLint 9.
-- Calidad tecnica: lint y build de produccion validados tras integrar filtros, SEO administrable, Sanity Live y Canary.
+- Calidad tecnica: lint y build de produccion validados tras integrar filtros, internacionalizacion, SEO administrable, Sanity Live y Canary.
 - Riesgos abiertos: no se registran bloqueantes activos.
 
 ## 2026
 
-### Q3 (Jul-Sep) - Navegacion, descubrimiento de contenido, SEO y experiencia interactiva
+### Q3 (Jul-Sep) - Navegacion, internacionalizacion, descubrimiento de contenido, SEO y experiencia interactiva
 
 #### Resumen
 
@@ -33,7 +33,10 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 - Se integro Canary como mascota virtual contextual en blog, proyectos y categorias.
 - Se agrego una flor ambiental para dar dinamismo a la mascota y conservar su estado entre vistas.
 - Se ajusto la lectura de vinetas de Canary en mobile y la convivencia con los controles de filtros.
-- Se valido la integracion de filtros, SEO y Canary con build de produccion usando Turbopack.
+- Se incorporo internacionalizacion completa en espanol e ingles con rutas publicas prefijadas por locale.
+- Se localizaron contenido, navegacion, formularios, accesibilidad y metadata SEO mediante next-intl y Sanity.
+- Se agrego un selector de idioma compacto con icono animado que conserva la ruta, los slugs traducidos y los filtros activos.
+- Se valido la integracion de filtros, internacionalizacion, SEO y Canary con build de produccion usando Turbopack.
 
 #### Feature
 
@@ -59,6 +62,12 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 - Separar render de sprites, dialogos, acciones y estado persistente para facilitar nuevas animaciones.
 - Agregar vinetas contextuales con mensajes automaticos para listados, filtros y estados sin resultados.
 - Incorporar Flower como animacion ambiental que atrae a Canary y se comporta como lampara en modo oscuro.
+- Integrar rutas `/es` y `/en` con mensajes localizados y formatos regionales `es-MX` y `en`.
+- Localizar documentos de Sanity por idioma y enlazar sus versiones mediante metadata de traduccion.
+- Resolver slugs editoriales entre idiomas y preservar query params al cambiar de locale.
+- Generar canonical, hreflang, Open Graph locale y sitemap bilingue sin alternates para contenido sin traduccion.
+- Controlar el lanzamiento del contenido ingles mediante la variable `ENGLISH_ENABLED`.
+- Reemplazar el selector `ES / EN` por un control circular de globo alineado con los iconos del encabezado.
 
 #### Chore
 
@@ -66,6 +75,7 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 - Configurar las variables privadas de Vercel y de la funcion de sync tags sin versionar secretos.
 - Rotar el token de escritura de comentarios, revocar el token publico anterior y eliminar `NEXT_PUBLIC_SANITY_TOKEN`.
 - Eliminar el Deploy Hook `Sanity Deploy` para evitar builds completos en cada publicacion del CMS.
+- Preparar una migracion idempotente de contenido bilingue con respaldo, dry run y auditoria posterior.
 
 #### Fix
 
@@ -75,6 +85,8 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 - Orientar a Canary hacia la flor cuando aparece cerca sin requerir desplazamiento.
 - Evitar que la vineta de Canary choque con los botones de filtros en mobile.
 - Mantener visible la vineta tras taps en filtros para permitir lectura en interacciones tactiles.
+- Mantener filtros, comentarios y enlaces internos dentro del locale activo.
+- Corregir alternates automaticos, metadata de traduccion y detalles editoriales del contenido ingles.
 
 #### Style
 
@@ -83,6 +95,8 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 - Agregar icono de etiqueta reconocible para el filtro de tags.
 - Marcar el elemento activo con color primario y fondo suave sin indicadores redundantes.
 - Alinear Canary, Flower y la vineta con la fila compacta de controles.
+- Igualar tamano, alineacion y contraste del selector de idioma con el control de tema.
+- Animar estrellas sutiles alrededor del icono de idioma y respetar `prefers-reduced-motion`.
 
 #### Commits de referencia
 
@@ -97,6 +111,12 @@ Este changelog usa una organizacion trimestral para dar un panorama rapido del e
 - [bb97aea](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/bb97aea) - fix: orientar Canary hacia la flor cercana
 - [b526831](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/b526831) - fix: evitar choque de vineta de Canary en movil
 - [9296193](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/9296193) - fix: mantener vineta de Canary tras tap en filtros
+- [753a342](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/753a342) - feat: implementar internacionalizacion en espanol e ingles
+- [d1bfa28](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/d1bfa28) - fix: excluir alternates automaticos del lanzamiento bilingue
+- [3907e8c](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/3907e8c) - fix: corregir metadatos de traduccion de Sanity
+- [247b1e0](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/247b1e0) - fix: mejorar revision editorial del contenido ingles
+- [f99897e](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/f99897e) - fix: corregir terminologia de pronombres reflexivos
+- [ecab222](https://github.com/UlisesSnz/portafolio-nextjs-v2/commit/ecab222) - feat: mejorar selector de idioma animado
 
 ### Q2 (Abr-Jun) - Modernizacion y estabilidad
 
